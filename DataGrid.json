@@ -1,0 +1,47 @@
+[
+	{
+		"id": 77,
+		"grupo": "Terminal",
+		"identificador": "48",
+		"dataInicio": "2023-07-12T14:45:00",
+		"dataFim": "2023-07-12T14:45:00",
+		"flagAtivo": true,
+		"localidade": "Florianópolis",
+		"terminal": "HOMOLOGCAVXP",
+		"configuracoes": [
+	{
+		"DiasSemana": [
+			"Monday",
+			"Tuesday",
+			"Wednesday",
+			"Thursday",
+			"Friday"
+		],
+		"Horarios": [
+			{
+				"Inicio": "07:45:00",
+				"Fim": "18:15:00"
+			}
+		],
+		"HorariosAtendimento": [
+			{
+				"Inicio": "08:00:00",
+				"Fim": "12:00:00"
+			},
+			{
+				"Inicio": "13:00:00",
+				"Fim": "18:00:00"
+			}
+		]
+	},
+	{
+		"DiasSemana": [
+			"Saturday",
+			"Sunday"
+		],
+		"Horarios": [],
+		"HorariosAtendimento": []
+	}
+]
+	}
+]

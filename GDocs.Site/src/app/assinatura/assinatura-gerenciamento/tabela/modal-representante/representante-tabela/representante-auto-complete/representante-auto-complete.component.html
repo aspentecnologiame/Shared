@@ -1,0 +1,16 @@
+<ng-select 
+    [items]="obsListaRepresentante$ | async" 
+    class="ng-select" 
+    bindLabel="usuarioAdRepresentante" 
+    [addTag]="false"
+    [hideSelected]="true" 
+    [loading]="listaRepresentanteLoading" 
+    [typeahead]="listaRepresentanteinput$"
+    [(ngModel)]="assinaturaAssinanteRepresentante.usuarioAdRepresentante"
+    (change)="onChange($event)"
+    loadingText="Aguarde, carregando..."
+    notFoundText="Nenhum representante localizado com esses termos."
+    typeToSearchText="Digite 3 ou mais caracteres para buscar um representante"
+    placeholder="Digite 3 ou mais caracteres para buscar um representante" 
+    clearAllText="Limpar">
+</ng-select>

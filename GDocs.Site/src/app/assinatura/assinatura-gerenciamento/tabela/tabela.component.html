@@ -1,0 +1,171 @@
+<style>
+  .cdk-column-groupHeader {
+    background-color: #f4f4f4;
+  }
+</style>
+<div class="form-inline table-filter-field">
+  <div class="form-group pull-right">
+    <label style="margin-right: 5px;">Buscar </label>
+    <input id="filtrar" type="text" (keyup)="aplicarFiltro($event.target.value)"
+      class="form-control text-box single-line" name="filtrar" />
+  </div>
+  <div class="clearfix"></div>
+</div>
+
+<table mat-table [dataSource]="matDataSource" matSort matSortDisableClear class="ng-mat-table"
+  style="margin-top: 10px;">
+  <caption>Tabela de documentos</caption>
+  <ng-container matColumnDef="titulo">
+    <th scope="col" mat-header-cell *matHeaderCellDef mat-sort-header style="width: 35%;">Título</th>
+    <td mat-cell *matCellDef="let row" class="text-left">
+      {{row.titulo}}
+      <em class="fa fa-info-circle" aria-hidden="true" [mdePopoverTriggerFor]="themePopoverDadosComplementares"
+        mdePopoverTriggerOn="click" mdePopoverTriggerOn="hover" aria-hidden="true">
+      </em>
+      <mde-popover #themePopoverDadosComplementares="mdePopover" [mdePopoverOverlapTrigger]="false"
+        [mdePopoverCloseOnClick]="false" [mdePopoverOffsetX]="0" [mdePopoverOffsetY]="0" [mdePopoverArrowOffsetX]="0"
+        mdePopoverArrowColor="transparent">
+        <div class="popover-internal-div-padrao">
+          <div>
+            <strong>Descrição</strong>
+            <pre [innerHtml]="row.descricao | safe: 'html'"></pre>
+          </div>
+          <div>
+            <strong>Nome do documento</strong>
+            <pre> {{row.nomeDocumento}}</pre>
+          </div>
+        </div>
+      </mde-popover>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="numeroDocumento">
+    <th scope="row" mat-header-cell *matHeaderCellDef mat-sort-header style="text-align: center;">Número</th>
+    <td mat-cell class="text-center" *matCellDef="let row">
+      {{row.numeroDocumento}}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="statusDescricao">
+    <th scope="row" mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+    <td mat-cell class="text-center" *matCellDef="let row">
+      {{obterDescricaoStatus(row)}}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="categoriaDescricao">
+    <th scope="row" mat-header-cell *matHeaderCellDef mat-sort-header style="text-align: center;">Categoria
+    </th>
+    <td mat-cell class="text-center" *matCellDef="let row">
+      {{row.categoriaDescricao}}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="dataCriacao">
+    <th scope="row" mat-header-cell *matHeaderCellDef mat-sort-header>Data</th>
+    <td mat-cell class="text-center" *matCellDef="let row">
+      {{row.dataCriacao | date: 'dd/MM/yyyy'}}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="acao">
+    <th scope="row" mat-header-cell *matHeaderCellDef style="width: 10%;text-align: center;">Ação</th>
+    <td mat-cell class="text-center" *matCellDef="let row">
+      <em *ngIf="verificarProcessoEstaAtivo(row.status.toString())" style="cursor:pointer;margin-right:5px;"
+        [ngClass]="row.destaque ? 'fas fa-star warning-color' : 'far fa-star warning-color'"
+        [mdePopoverTriggerFor]="themePopoverDestaque" mdePopoverTriggerOn="hover"
+        aria-hidden="true" (click)="alterarDestaque(row)">
+      </em>
+      <em *ngIf="verificarProcessoEstaAtivo(row.status.toString())" style="cursor:pointer;color:#00417f"
+        class="fas fa-user-edit" [mdePopoverTriggerFor]="themePopoverAlterarRepresentante" mdePopoverTriggerOn="hover"
+        aria-hidden="true" (click)="alterarRepresentante(row)">
+      </em>
+      <em style="margin-left:5px;cursor:pointer;color:#008000" class="fas fa-file-alt"
+        [mdePopoverTriggerFor]="themePopoverPendenciaAssinatura" mdePopoverTriggerOn="hover" aria-hidden="true"
+        (click)="obterProcessoComPassosParaAssinatura(row)">
+      </em>
+      <em style="cursor:pointer;color:#00417f;margin-left:5px" class="fas fa-search"
+        [mdePopoverTriggerFor]="themePopoverDocumento" mdePopoverTriggerOn="hover" aria-hidden="true"
+        (click)="visualizarDetalhesDoProcesso(row)">
+      </em>
+      <em *ngIf="!verificarProcessoEstaAtivo(row.status.toString()) && row.certificadoDigital"
+        style="cursor:pointer;color:#00417f;margin-left:5px" class="fa fa-certificate"
+        [mdePopoverTriggerFor]="themePopoverDocumentoCertificado" mdePopoverTriggerOn="hover" aria-hidden="true"
+        (click)="visualizarDocumento(row)">
+      </em>
+      <em *ngIf="!verificarProcessoEstaAtivo(row.status.toString()) && row.assinadoNoDocumento"
+        style="cursor:pointer;color:#00417f;margin-left:5px" class="fa fa-file-signature"
+        [mdePopoverTriggerFor]="themePopoverAssinadoNoDocumento" mdePopoverTriggerOn="hover" aria-hidden="true"
+        (click)="visualizarDocumento(row)">
+      </em>
+      <em *ngIf="(verificarProcessoEstaAtivo(row.status.toString()) || verificaStatusConcluido(row.status.toString())) && !verificarStatusPagamentoSolicitacaoSaida(row)" style="margin-left:5px;cursor:pointer;color:#c9302c"
+        class="fas fa-window-close" [mdePopoverTriggerFor]="themePopoverCancelar" (click)="confirmarCancelamento(row)"
+        matTooltipPosition="after" aria-hidden="true">
+      </em>
+
+      <mde-popover #themePopoverDestaque="mdePopover" [mdePopoverOverlapTrigger]="false"
+        [mdePopoverCloseOnClick]="false" [mdePopoverOffsetX]="0" [mdePopoverOffsetY]="0" [mdePopoverArrowOffsetX]="0"
+        mdePopoverArrowColor="transparent">
+        <div style="background-color: #565656 ;padding:20px;border-radius:5px;opacity:0.95;">
+          <span style="color: white;">{{ row.destaque ? 'Remover destaque' : 'Destacar' }}</span>
+        </div>
+      </mde-popover>
+      <mde-popover #themePopoverAlterarRepresentante="mdePopover" [mdePopoverOverlapTrigger]="false"
+        [mdePopoverCloseOnClick]="false" [mdePopoverOffsetX]="0" [mdePopoverOffsetY]="0" [mdePopoverArrowOffsetX]="0"
+        mdePopoverArrowColor="transparent">
+        <div style="background-color: #565656 ;padding:20px;border-radius:5px;opacity:0.95;">
+          <span style="color: white;">Atribuir Representante</span>
+        </div>
+      </mde-popover>
+      <mde-popover #themePopoverPendenciaAssinatura="mdePopover" [mdePopoverOverlapTrigger]="false"
+        [mdePopoverCloseOnClick]="false" [mdePopoverOffsetX]="0" [mdePopoverOffsetY]="0" [mdePopoverArrowOffsetX]="0"
+        mdePopoverArrowColor="transparent">
+        <div style="background-color: #565656 ;padding:20px;border-radius:5px;opacity:0.95;">
+          <span style="color: white;">Status do fluxo das aprovações</span>
+        </div>
+      </mde-popover>
+      <mde-popover #themePopoverDocumento="mdePopover" [mdePopoverOverlapTrigger]="false"
+        [mdePopoverCloseOnClick]="false" [mdePopoverOffsetX]="0" [mdePopoverOffsetY]="0" [mdePopoverArrowOffsetX]="0"
+        mdePopoverArrowColor="transparent">
+        <div style="background-color: #565656 ;padding:20px;border-radius:5px;opacity:0.95;">
+          <span style="color: white;">Ver detalhes</span>
+        </div>
+      </mde-popover>
+      <mde-popover #themePopoverDocumentoCertificado="mdePopover" [mdePopoverOverlapTrigger]="false"
+        [mdePopoverCloseOnClick]="false" [mdePopoverOffsetX]="0" [mdePopoverOffsetY]="0" [mdePopoverArrowOffsetX]="0"
+        mdePopoverArrowColor="transparent">
+        <div style="background-color: #565656 ;padding:20px;border-radius:5px;opacity:0.95;">
+          <span style="color: white;">Ver documento com certificado</span>
+        </div>
+      </mde-popover>
+      <mde-popover #themePopoverAssinadoNoDocumento="mdePopover" [mdePopoverOverlapTrigger]="false"
+        [mdePopoverCloseOnClick]="false" [mdePopoverOffsetX]="0" [mdePopoverOffsetY]="0" [mdePopoverArrowOffsetX]="0"
+        mdePopoverArrowColor="transparent">
+        <div style="background-color: #565656 ;padding:20px;border-radius:5px;opacity:0.95;">
+          <span style="color: white;">Ver documento Aprovado</span>
+        </div>
+      </mde-popover>
+      <mde-popover #themePopoverCancelar="mdePopover" [mdePopoverOverlapTrigger]="false"
+        [mdePopoverCloseOnClick]="false" [mdePopoverOffsetX]="0" [mdePopoverOffsetY]="0" [mdePopoverArrowOffsetX]="0"
+        mdePopoverArrowColor="transparent">
+        <div style="background-color: #565656 ;padding:20px;border-radius:5px;opacity:0.95;">
+          <span style="color: white;">Cancelar processo de aprovação</span>
+        </div>
+      </mde-popover>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+  <ng-container matColumnDef="groupHeader">
+    <td colspan="7" mat-cell *matCellDef="let group">
+      <strong>{{group.value}}</strong>
+    </td>
+  </ng-container>
+
+  <tr mat-row *matRowDef="let row; columns: ['groupHeader']; when: matGroupBy.isGroup"> </tr>
+
+</table>
+
+<mat-paginator [length]="0" [pageSize]="10" showFirstLastButtons></mat-paginator>

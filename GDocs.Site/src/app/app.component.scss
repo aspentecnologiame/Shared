@@ -1,0 +1,56 @@
+.header_centralizado {
+  text-align: center;
+}
+
+.alert.alert-nao-localizado {
+  background: #f5f5f5;
+  border-color: #ddd;
+  color: gray;
+  background-size: 20px 20px;
+}
+
+.modal-navegado-incompativel-container {
+  height: 90vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding-top: 30px;
+
+  & .modal-navegado-incompativel {
+    max-width: 800px;
+    background: #fff;
+    border-radius: 5px;
+    padding: 15px;
+    border: 1px solid;
+
+    & p {
+      &.titulo {
+        color: #f00;
+        font-size: 14pt;
+        text-align: center;
+      }
+
+      &.mensagem {
+        font-size: 12pt;
+        text-align: justify;
+      }
+    }
+
+    & .navegadores-compativeis {
+      text-align: center;
+      & span {
+        margin-right: 5px;
+        margin-left: 5px;
+      }
+
+      & small {
+        vertical-align: top;
+      }
+
+      & img {
+        margin: 0 13px;
+      }
+    }
+  }
+}

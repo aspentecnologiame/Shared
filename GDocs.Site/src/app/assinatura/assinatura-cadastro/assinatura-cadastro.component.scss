@@ -1,0 +1,44 @@
+/*Mat-Stepper*/
+::ng-deep .mat-horizontal-stepper-header{
+    pointer-events: none !important;
+    padding: 24px 0 24px 0 !important;
+  }
+  
+  ::ng-deep .mat-step-header .mat-step-label-selected {
+    font-size: 14px !important;
+    font-weight: 800 !important;
+    color: #333 !important;
+  }
+  
+  ::ng-deep .mat-step-header {
+    background-color: transparent !important;
+    font-size: 18px !important;
+    font-weight: 400 !important;
+  }
+  
+  ::ng-deep .mat-horizontal-content-container{
+    overflow: hidden !important;
+    padding: 0 !important;
+  }  
+  
+  ::ng-deep .mat-step-header .mat-step-icon-selected {
+    background-color: #0073e6;
+  }
+  
+  ::ng-deep .mat-step-header .mat-step-icon-state-edit {
+     background-color: #5cb85c !important; 
+  }
+      
+  ::ng-deep .mat-step-icon .mat-icon {
+    font-size: 22px !important;
+  }
+  
+  ::ng-deep .mat-step-icon-state-edit .mat-step-icon-content {
+    top: 42% !important;
+    left: 42% !important;
+  }
+  
+  ::ng-deep .mat-step-icon {
+    height: 32px !important;
+    width: 32px !important;
+  }

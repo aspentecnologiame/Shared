@@ -1,0 +1,43 @@
+<div *ngIf="VerificaMostraTitulo()">
+  <label *ngIf="dataSource.length > 0 " class="control-label" style="margin-right: 3px;">Histórico Prorrogações</label>
+</div>
+
+  <table mat-table   [dataSource]="dataSourceHistorico"  class="ng-mat-table"
+  aria-describedby="id" *ngIf="dataSource.length > 0">
+  <ng-container matColumnDef="de">
+    <th scope="col"  style="width:3%; text-align: center;" mat-header-cell *matHeaderCellDef >De</th>
+    <td mat-cell class="text-center" *matCellDef="let row"> {{row.dataRetornoAtual | date: 'dd/MM/yyyy'}} </td>
+  </ng-container>
+
+  <ng-container  matColumnDef="para">
+    <th scope="col" style="width:3%; text-align: center;"  mat-header-cell *matHeaderCellDef>{{descricaoColunaPara}}</th>
+    <td mat-cell class="text-center" *matCellDef="let row"> {{row.dataRetornoNova | date: 'dd/MM/yyyy'}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="observacao">
+    <th scope="col" style="width:10%; text-align: center;"  mat-header-cell *matHeaderCellDef>Observação</th>
+    <td mat-cell *matCellDef="let row" style="text-align:left;"> {{row.observacao}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="status">
+    <th scope="col" style="width:3%; text-align: center;" mat-header-cell *matHeaderCellDef>Status de Ciência</th>
+    <td mat-cell  style="text-align:left;"*matCellDef="let row"> {{row.status }}
+
+    <em *ngIf="MostrarInfo(row.htmlInfoDir)" class="fa fa-info-circle" aria-hidden="true" [mdePopoverTriggerFor]="themePopoverDadosComplementares"
+      mdePopoverTriggerOn="click" mdePopoverTriggerOn="hover" aria-hidden="true">
+    </em>
+    <mde-popover #themePopoverDadosComplementares="mdePopover" [mdePopoverOverlapTrigger]="false"
+      [mdePopoverCloseOnClick]="false" [mdePopoverOffsetX]="0" [mdePopoverOffsetY]="0" [mdePopoverArrowOffsetX]="0"
+      mdePopoverArrowColor="transparent">
+      <div
+        class="popover-internal-div-padrao"
+        [innerHtml]="row.htmlInfoDir | safe: 'html'">
+      </div>
+    </mde-popover>
+
+  </td>
+  </ng-container>
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row  class="text-center" *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+<mat-paginator   [length]="0" [pageSize]="3" showFirstLastButtons></mat-paginator>

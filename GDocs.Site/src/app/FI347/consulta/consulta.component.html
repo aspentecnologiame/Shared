@@ -1,0 +1,181 @@
+<div class="panel">
+  <div class="panel-heading">
+    <app-breadcrumb></app-breadcrumb>
+  </div>
+  <div class="panel-body" [style.minHeight]='minHeight'>
+    <div class="page-header">
+      <i class="fa fa-search" aria-hidden="true"></i>
+      <h1>Filtro de pesquisa</h1>
+    </div>
+
+    <form [formGroup]="formPesquisarMaterial" novalidate>
+      <div class="row">
+        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-2 form-group">
+          <label class="control-label">Data início</label>
+          <div class="input-group">
+            <input formControlName="dataInicio" matInput [matDatepicker]="picker"
+              class="form-control text-center mat-datapicker-input" [readonly]="true" (click)="picker.open()">
+            <span class="input-group-addon" style="cursor: pointer;" (click)="picker.open()">
+              <span class="fa fa-calendar-alt"></span>
+            </span>
+            <mat-datepicker #picker></mat-datepicker>
+          </div>
+        </div>
+
+        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-2 form-group">
+          <label class="control-label">Data término</label>
+          <div class="input-group">
+            <input formControlName="dataTermino" matInput [matDatepicker]="picker2"
+            class="form-control text-center mat-datapicker-input" [readonly]="true" (click)="picker2.open()">
+            <span class="input-group-addon" style="cursor: pointer;" (click)="picker2.open()">
+              <span class="fa fa-calendar-alt"></span>
+            </span>
+            <mat-datepicker #picker2></mat-datepicker>
+          </div>
+        </div>
+
+        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 form-group">
+          <label class="control-label">Número da autorização de saída</label>
+          <input id="numero" type="text" class="form-control text-box single-line" formControlName="numero"
+            placeholder="" />
+        </div>
+
+        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 form-group">
+          <label class="control-label">Tipo de saída</label>
+          <ng-select [items]="listaTiposSaida"  id="listaTiposSaida" [multiple]="true" [selectOnTab]="true"
+            bindLabel="descricao" bindValue="id" placeholder="[Selecione]" formControlName="tiposSaida"
+            clearAllText="Limpar" loadingText="Aguarde, carregando..."
+            notFoundText="Nenhum tipo de saída localizado.">
+            <ng-template ng-label-tmp ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+              {{item.descricao}}
+            </ng-template>
+          </ng-select>
+        </div>
+
+      </div>
+
+      <div class="row">
+        <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 form-group">
+          <label class="control-label">Patrimônio</label>
+          <input id="patrimonio" type="text" class="form-control text-box single-line" formControlName="patrimonio"
+            placeholder="" />
+        </div>
+
+          <div
+            class="col-xs-12 col-sm-4 col-md-4 col-lg-4 form-group">
+            <label class="control-label">Responsável</label>
+            <ng-select [items]="listaResponsavel" [multiple]="true" id="listaResponsavel" [selectOnTab]="true" bindLabel="nome"
+              bindValue="activeDirectoryId" placeholder="[Selecione]" formControlName="autores"
+              clearAllText="Limpar" loadingText="Aguarde, carregando..." notFoundText="Nenhum autor localizado.">
+              <ng-template ng-label-tmp ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+                {{item.nome}}
+              </ng-template>
+            </ng-select>
+          </div>
+
+        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 form-group">
+          <label class="control-label">Status</label>
+          <ng-select [items]="listaStatus" [multiple]="true" id="listaStatus" [selectOnTab]="true"
+            bindLabel="descricao" bindValue="id" placeholder="[Selecione]" formControlName="status"
+            clearAllText="Limpar" loadingText="Aguarde, carregando..."
+            notFoundText="Nenhum tipo de status localizado.">
+            <ng-template ng-label-tmp ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+              {{item.descricao}}
+            </ng-template>
+          </ng-select>
+        </div>
+
+        <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 " style="padding-top: 30px">
+          <mat-checkbox id="vencimento" name="vencimento" formControlName="vencido" (change)="habilitarDesabilitarStatus($event)">Vencido</mat-checkbox>
+        </div>
+
+      </div>
+
+      <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <button class="btn btn-primary" (click)="pesquisarSaidaMaterialSubmit()"><i class="fa fa-search"
+              aria-hidden="true"></i> Pesquisar</button>
+          <button class="btn btn-primary" (click)="Limpar()"><i class="fa fa-eraser"
+              aria-hidden="true"></i> Limpar</button>
+        </div>
+      </div>
+    </form>
+    <hr>
+
+    <div class="form-group">
+      <button *appHasPermition="'fi347:adicionar'" class="btn btn-success" [routerLink]="'/fi347/adicionar/0'">
+        <i aria-hidden="true" class="fa fa-plus" ></i> Adicionar
+      </button>
+      <button class="btn btn-primary pull-right" style="margin-right: 0px;" *ngIf="dataSource?.length > 0" (click)="gerarRdl()">
+        <i class="fa fa-file-alt" aria-hidden="true"></i> Gerar relatório
+      </button>
+    </div>
+
+
+    <app-consulta-tabela 
+      (cancelarEventEmitter)="cancelarEventEmitter($event)"
+      [dataSource]="dataSource" *ngIf="(dataSource?.length || 0) > 0 else tabelaVazia">
+    </app-consulta-tabela>
+    <ng-template #tabelaVazia>
+      <app-no-records-found-message *ngIf="dataSource != null"></app-no-records-found-message>
+    </ng-template>
+
+
+  </div>
+
+  <div style="min-height: 90px" class="panel-footer">
+    <div class="panel-heading" id="dvLegenda">
+      <div class="row">
+        <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+          <h4 style="border-bottom: 1px dotted #ccc">Ação</h4>
+          <div class="row">
+            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+              <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                  <em class="fas fa-search" style="color:#00417f;font-size: 16px;"></em> Ver detalhes
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                  <em class="fas fa-file-alt" style="color:#008000;font-size: 16px;"></em> Histórico Material
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                  <em class="fas fa-window-close" style="color:#c9302c;"></em> Cancelar saída
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                  <em class="fas fa-arrow-right" style="color:#eba308;"></em> Registro de saída
+                </div>
+              </div>
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+              <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                  <em class="fas fa-undo" style="color:#289c41;"></em> Registro de retorno
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                  <em class="fas fa-history" style="color:#f35900;"></em> Solicitação de prorrogação de retorno
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                  <em class="fas fa-trash-restore" style="color:#c90a0a;"></em> Solicitação de Baixa de material sem retorno
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <h4 style="border-bottom: 1px dotted #ccc">Descrição</h4>
+            <div class="row">
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <em class="fa fa-exclamation-triangle" style="color: #eba308"></em> Retorno parcial
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <em class="fa fa-info-circle" style="color:#000;font-size: 16px;"></em> Informação
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

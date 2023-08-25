@@ -1,0 +1,24 @@
+<div id="menuPrincipal" class="navbar-collapse collapse active">
+  <ul class="nav navbar-nav navbar-right" *ngFor="let item of dataSource">
+    <li *ngIf="(!item.filhos || !item.filhos.length > 0) else menuSubMenu" [class.active]="item.ativo">
+      <a routerLink="{{ item.rota }}" role="button" aria-haspopup="true" aria-expanded="false" (click)="onClickItem(item)">
+        <i class="fa {{ item.icone }}" aria-hidden="true"></i> {{ item.texto }}
+      </a>
+    </li>
+
+    <ng-template #menuSubMenu >
+      <li appDropdown [class.active]="item.ativo">
+        <a role="button" aria-haspopup="true" aria-expanded="false">
+          <i class="fa {{ item.icone }}" aria-hidden="true"></i> {{ item.texto }}
+        </a>
+        <ul class="dropdown-menu">
+          <li *ngFor="let subitem of item.filhos">
+            <a routerLink="{{subitem.rota}}" role="button" aria-haspopup="true" aria-expanded="false" (click)="onClickItem(item)">
+              {{subitem.texto}}
+            </a>
+          </li>
+        </ul>
+      </li>
+    </ng-template>
+  </ul>
+</div>

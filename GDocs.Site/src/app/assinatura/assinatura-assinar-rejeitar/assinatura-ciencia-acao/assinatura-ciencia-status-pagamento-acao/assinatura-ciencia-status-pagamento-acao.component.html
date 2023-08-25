@@ -1,0 +1,82 @@
+<div class="div-modal" mat-dialog-content>
+  <div class="modal-header">
+    <h4 class="modal-title">Solicitação de cancelamento de Status de Pagamento</h4>
+  </div>
+  <div  class="modal-body">
+    <div class="row">
+      <div class="col-sm-4 col-md-4 col-lg-4 form-group">
+        <label class="control-label">Número</label><br>
+        <label class="NumeroDoc control-label">{{dataSource.documentoFI1548Numero}}</label>
+      </div>
+      <div class="col-sm-4 col-md-4 col-lg-4 form-group">
+      </div>
+      <div class="col-sm-4 col-md-4 col-lg-4 form-group">
+        <label class="control-label">Tipo de Ciência</label><br>
+        <label class="tipoCiencia control-label">{{dataSource.tipoCiencia}}</label>
+      </div>
+    </div>
+
+  <div class="tabela-scroll">
+    <app-assinatura-ciencia-acao-card-justificativa [dataSource]="cienciaRejeitado">
+    </app-assinatura-ciencia-acao-card-justificativa>
+
+    <form [formGroup]="form">
+      <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 form-group">
+          <label class="control-label" style="margin-right: 3px;">Justificativa da Solicitação</label>
+          <textarea class="form-control text-box single-line login-textbox-control" height="30px!important"
+            id="justificativa" name="justificativa" placeholder="Justificativa" type="text"
+            formControlName="justificativa">
+            </textarea>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-4 col-md-4 col-lg-4 form-group">
+          <label class="control-label">Responsável</label>
+          <input type="text" formControlName="responsavel" class="form-control text-box single-line" name="responsavel"
+            id="responsavel" />
+        </div>
+        <div class="col-sm-4 col-md-4 col-lg-4 form-group">
+          <label class="control-label">Pagamento</label>
+          <input type="text" formControlName="pagamento" class="form-control text-box single-line" name="pagamento"
+            id="pagamento" />
+        </div>
+        <div class="col-sm-4 col-md-4 col-lg-4 form-group">
+          <label class="control-label">Valor total</label>
+          <input type="text" class="form-control text-box single-line" name="valorTotal" id="valorTotal" value="{{dataSource.valorTotal | currency: dataSource.moedaSimbolo }}" disabled />
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-12 form-group">
+          <label class="control-label">Fornecedor</label>
+            <input type="text" formControlName="fornecedor" class="form-control text-box single-line" name="fornecedor"
+              id="fornecedor" />
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 form-group">
+          <label class="control-label" style="margin-right: 3px;">Motivo da solicitação</label>
+          <textarea class="form-control text-box single-line login-textbox-control" height="30px!important"
+            id="observacao" name="observacao" placeholder="nameCampoObservacao" type="text"
+            formControlName="observacao">
+            </textarea>
+        </div>
+      </div>
+    </form>
+  </div>
+  </div>
+  <div class="modal-footer" id="footer">
+    <button class="btn btn-success pull-right" style="margin-right: 0px;" (click)="confirmarModal()">
+      <i class="fa fa-check" aria-hidden="true"></i> Ciente
+    </button>
+    <button class="btn btn-danger pull-right" (click)="RejeitarCiencia()">
+      <i class="fa fa-times" aria-hidden="true"></i> Rejeitar
+    </button>
+    <button class="btn btn-danger pull-right" (click)="cancelarModal()">
+      <i class="fa fa-times" aria-hidden="true"></i> Cancelar
+    </button>
+  </div>
+</div>

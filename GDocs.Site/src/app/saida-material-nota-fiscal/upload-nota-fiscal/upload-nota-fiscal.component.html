@@ -1,0 +1,77 @@
+<div class="panel">
+  <div class="panel-heading">
+    <app-breadcrumb></app-breadcrumb>
+  </div>
+  <div class="panel-body" [style.minHeight]='minHeight'>
+    <div class="page-header">
+      <i class="fa fa-search" aria-hidden="true"></i>
+      <h1>Upload nota fiscal</h1>
+    </div>
+    <form [formGroup]="formUploadNf" novalidate>
+    <mat-tab-group [selectedIndex]="indexGroupTab">
+      <mat-tab label="Informações">
+      <app-informacao-saida-material [dataSource]="saidaMaterialNf"></app-informacao-saida-material>
+
+      <app-tabela-item-material *ngIf="dataSourceItemNf.length > 0"
+      [configuracaoColuna]="ConfigColuna()"
+      [mostrarClickCopy]="true"
+      [dataSource]="dataSourceItemNf">
+     </app-tabela-item-material>
+
+      </mat-tab>
+      <mat-tab label="Upload Nota fiscal" >
+      <div style=" width:1080px;">
+
+        <div class="row" *ngIf="!verificaEhPendenteNfRetorno()">
+          <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 form-group">
+            <label class="control-label">Número nota fiscal</label>
+            <input type="text" formControlName="numeroNf" class="form-control text-box single-line" name="numeroNf" mask="00000000"
+            [attr.maxlength]="formUploadNf.get('numeroNf').getError('maxlength')?.requiredLength" />
+          </div>
+        </div>
+           <app-upload  fileUploadType="pdf"
+           (uploadCompletoAdicionarNaListaDeDocumentosPreview)="uploadCompletoAdicionarNaListaDeDocumentosPreview($event)">
+          </app-upload>
+
+          <app-pdf-preview [listarDocumentosChanging]="listarArquivosChangingValue" [showThumbnail]="true">
+        </app-pdf-preview>
+
+        <div class="row pull-right">
+          <br>
+
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 form-group">
+          <button class="btn btn-danger" style="margin-right: 10px;" (click)="cancelarOperacao()">
+            <i class="fa fa-times" aria-hidden="true"></i> Cancelar
+          </button>
+
+           <button class="btn btn-success" style="margin-right: 0px;" (click)="salvarAnexo()">
+             <i class="fa fa-save" aria-hidden="true"></i> Salvar
+           </button>
+        </div>
+        </div>
+      </div>
+
+    </mat-tab>
+  </mat-tab-group>
+</form>
+
+  </div>
+  <div class="panel-footer" style="min-height: 90px">
+    <div id="dvLegenda" class="panel-heading">
+      <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <h4 style="border-bottom: 1px dotted #ccc">Ação</h4>
+          <div class="row">
+            <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+              <div class="row">
+                <div *appHasPermition="'SaidaMaterialNF:acao:verDetalhes'" class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                  <em class="fas fa-copy" style="color:#000000;font-size: 16px;"></em> Copiar
+                </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

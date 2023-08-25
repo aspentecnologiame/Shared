@@ -1,0 +1,205 @@
+<div class="grupo-informacao" *ngIf="VerificarDataSource()">
+
+  <div class="row">
+    <div class="col-sm-6 col-md-6 col-lg-6 " style="margin-bottom: 0px;">
+      <label class="control-label info-desc">Tipo da saída: </label>
+      <label class="descricao">{{dataSource.tipoSaida}}</label>
+    </div>
+    <div *ngIf="MostrarFornecedor()" class="col-sm-6 col-md-6 col-lg-6 " style="margin-bottom:0px;">
+      <label>Fornecedor</label>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-6 col-md-6 col-lg-6  " style="margin-bottom: 0px;">
+      <label class="control-label info-desc">Responsável pela saída: </label>
+      <label class="descricao">{{dataSource.nomeAutor}}</label>
+    </div>
+    <div *ngIf="MostrarFornecedor()" class="col-sm-6 col-md-6 col-lg-6 " style="margin-bottom: 0px;">
+      <label class="control-label info-desc">Endereço fornecedor: </label>
+      <label class="descricao">{{dataSource.fornecedor.endereco}}</label>
+      <button copyClipboard="{{dataSource.fornecedor.endereco}}" class="btn btn-estilo"> <i
+          class="fas fa-copy"></i></button>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-6 col-md-6 col-lg-6 " style="margin-bottom: 0px;">
+      <label class="control-label info-desc">Quem vai transportar: </label>
+      <label class="descricao">{{dataSource.transportador}}</label>
+    </div>
+
+    <div *ngIf="MostrarFornecedor()" class="col-sm-6 col-md-6 col-lg-6 " style="margin-bottom: 0px;">
+      <label class="control-label info-desc">Bairro: </label>
+      <label class="descricao">{{dataSource.fornecedor.bairro}}</label>
+      <button copyClipboard="{{dataSource.fornecedor.bairro}}" class="btn btn-estilo"> <i
+          class="fas fa-copy"></i></button>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-6 col-md-6 col-lg-6 " style="margin-bottom: 0px;">
+      <label class="control-label info-desc">Sigla do Setor: </label>
+      <label class="descricao">{{dataSource.setorResponsavel}}</label>
+    </div>
+
+    <div *ngIf="MostrarFornecedor()" class="col-sm-6 col-md-6 col-lg-6 " style="margin-bottom: 0px;">
+      <label class="control-label info-desc">Cidade: </label>
+      <label class="descricao">{{dataSource.fornecedor.cidade}}</label>
+      <button copyClipboard="{{dataSource.fornecedor.cidade}}" class="btn btn-estilo"> <i class="fas fa-copy"></i></button>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-6 col-md-6 col-lg-6 " style="margin-bottom: 0px;">
+      <label class="control-label info-desc">Data da Saída: </label>
+      <label class="descricao">{{dataSource.saida | date: 'dd/MM/yyyy'}}</label>
+    </div>
+
+    <div *ngIf="MostrarFornecedor()" class="col-sm-6 col-md-6 col-lg-6 " style="margin-bottom: 0px;">
+      <label class="control-label info-desc">Estado: </label>
+      <label class="descricao">{{dataSource.fornecedor.estado}}</label>
+      <button copyClipboard="{{dataSource.fornecedor.estado}}" class="btn btn-estilo"> <i class="fas fa-copy"></i></button>
+    </div>
+  </div>
+
+  <div class="row">
+
+    <div class="col-sm-6 col-md-6 col-lg-6 " style="margin-bottom: 0px;">
+      <label class="control-label info-desc">Data de retorno: </label>
+      <label class="descricao">{{dataSource.retorno | date: 'dd/MM/yyyy' }}</label>
+    </div>
+
+    <div *ngIf="MostrarFornecedor()" class="col-sm-6 col-md-6 col-lg-6 " style="margin-bottom: 0px;">
+      <label class="control-label info-desc">Cep: </label>
+      <label class="descricao">{{dataSource.fornecedor.cep | cep}}</label>
+      <button copyClipboard="{{dataSource.fornecedor.cep}}" class="btn btn-estilo"> <i class="fas fa-copy"></i></button>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-6 col-md-6 col-lg-6 " style="margin-bottom: 0px;">
+      <label class="control-label info-desc">Origem: </label>
+      <label class="descricao">{{dataSource.origem}}</label>
+      <button copyClipboard="{{dataSource.origem}}" class="btn btn-estilo"> <i class="fas fa-copy"></i></button>
+    </div>
+  </div>
+
+
+
+
+  <div class="row">
+    <div class="col-sm-6 col-md-6 col-lg-6  " style="margin-bottom: 0px;">
+      <label class="control-label info-desc">Destino: </label>
+      <label class="descricao">{{dataSource.destino}}</label>
+      <button copyClipboard="{{dataSource.destino}}" class="btn btn-estilo"> <i class="fas fa-copy"></i></button>
+    </div>
+  </div>
+
+  <div class="row" *ngIf="dataSource.documento != null">
+    <div class="col-sm-6 col-md-6 col-lg-6  " style="margin-bottom: 0px;">
+      <label class="control-label info-desc">CPF/CNPJ: </label>
+      <label class="descricao">{{dataSource.documento | cpfcnpj }}</label>
+      <button copyClipboard="{{dataSource.documento | cpfcnpj}}" class="btn btn-estilo"> <i class="fas fa-copy"></i></button>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-6 col-md-6 col-lg-6  " style="margin-bottom: 0px;">
+      <label class="control-label info-desc">Natureza operacional: </label>
+      <label class="descricao">{{dataSource.naturezaOperacionalDesc}}</label>
+      <button copyClipboard="{{dataSource.naturezaOperacionalDesc}}" class="btn btn-estilo"> <i
+          class="fas fa-copy"></i></button>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-6 col-md-6 col-lg-6  " style="margin-bottom: 0px;">
+      <label class="control-label info-desc">Modalidade do Frete: </label> <label
+        class="descricao">{{dataSource.modalidadeFreteDesc}}</label>
+      <button copyClipboard="{{dataSource.modalidadeFreteDesc}}" class="btn btn-estilo"> <i
+          class="fas fa-copy"></i></button>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-6 col-md-6 col-lg-6  " style="margin-bottom: 0px;">
+      <label class="control-label info-desc">Volume: </label>
+      <label class="descricao">{{dataSource.volume}}</label>
+      <button copyClipboard="{{dataSource.volume}}" class="btn btn-estilo"> <i class="fas fa-copy"></i></button>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-6 col-md-6 col-lg-6  " style="margin-bottom: 0px;">
+      <label class="control-label info-desc">Peso: </label>
+      <label class="descricao">{{dataSource.peso}}</label>
+      <button copyClipboard="{{dataSource.peso}}" class="btn btn-estilo"> <i class="fas fa-copy"></i></button>
+
+    </div>
+  </div>
+
+  <div *ngIf="!MostrarFornecedor()" class="row">
+    <div class="col-sm-6 col-md-6 col-lg-6  " style="margin-bottom: 0px;">
+      <label class="control-label info-desc">Código Totvs</label>
+      <label class="descricao">{{dataSource.codigoTotvs }}</label>
+      <button copyClipboard="{{dataSource.codigoTotvs}}" class="btn btn-estilo"><i class="fas fa-copy"></i></button>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12  " style="margin-bottom: 0px;">
+      <label class="control-label info-desc">Motivo: </label>
+      <label class="descricao">{{dataSource.motivo}}</label>
+    </div>
+  </div>
+  <div *ngIf="false">
+    <hr class="divisao">
+    <h4>Fornecedor</h4>
+
+    <div class="row">
+      <div class="col-sm-6 col-md-6 col-lg-6  " style="margin-bottom: 0px;">
+        <label class="control-label info-desc">Endereço: </label>
+        <label class="descricao">{{dataSource.fornecedor.endereco}}</label>
+        <button copyClipboard="{{dataSource.fornecedor.endereco}}" class="btn btn-estilo"><i
+            class="fas fa-copy"></i></button>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-6 col-md-6 col-lg-6 " style="margin-bottom: 0px;">
+        <label class="control-label info-desc">Bairro: </label> <label
+          class="descricao">{{dataSource.fornecedor.bairro}}</label>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-6 col-md-6 col-lg-6 " style="margin-bottom: 0px;">
+        <label class="control-label info-desc">Cidade: </label>
+        <label class="descricao">{{dataSource.fornecedor.cidade}}</label>
+        <button copyClipboard="{{dataSource.fornecedor.cidade}}" class="btn btn-estilo"><i
+            class="fas fa-copy"></i></button>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-6 col-md-6 col-lg-6 " style="margin-bottom: 0px;">
+        <label class="control-label info-desc">Estado: </label>
+        <label class="descricao">{{dataSource.fornecedor.estado}}</label>
+        <button copyClipboard="{{dataSource.fornecedor.estado}}" class="btn btn-estilo"><i
+            class="fas fa-copy"></i></button>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-6 col-md-6 col-lg-6 " style="margin-bottom: 0px;">
+        <label class="control-label info-desc">Cep: </label>
+        <label class="descricao">{{dataSource.fornecedor.cep | cep}}</label>
+        <button copyClipboard="{{dataSource.fornecedor.cep | cep}}}" class="btn btn-estilo"><i
+            class="fas fa-copy"></i></button>
+      </div>
+    </div>
+  </div>
+
+
+</div>

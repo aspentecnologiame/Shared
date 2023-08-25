@@ -1,0 +1,211 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <Name>DB_GDOCS</Name>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectVersion>4.1</ProjectVersion>
+    <ProjectGuid>{4071f65f-d22a-4e6d-93ed-2e8151cfd0ec}</ProjectGuid>
+    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql100DatabaseSchemaProvider</DSP>
+    <OutputType>Database</OutputType>
+    <RootPath>
+    </RootPath>
+    <RootNamespace>GDocsDatabase</RootNamespace>
+    <AssemblyName>GDocsDatabase</AssemblyName>
+    <ModelCollation>1033,CI</ModelCollation>
+    <DefaultFileStructure>BySchemaAndSchemaType</DefaultFileStructure>
+    <DeployToDatabase>True</DeployToDatabase>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetLanguage>CS</TargetLanguage>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <SqlServerVerification>False</SqlServerVerification>
+    <IncludeCompositeObjects>True</IncludeCompositeObjects>
+    <TargetDatabaseSet>True</TargetDatabaseSet>
+    <DefaultCollation>SQL_Latin1_General_CP1_CI_AS</DefaultCollation>
+    <DefaultFilegroup>PRIMARY</DefaultFilegroup>
+    <SccProjectName>SAK</SccProjectName>
+    <SccProvider>SAK</SccProvider>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccLocalPath>SAK</SccLocalPath>
+    <PermissionSet>UNSAFE</PermissionSet>
+    <DacVersion>1.0.1.6</DacVersion>
+    <IncludeSchemaNameInFileName>False</IncludeSchemaNameInFileName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">11.0</VisualStudioVersion>
+    <!-- Default to the v11.0 targets path if the targets file for the current VS version is not found -->
+    <SSDTExists Condition="Exists('$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets')">True</SSDTExists>
+    <VisualStudioVersion Condition="'$(SSDTExists)' == ''">11.0</VisualStudioVersion>
+  </PropertyGroup>
+  <Import Condition="'$(SQLDBExtensionsRefPath)' != ''" Project="$(SQLDBExtensionsRefPath)\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
+  <Import Condition="'$(SQLDBExtensionsRefPath)' == ''" Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
+  <ItemGroup>
+    <Folder Include="Properties" />
+    <Folder Include="dbo\" />
+    <Folder Include="dbo\Tables\" />
+    <Folder Include="Scripts" />
+    <Folder Include="Scripts\Post-Deployment" />
+    <Folder Include="Scripts\Pre-Deployment" />
+    <Folder Include="dbo\Stored Procedures\" />
+    <Folder Include="mock\" />
+    <Folder Include="mock\Tables\" />
+    <Folder Include="dbo\Functions\" />
+    <Folder Include="Security\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Scripts\Post-Deployment\CargaInicial.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Scripts\Pre-Deployment\Inicializacao.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Scripts\Post-Deployment\migracao_da_versao_1_0_1_5.sql" />
+    <None Include="Scripts\Post-Deployment\migracao_da_versao_1_0_1_6.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <PreDeploy Include="Scripts\Script.PreDeployment.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <PostDeploy Include="Scripts\Script.PostDeployment.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Build Include="dbo\Tables\tb_lre_log_requisicao.sql" />
+    <Build Include="dbo\Tables\tb_cfg_configuracao.sql" />
+    <Build Include="dbo\Tables\tb_tpl_tipo_log.sql" />
+    <Build Include="dbo\Tables\tb_log_log.sql" />
+    <Build Include="dbo\Tables\tb_per_perfil.sql" />
+    <Build Include="dbo\Tables\tb_pfu_perfil_funcionalidade.sql" />
+    <Build Include="dbo\Tables\tb_tfu_tipo_funcionalidade.sql" />
+    <Build Include="dbo\Tables\tb_usp_usuario_perfil.sql" />
+    <Build Include="dbo\Tables\tb_func_funcionalidade.sql" />
+    <Build Include="dbo\Tables\tb_dfi_documento_fi1548.sql" />
+    <Build Include="dbo\Tables\tb_sdo_status_documento.sql" />
+    <None Include="Scripts\Post-Deployment\migracao_da_versao_1_0_0_0.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Scripts\Post-Deployment\migracao_da_versao_1_0_0_2.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <Build Include="dbo\Stored Procedures\sp_get_nextval.sql" />
+    <Build Include="dbo\Tables\tb_aus_assinatura_usuario.sql" />
+    <Build Include="dbo\Tables\tb_bin_binario.sql" />
+    <Build Include="dbo\Tables\tb_pad_processo_assinatura_documento.sql" />
+    <Build Include="dbo\Tables\tb_pada_processo_assinatura_documento_arquivo.sql" />
+    <Build Include="dbo\Tables\tb_padp_processo_assinatura_documento_passo.sql" />
+    <Build Include="dbo\Tables\tb_padpu_processo_assinatura_documento_passo_usuario.sql" />
+    <Build Include="dbo\Tables\tb_sad_status_assinatura_documento.sql" />
+    <Build Include="dbo\Tables\tb_sadp_status_assinatura_documento_passo.sql" />
+    <Build Include="dbo\Tables\tb_sadpu_status_assinatura_documento_passo_usuario.sql" />
+    <Build Include="dbo\Tables\tb_seq_sequencia.sql" />
+    <Build Include="dbo\Tables\tb_tpad_template_processo_assinatura_documento.sql" />
+    <Build Include="dbo\Tables\tb_tpadp_template_processo_assinatura_documento_passo.sql" />
+    <Build Include="dbo\Tables\tb_tpadpu_template_processo_assinatura_documento_passo_usuario.sql" />
+    <Build Include="dbo\Tables\tb_tpadt_template_processo_assinatura_documento_tag.sql" />
+    <None Include="Scripts\Post-Deployment\migracao_da_versao_1_0_0_3_e_1_0_0_4.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <Build Include="dbo\Tables\tb_pado_precesso_assinatura_documento_origem.sql" />
+    <Build Include="dbo\Tables\tb_padc_processo_assinatura_documento_categoria.sql" />
+    <None Include="Scripts\Post-Deployment\migracao_da_versao_1_0_0_5.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Scripts\Post-Deployment\migracao_da_versao_1_0_0_7.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Scripts\Post-Deployment\configuracoes.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Scripts\Post-Deployment\migracao_da_versao_1_0_0_9.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Scripts\Post-Deployment\migracao_da_versao_1_0_1_0.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Scripts\Post-Deployment\migracao_da_versao_1_0_1_2.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Scripts\Post-Deployment\migracao_da_versao_1_0_1_3.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Scripts\Post-Deployment\migracao_da_versao_1_0_1_4.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <Build Include="dbo\Tables\tb_tci_tipo_ciencia.sql" />
+    <Build Include="dbo\Tables\tb_ssmi_solicitacao_saida_material_item.sql" />
+    <Build Include="dbo\Tables\tb_ssm_solicitacao_saida_material.sql" />
+    <Build Include="dbo\Tables\tb_soc_solicitacao_ciencia.sql" />
+    <Build Include="dbo\Tables\tb_scua_solicitacao_ciencia_usuario_aprovacao.sql" />
+    <Build Include="dbo\Tables\tb_scit_solicitacao_ciencia_item.sql" />
+    <Build Include="dbo\Tables\tb_sci_status_ciencia.sql" />
+    <Build Include="dbo\Tables\tb_stsm_status_saida_material.sql" />
+    <Build Include="dbo\Tables\tb_ssmai_solicitacao_saida_material_acao_item.sql" />
+    <Build Include="dbo\Tables\tb_ssma_solicitacao_saida_material_acao.sql" />
+    <Build Include="dbo\Tables\tb_smta_saida_material_tipo_acao.sql" />
+    <Build Include="mock\Tables\tb_sp_send_dbmail.sql" />
+    <Build Include="Security\REPORTS.sql" />
+    <Build Include="Security\mock.sql" />
+    <Build Include="dbo\Functions\fn_retorna_itens_solicitacao_saida_material.sql" />
+    <Build Include="dbo\Tables\tb_rel_relatorio.sql" />
+    <Build Include="dbo\Tables\tb_ntu_notificacao_usuario.sql" />
+    <Build Include="dbo\Tables\tb_hsp_historico_solicitacao_prorogacao.sql" />
+    <Build Include="dbo\Tables\tb_tnnf_tipo_natureza_nota_fiscal.sql" />
+    <Build Include="dbo\Tables\tb_fnf_fornecedor_nota_fiscal.sql" />
+    <Build Include="dbo\Tables\tb_mfnf_modalidade_frete_nota_fiscal.sql" />
+    <Build Include="dbo\Tables\tb_smnf_saida_material_nota_fiscal.sql" />
+    <Build Include="dbo\Tables\tb_smnfi_saida_material_nota_fiscal_item.sql" />
+    <Build Include="dbo\Tables\tb_tcinf_tipo_ciencia_nota_fiscal.sql" />
+    <Build Include="dbo\Tables\tb_tdnf_tipo_documento_nota_fiscal.sql" />
+    <Build Include="dbo\Tables\tb_stsmnf_status_saida_material_nota_fiscal.sql" />
+    <Build Include="dbo\Tables\tb_scinf_status_ciencia_nota_fiscal.sql" />
+    <Build Include="dbo\Tables\tb_smta_saida_material_tipo_acao_nota_fiscal.sql" />
+    <Build Include="dbo\Tables\tb_smnfa_saida_material_nota_fiscal_acao.sql" />
+    <Build Include="dbo\Tables\tb_smnfai_saida_material_nota_fiscal_acao_item.sql" />
+    <Build Include="dbo\Tables\tb_socnf_solicitacao_ciencia_nota_fiscal.sql" />
+    <Build Include="dbo\Tables\tb_scitnf_solicitacao_ciencia_item_nota_fiscal.sql" />
+    <Build Include="dbo\Tables\tb_smdnf_saida_material_documento_nota_fiscal.sql" />
+    <Build Include="dbo\Tables\tb_scunfa_solicitacao_ciencia_usuario_nota_fiscal_aprovacao.sql" />
+    <Build Include="dbo\Tables\tb_hspnf_historico_solicitacao_prorogacao_nota_fiscal.sql" />
+    <Build Include="dbo\Functions\fn_retorna_itens_solicitacao_saida_material_nota_fiscal.sql" />
+    <Build Include="dbo\Tables\tb_csmnf_cancelar_saida_material_nota_fiscal.sql" />
+    <Build Include="dbo\Functions\fn_retorna_obs_diretoria_acao_NF.sql" />
+    <Build Include="dbo\Functions\fn_retorna_obs_diretoria_acao_sem_NF.sql" />
+    <Build Include="dbo\Tables\tb_dfisci_status_ciencia_fi1548.sql" />
+    <Build Include="dbo\Tables\tb_dfitci_tipo_ciencia_fi1548.sql" />
+    <Build Include="dbo\Tables\tb_dfisoc_solicitacao_ciencia_fi1548.sql" />
+    <Build Include="dbo\Tables\tb_dfiscua_solicitacao_ciencia_usuario_aprovacao_fi1548.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <RefactorLog Include="DB_GDOCS.refactorlog" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,29 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <ProjectGuid>{964822DC-D88D-49D4-9625-048AB485D177}</ProjectGuid>
+      <TargetFramework>netstandard2.1</TargetFramework>
+        <AssemblyName>ICE.GDocs.Infra.Data</AssemblyName>
+        <RootNamespace>ICE.GDocs.Infra.Data</RootNamespace>
+        <IsPackable>false</IsPackable>
+    </PropertyGroup>
+
+
+    <ItemGroup>
+        <None Remove="Infra.Data.csproj.vspscc" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="System.Data.SqlClient" Version="4.8.5" />
+      <PackageReference Include="Dapper" Version="2.0.123" />      
+        <PackageReference Include="ICE.Framework.Cryptography" Version="4.3.1-*" />
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
+      <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="6.0.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\..\Domain\Domain.csproj" />
+        <ProjectReference Include="..\CrossCutting\Models\Infra.CrossCutting.Models.csproj" />
+    </ItemGroup>  
+
+</Project>

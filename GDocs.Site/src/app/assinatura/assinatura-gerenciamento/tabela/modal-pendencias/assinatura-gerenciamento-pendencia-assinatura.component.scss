@@ -1,0 +1,10 @@
+.passo-wrapper {
+  margin: 16px 0;
+
+  &:nth-child(1){
+    margin-top: 0;
+  }
+  &:nth-last-child(1){
+    margin-bottom: 0;
+  }
+}

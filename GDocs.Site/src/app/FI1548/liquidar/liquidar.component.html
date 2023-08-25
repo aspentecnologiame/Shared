@@ -1,0 +1,51 @@
+<div class="panel">
+  <div class="panel-heading">
+    <app-breadcrumb></app-breadcrumb>
+  </div>
+
+  <div class="panel-body" [style.minHeight]='minHeight'>
+    <div class="page-header">
+      <i class="fa fa-file" aria-hidden="true"></i>
+      <h1>Liquidar documento</h1>
+    </div>
+    <div>
+      <form [formGroup]="formDocumento" novalidate>
+        <div class="row">
+          <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 form-group">
+            <label class="control-label">Número do documento</label>
+            <input type="text" class="form-control text-box single-line" name="numero" formControlName="numero"
+              maxlength="9" formControlNumericOnly />
+          </div>
+        </div>
+      </form>
+
+      <app-upload
+        (uploadCompletoAdicionarNaListaDeDocumentosPreview)="uploadCompletoAdicionarNaListaDeDocumentosPreview($event)">
+      </app-upload>
+
+      <app-pdf-preview [listarDocumentosChanging]="listarDocumentosChangingValue" [showThumbnail]="false">
+      </app-pdf-preview>
+
+      <hr />
+
+      <div class="form-group">
+        <button class="btn btn-success pull-right" style="margin-right: 0px;"
+          [disabled]="listaDocumentosUpload.length === 0" (click)="liquidarDocumento()">
+          <i class="fa fa-save" aria-hidden="true"></i> Liquidar
+        </button>
+        <button class="btn btn-danger pull-right" (click)="navegarParaConsulta()">
+          <i class="fa fa-times" aria-hidden="true"></i> Cancelar
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="panel-footer" style="min-height: 90px">
+    <div id="dvLegenda" class="panel-heading">
+      <div class="row">
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4"></div>
+        <div class="row">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

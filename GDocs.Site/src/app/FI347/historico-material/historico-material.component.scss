@@ -1,0 +1,38 @@
+.destaque{
+  font-size: 20px;
+}
+
+.div-modal {
+  position: relative;
+  min-height: 900px ;
+  max-height: inherit;
+  overflow: hidden;
+}
+
+.modal-body {
+  max-height: 920px;
+  padding-right: 0px;
+  overflow: hidden;
+}
+
+.modal-footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  &-last-button {
+    margin: 0 !important;
+  }
+}
+
+.tabela-scroll-historico{
+  padding-right: 15px;
+  max-height: 680px;
+  height: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+
+.nao-encontrado{
+ width:660px;
+}

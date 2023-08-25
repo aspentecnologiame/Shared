@@ -1,0 +1,12 @@
+.breadcrumb li {
+  display: inline;
+}
+.breadcrumb li+li:before {
+  content: "/";
+  color: black;
+  padding: 0 3px;
+}
+
+.breadcrumb li:last-child{
+  color: #5cb85c;  
+}

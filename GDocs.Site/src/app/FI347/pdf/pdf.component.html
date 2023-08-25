@@ -1,0 +1,34 @@
+<div class="div-modal" mat-dialog-content>
+  <div class="modal-header">
+    <h4 class="modal-title">Saída de Material - sem NF – ICE FI 347</h4>
+  </div>
+  <div class="modal-body">
+    <div>
+      <app-justificativa-ciencia-rejeitada [dataSource]="cienciaUsuarioRejeitado">
+      </app-justificativa-ciencia-rejeitada>
+    </div>
+    <div>
+      <ng2-pdfjs-viewer #pdfView [pdfSrc]="pdfSrc" locale="pt-br" pagemode="none" [openFile]="false"
+        [viewBookmark]="false" [fullScreen]="false" [find]="false" cursor="H"
+        class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="height: 70vh; padding: 0">
+      </ng2-pdfjs-viewer>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button *ngIf="mostrarBotaoEnviarMaterialParaAssinatura()"  class="btn btn-primary pull-left" (click)="enviarParaEdicao()">
+      Editar Solicitação
+    </button>
+
+    <button cdkFocusInitial (click)="fechar()" type="button"
+      class="btn btn-primary pull-right modal-footer-last-button">
+      Fechar
+    </button>
+    <div class="pull-right">
+
+      <button *ngIf="mostrarBotaoEnviarMaterialParaAssinatura()" class="btn-split btn btn-success" (click)="enviarMaterialParaAssinatura()">
+        Enviar para aprovação
+      </button>
+    </div>
+
+  </div>
+</div>

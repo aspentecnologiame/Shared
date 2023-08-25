@@ -1,0 +1,22 @@
+<div  class="row">
+  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <h4 *ngIf="dataSource.length > 0" style="margin-left: 10px;">Ciência de cancelamento rejeitada anteriormente com o(s) seguinte(s) comentário(s)</h4>
+    <mat-card *ngFor="let aprovadorCiencia of dataSource">
+      <mat-card-title>
+        <em  class="fa fa-circle marcador-rejeitado"
+        [mdePopoverTriggerFor]="themePopoverStatus"
+        mdePopoverTriggerOn="hover" aria-hidden="true">
+        </em>
+        <mde-popover #themePopoverStatus="mdePopover" [mdePopoverOverlapTrigger]="false"
+        [mdePopoverCloseOnClick]="false" [mdePopoverOffsetX]="0" [mdePopoverOffsetY]="0" [mdePopoverArrowOffsetX]="0"
+        mdePopoverArrowColor="transparent">
+        <div style="background-color:#565656; padding:20px; border-radius:5px; opacity:0.95;">
+          <span style="color: white;">Rejeitado</span>
+        </div>
+      </mde-popover>
+        {{ aprovadorCiencia.nome }}</mat-card-title>
+      <mat-card-subtitle style="margin-bottom:5px">Rejeitado em: {{aprovadorCiencia.dataAprovacao | date: 'dd/MM/yyyy HH:mm'}}</mat-card-subtitle>
+      <mat-card-content>{{aprovadorCiencia.observacao}}</mat-card-content>
+    </mat-card>
+  </div>
+</div>

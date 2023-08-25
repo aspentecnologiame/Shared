@@ -1,0 +1,284 @@
+.input-group .form-control, .input-group-addon, .input-group-btn {
+    display: table-cell;
+}
+.input-group .form-control {
+    position: relative;
+    z-index: 2;
+    float: left;
+    width: 100%;
+    margin-bottom: 0;
+}
+.form-control {
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-bottom-left-radius: 4px !important;
+    border-top-left-radius: 4px !important;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+}
+
+.input-group-addon{
+    border-bottom-right-radius: 4px !important;
+    border-top-right-radius: 4px !important;
+    background-color: #B6B7B9;
+}
+    
+/* ========================================================================
+    Global classes
+========================================================================== */
+.dotted-border-top-bottom {
+    border-top: 2px dotted #B6B7B9;
+    border-bottom: 2px dotted #B6B7B9;
+}
+.margin-top-bottom {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+.cicle-border-radius {
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+}
+.font-color-default-buttons {
+    color: rgba(255, 255, 255, 0.84);
+}
+[class$="-primary"],
+[class*="-primary "] {
+    background-color: #00417f !important;
+}
+/* ========================================================================
+    Global elements
+========================================================================== */
+html {
+    height: 100%;
+}
+body {
+    font-family: "OpenSansRegular", Arial, sans-serif;
+}
+@media (min-width: 18px) {
+body {
+    background-attachment: fixed, scroll;
+    -moz-background-clip: border-box, border-box;
+    -webkit-background-clip: border-box, border-box;
+    background-clip: border-box, border-box;
+    -moz-background-origin: padding-box, padding-box;
+    -webkit-background-origin: padding-box, padding-box;
+    background-origin: padding-box, padding-box;
+    background-position: 0 0, 0 0;
+    background-repeat: repeat, repeat;
+    background-size: cover;
+}
+}
+@media (max-width: 17px) {
+    body {
+        background-image: inherit;
+        background-color: #d2d3d5;
+    }
+}
+hr {
+    margin-top: 15px !important;
+    margin-bottom: 15px !important;
+}
+/* ========================================================================
+    Component: Login & Register
+========================================================================== */
+.system-title {
+    border-top: 2px dotted #B6B7B9;
+    border-bottom: 2px dotted #B6B7B9;
+    color: #000;    
+    text-align: center;
+    margin: 15px 0 25px;
+}
+
+.login-box {
+    width: 320px;
+    margin: auto;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    height: 430px;
+    background-color: #d2d3d5;    
+    color: #444;
+    border-top: 0;
+    padding: 10px 30px;
+
+    & .assembly-version {
+        position: absolute;
+        bottom: 5px;
+        right: 7px;
+        font-size: 12px;
+        color: #444;
+        z-index: 999;
+    }
+}
+.login-logo {
+    text-align: center;
+    margin-bottom: 15px;
+}
+.login-logo a {
+    color: #444;
+}
+.login-page {
+    background: #d2d3d5;
+}
+
+@media (min-width: 18px) {
+    .login-box {
+        border-radius: 10px;
+        background-color: #d2d3d5;
+        box-shadow: 0 0 1px rgba(0, 0, 0, 0.1) inset;
+    }
+    .login-box-body {
+        background-color: #d2d3d5;
+    }
+}
+.login-box-body .form-control-feedback {
+    color: #777;
+}
+.login-box-msg {
+    margin: 0;
+    text-align: center;
+    padding: 0 20px 20px 20px;
+}
+.forgot-pass {
+    display: table-cell;
+    font-size: 13px;
+    height: 0;
+    text-align: right;
+    vertical-align: top;
+    width: 1%;
+}
+.social-auth-links {
+    margin: 10px 0;
+}
+/* ========================================================================
+    Component: Button
+========================================================================== */
+.btn.btn-primary {
+    background-color: #00417f !important;
+}
+/* ========================================================================
+    Component: Alert msg
+========================================================================== */
+.alert {
+    background: #f9f1c7;
+    border-color: #f6deac;
+    color: #af8640;
+    padding: 15px 10px 15px 50px;
+}
+.alert span.fa {
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+    font-size: 1.4em;
+    height: 32px;
+    left: 10px;
+    line-height: 32px;
+    margin-top: -16px;
+    position: absolute;
+    text-align: center;
+    top: 50%;
+    width: 32px;
+}
+.alert-warning span.fa-warning {
+    background-color: #a59024;
+    color: rgba(255, 255, 255, 0.84);
+}
+.alert-success span.fa-check {
+    background-color: #4caf50;
+    color: rgba(255, 255, 255, 0.84);
+}
+.alert-info span.fa-info {
+    background-color: #03a9f4;
+    color: rgba(255, 255, 255, 0.84);
+}
+.alert-danger span.fa-warning {
+    background-color: #f44336;
+    color: rgba(255, 255, 255, 0.84);
+}
+.panel-body .alert {
+    margin: 5px 0 !important;
+    padding: 10px;
+}
+.alert.alert-danger {
+    background: #f2dede;
+    border-color: #ebccd1;
+    color: #f44336;
+    background-size: 20px 20px;
+}
+.alert.alert-success {
+    background: #dff0d8;
+    border-color: #d0e6be;
+    color: #4caf50;
+    background-size: 20px 20px;
+}
+.alert.alert-info {
+    background: #d9edf7;
+    border-color: #bce8f1;
+    color: #03a9f4;
+    background-size: 20px 20px;
+}
+.alert i {
+    border: 1px solid;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+    height: 24px;
+    line-height: 22px;
+    text-align: center;
+    width: 24px;
+}
+.version {
+    background-color: #fff;
+    color: rgba(0, 0, 0, 0.84);
+    font-size: 0.8em;
+    padding: 5px;
+}
+/* ========================================================================
+    Novo layout de login
+===========================================================================*/
+a {
+    color: #000;
+    text-decoration: underline;
+}
+.logo-ice {
+    height: auto;
+    width: 70px;
+    margin-bottom: 25px;
+    margin-top: 20px;
+}
+.form-group-password {
+    margin-bottom: 25px;
+}
+
+
+
+.login-box-body {
+    background-color: #d2d3d5;
+    padding: 15px;
+    color: #444;
+    border-top: 0;
+
+    & > img {
+        height: auto;
+        width: 200px;        
+    }
+}
+
+.login-box,
+.register-box {
+    width: 300px;
+    height: 460px;
+}
+  

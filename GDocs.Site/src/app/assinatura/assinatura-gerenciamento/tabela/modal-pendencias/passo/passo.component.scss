@@ -1,0 +1,56 @@
+.passo {
+  border-radius: 4px;
+  border-top-right-radius: 4px;
+  border-top-left-radius: 4px;
+  box-sizing: content-box;
+  display: block;
+  overflow: hidden;
+  transition: margin 225ms cubic-bezier(0.4, 0, 0.2, 1), box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1);
+  border: solid 0.1px #ddd !important;
+  background: #fff;
+  color: rgba(0, 0, 0, 0.87);
+
+  &-header {
+    background-color: #f0f0f0;
+    border-top: 1px dotted #e4e4e4;
+    border-bottom: 1px dotted #e4e4e4;
+    padding: 10px 13px;
+    & h1 {
+      color: #000;
+      display: inline-block;
+      font-size: 16px;
+      font-weight: 300;
+      line-height: 1;
+      margin: 0;
+      vertical-align: middle;
+    }
+    & em {
+      margin-right: 7px;
+      vertical-align: middle;
+    }
+  }
+
+  &-body {
+    padding: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+}
+
+.icon {
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.icon-red {
+  color: #c9302c;
+}
+
+.icon-orange {
+  color: #ffa500;
+}
+
+.icon-green {
+  color: #008000;
+}

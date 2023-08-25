@@ -1,0 +1,55 @@
+<div class="card">
+  <div class="card-header">
+    <em *ngIf="legendaIcone!==''" #emTriggerPopover="mdePopoverTrigger" class="{{faIcone}} icon {{corIcone}}"
+      [mdePopoverTriggerFor]="themePopover" mdePopoverTriggerOn="hover" aria-hidden="true">
+    </em>
+    <mde-popover #themePopover="mdePopover" [mdePopoverOverlapTrigger]="false" [mdePopoverCloseOnClick]="false"
+      [mdePopoverOffsetX]="0" [mdePopoverOffsetY]="0" [mdePopoverArrowOffsetX]="0" mdePopoverArrowColor="transparent">
+      <div style="background-color: #565656 ;padding:20px;border-radius:5px;opacity:0.95;">
+        <span #status style="color: white;">{{legendaIcone}}</span>
+      </div>
+    </mde-popover>
+  </div>
+  <div class="card-body">
+    <strong class="card-body-name">
+      {{assinante.nome}}
+      <em *ngIf="assinante.notificarFinalizacao" class="far fa-envelope"
+        [mdePopoverTriggerFor]="themePopoverNotificarFinalizacao" mdePopoverTriggerOn="hover" aria-hidden="true">
+      </em>
+      <mde-popover #themePopoverNotificarFinalizacao="mdePopover" [mdePopoverOverlapTrigger]="false"
+        [mdePopoverCloseOnClick]="false" [mdePopoverOffsetX]="0" [mdePopoverOffsetY]="0" [mdePopoverArrowOffsetX]="0"
+        mdePopoverArrowColor="transparent">
+        <div style="background-color: #565656 ;padding:20px;border-radius:5px;opacity:0.95;">
+          <span style="color: white;">Selecionado para receber notificação</span>
+        </div>
+      </mde-popover>
+      <span *ngIf="assinante.nomeRepresentante"> /
+        {{assinante.nomeRepresentante}}
+        <em *ngIf="exibirCanetaAssinatura" class="fa fa-pen-alt" style="font-size: 12px;"
+          [mdePopoverTriggerFor]="assinadoPorPopover" mdePopoverTriggerOn="hover"></em>
+        <mde-popover #assinadoPorPopover="mdePopover" [mdePopoverOverlapTrigger]="false"
+          [mdePopoverCloseOnClick]="false" [mdePopoverOffsetX]="0" [mdePopoverOffsetY]="0" [mdePopoverArrowOffsetX]="0"
+          mdePopoverArrowColor="transparent">
+          <div style="background-color: #565656 ;padding:20px;border-radius:5px;opacity:0.95;">
+            <span #status style="color: white;">{{legendaIconeCanetaAssinatura}}</span>
+          </div>
+        </mde-popover>
+      </span>&nbsp;
+      <span
+        *ngIf="assinante.justificativa !== '' && assinante.justificativa !== undefined && assinante.justificativa !== null">
+        <em class="fa fa-info-circle" style="font-size: 14px;" [mdePopoverTriggerFor]="rejeitadoPorPopover"
+          mdePopoverTriggerOn="hover"></em>
+        <mde-popover #rejeitadoPorPopover="mdePopover" [mdePopoverOverlapTrigger]="false"
+          [mdePopoverCloseOnClick]="false" [mdePopoverOffsetX]="0" [mdePopoverOffsetY]="0" [mdePopoverArrowOffsetX]="0"
+          mdePopoverArrowColor="transparent">
+          <div class="popover-internal-div-padrao">
+            <strong>Observação</strong>
+            <pre>{{assinante.justificativa}}</pre>
+          </div>
+        </mde-popover>
+      </span>
+    </strong>
+    <p *ngIf="assinante.status === 'Assinado'">Aprovado em: {{assinante.dataAssinatura | date: 'dd/MM/yyyy HH:mm'}}</p>
+    <p *ngIf="assinante.status === 'Rejeitado'">Rejeitado em: {{assinante.dataAssinatura | date: 'dd/MM/yyyy HH:mm'}}</p>
+  </div>
+</div>

@@ -1,0 +1,33 @@
+<div class="form-inline table-filter-field">
+  <div class="form-group pull-right">
+    <label style="margin-right: 5px;">Buscar </label>
+    <input id="filtrar" type="text" (keyup)="aplicarFiltro($event.target.value)"
+      class="form-control text-box single-line" name="filtrar" autocomplete="off" tabindex='-1' />
+  </div>
+  <div class="clearfix"></div>
+</div>
+<br />
+<table mat-table [dataSource]="matDataSource" matSort matSortDisableClear class="ng-mat-table">
+  <caption>Tabela de aprovadores</caption>
+  <ng-container matColumnDef="usuarioAdAssinate">
+    <th scope="col" mat-header-cell *matHeaderCellDef mat-sort-header>Assinante</th>
+    <td mat-cell class="text-left" *matCellDef="let row">{{row.usuarioAdAssinate}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="usuarioAdRepresentante">
+    <th scope="col" mat-header-cell *matHeaderCellDef style="text-align: center;">Representante</th>
+    <td mat-cell class="text-left" *matCellDef="let row">
+      <app-representante-auto-complete *ngIf="row.podeSerRepresentado else naoPodeSerRepresentado" [assinaturaAssinanteRepresentante]="row"
+        (assinaturaAssinanteRepresentanteChange)="assinaturaAssinanteRepresentanteOnChange($event)">
+      </app-representante-auto-complete>
+      <ng-template #naoPodeSerRepresentado>
+        O usuário não pode ser representado.
+      </ng-template>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+
+<mat-paginator [length]="0" [pageSize]="10" showFirstLastButtons></mat-paginator>

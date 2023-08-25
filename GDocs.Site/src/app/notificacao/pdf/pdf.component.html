@@ -1,0 +1,21 @@
+<div class="div-modal" mat-dialog-content>
+  <div class="modal-header">
+    <h4 class="modal-title">Notificação de Usuário</h4>
+  </div>
+  <div class="modal-body">
+    <div>
+      <ng2-pdfjs-viewer #pdfView [pdfSrc]="pdfSrc" locale="pt-br" pagemode="none" [openFile]="false" [viewBookmark]="false"
+        [fullScreen]="false" [find]="false" cursor="H" class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
+        style="height: 70vh; padding: 0">
+      </ng2-pdfjs-viewer>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button cdkFocusInitial (click)="fechar()" type="button" class="btn btn-primary pull-right modal-footer-last-button">
+      Fechar
+    </button>
+    <button cdkFocusInitial (click)="lido()" type="button" style="margin-right: 10px !important; padding: 5px 22px 5px 22px !important;" class="btn btn-success pull-right modal-footer-last-button">
+      Lido
+    </button>
+  </div>
+</div>

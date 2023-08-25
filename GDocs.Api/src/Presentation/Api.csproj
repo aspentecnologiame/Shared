@@ -1,0 +1,88 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+    <PropertyGroup>
+        <ProjectGuid>{596C8047-578E-4E82-A289-0A9CBE2536B1}</ProjectGuid>
+      <TargetFramework>netcoreapp3.1</TargetFramework>
+        <AssemblyName>ICE.GDocs.Api</AssemblyName>
+        <RootNamespace>ICE.GDocs.Api</RootNamespace>
+        <AspNetCoreHostingModel>OutOfProcess</AspNetCoreHostingModel>        
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+        <DocumentationFile>.\ICE.GDocs.Api.xml</DocumentationFile>
+        <NoWarn>1701;1702;1591</NoWarn>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <None Remove="Api.csproj.vspscc" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="AspNetCore.HealthChecks.Publisher.ApplicationInsights" Version="3.1.1" />
+        <PackageReference Include="AspNetCore.HealthChecks.Redis" Version="3.1.2" />
+        <PackageReference Include="AspNetCore.HealthChecks.Rabbitmq" Version="3.1.2" />
+        <PackageReference Include="AspNetCore.HealthChecks.SqlServer" Version="3.2.0" />
+        <PackageReference Include="AspNetCore.HealthChecks.UI.Client" Version="3.1.2" />
+        <PackageReference Include="AspNetCore.HealthChecks.Uris" Version="3.1.2" />
+        <PackageReference Include="AutoMapper" Version="12.0.0" />
+        <PackageReference Include="FreeSpire.Office" Version="7.7.1" />
+        <PackageReference Include="GhostScript.NetCore" Version="1.0.1" />
+        <PackageReference Include="ICE.Framework.Core" Version="4.3.1-*" />
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.32" />
+        <PackageReference Include="Microsoft.AspNetCore.Mvc.Formatters.Xml" Version="2.2.0" />
+        <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.32" />        
+        <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.21.0" />        
+        <PackageReference Include="Microsoft.AspNetCore.Cors" Version="2.2.0" />
+        <PackageReference Include="Microsoft.AspNetCore.Diagnostics.HealthChecks" Version="2.2.0" />
+        <PackageReference Include="Microsoft.AspNetCore.Hosting" Version="2.2.7" />
+        <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
+        <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer" Version="5.0.0" />        
+        <PackageReference Include="Microsoft.AspNetCore.Routing" Version="2.2.2" />
+        <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="3.1.32" />        
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
+        <PackageReference Include="Microsoft.Extensions.PlatformAbstractions" Version="1.1.0" />
+        <PackageReference Include="Microsoft.OpenApi" Version="1.4.5" />        
+        <PackageReference Include="NLog.Schema" Version="5.1.1" />
+        <PackageReference Include="NLog.Web.AspNetCore" Version="5.2.1" />
+        <PackageReference Include="NLog.WindowsIdentity" Version="5.0.0" />
+        <PackageReference Include="Polly" Version="7.2.3" />
+        <PackageReference Include="StackExchange.Redis.Extensions.AspNetCore" Version="8.0.5" />
+        <PackageReference Include="StackExchange.Redis.Extensions.Newtonsoft" Version="8.0.5" />
+        <PackageReference Include="Swashbuckle.AspNetCore.Filters" Version="7.0.6" />
+        <PackageReference Include="Swashbuckle.AspNetCore.Newtonsoft" Version="6.4.0" />
+        <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="6.4.0" />
+        <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="6.4.0" />
+        <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.25.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Application\Application.csproj" />
+        <ProjectReference Include="..\Common\Common.csproj" />
+        <ProjectReference Include="..\Infra\CrossCutting\IoC\Infra.CrossCutting.IoC.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Content Update="Log.config">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+    </ItemGroup>
+
+    <ItemGroup>
+        <Folder Include="wwwroot\uploads\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Update="FileTools\Ghostscript\DLL\gsdll64.dll">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="ICE.GDocs.Api.xml">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+      <None Update="Nodejs\xlsxTransform.js">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+
+    <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+      <Exec Command="npm install" />
+    </Target>
+
+</Project>

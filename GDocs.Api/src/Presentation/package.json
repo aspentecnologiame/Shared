@@ -1,0 +1,10 @@
+{
+    "private": true,
+    "scripts": {
+        "build": "echo ------ Yarn Install -------- && yarn install"
+    },
+    "dependencies": {
+        "xlsx-template": "^1.3.0",
+        "node-msoffice-pdf": "0.0.7"
+    }
+}

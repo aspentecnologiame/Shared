@@ -1,0 +1,134 @@
+<style>
+  .cdk-column-groupHeader {
+    background-color: #f4f4f4;
+  }
+</style>
+<div class="form-inline table-filter-field">
+  <div class="form-group pull-right">
+    <label style="margin-right: 5px;">Buscar </label>
+    <input id="filtrar" type="text" (keyup)="aplicarFiltro($event.target.value)"
+      class="form-control text-box single-line" name="filtrar" />
+  </div>
+  <div class="clearfix"></div>
+</div>
+
+<table mat-table [dataSource]="matDataSource" matSort (matSortChange)="sortChange($event)" matSortDisableClear class="ng-mat-table"
+  style="margin-top: 10px;">
+  <caption>Tabela de Documentos</caption>
+
+  <ng-container matColumnDef="numero">
+    <th scope="col" mat-header-cell *matHeaderCellDef mat-sort-header>Número</th>
+    <td mat-cell *matCellDef="let row" class="text-right">
+      {{row.numero}}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="referencia">
+    <th scope="row" mat-header-cell *matHeaderCellDef mat-sort-header style="width: 32%;">Referência</th>
+    <td mat-cell class="text-left" *matCellDef="let row">
+      {{row.referencia}}
+      <em class="fa fa-info-circle" aria-hidden="true" [mdePopoverTriggerFor]="themePopoverDadosComplementares"
+        mdePopoverTriggerOn="click" mdePopoverTriggerOn="hover" aria-hidden="true">
+      </em>
+      <mde-popover #themePopoverDadosComplementares="mdePopover" [mdePopoverOverlapTrigger]="false"
+        [mdePopoverCloseOnClick]="false" [mdePopoverOffsetX]="0" [mdePopoverOffsetY]="0" [mdePopoverArrowOffsetX]="0"
+        mdePopoverArrowColor="transparent">
+        <div class="popover-internal-div-padrao">
+          <div>
+            <strong>Descrição</strong>
+            <pre [innerHtml]="row.descricao | safe: 'html'"></pre>
+          </div>
+        </div>
+      </mde-popover>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="tipoPagamento">
+    <th scope="row" mat-header-cell *matHeaderCellDef style="width: 13%;text-align: center;" mat-sort-header>Pagamento
+    </th>
+    <td mat-cell class="text-left" *matCellDef="let row">
+      {{obterDescricaoTipoPagamento(row)}}
+
+      <em *ngIf="mostrarQuantidadeParcelas(row)" style="margin-left:5px;cursor:pointer;" class="fa fa-info-circle"
+        matTooltip="{{row.quantidadeParcelas}}x" matTooltipPosition="after" aria-hidden="true"></em>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="valor">
+    <th scope="row" mat-header-cell *matHeaderCellDef mat-sort-header style="width: 13%;">Valor</th>
+    <td mat-cell class="text-right" *matCellDef="let row">
+      {{row.valor | currency:row.moedaSimbolo}}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="status">
+    <th scope="row" mat-header-cell *matHeaderCellDef style="width: 13%;text-align: center;" mat-sort-header>Status</th>
+    <td mat-cell class="text-left" *matCellDef="let row">
+      {{row.descricaoStatus}}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="dataCriacao">
+    <th scope="row" mat-header-cell *matHeaderCellDef mat-sort-header style="width: 13%;">Data</th>
+    <td mat-cell class="text-center" *matCellDef="let row">
+      {{row.dataCriacao | date: 'dd/MM/yyyy'}}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="acao">
+    <th scope="row" mat-header-cell *matHeaderCellDef style="width: 8%;text-align: center;">Ação</th>
+    <td mat-cell class="text-center" *matCellDef="let row">
+      <em style="cursor:pointer;color:#00417f" class="fas fa-search" [mdePopoverTriggerFor]="themePopoverImprimir"
+        (click)="exibirDetalhesDocumento(row)" mdePopoverTriggerOn="hover" aria-hidden="true">
+      </em>
+
+      <em *ngIf="mostrarBotaoLiquidar(row)" style="margin-left:5px;cursor:pointer;color:#5cb85c"
+        class="fas fa-money-check-alt" [mdePopoverTriggerFor]="themePopoverLiquidar" (click)="liquidarDocumento(row)"
+        matTooltipPosition="after" aria-hidden="true">
+      </em>
+
+      <em *ngIf="mostrarBotaoCancelar(row)" style="margin-left:5px;cursor:pointer;color:#c9302c"
+        class="fas fa-window-close" [mdePopoverTriggerFor]="themePopoverCancelar" (click)="confirmarCancelamento(row)"
+        matTooltipPosition="after" aria-hidden="true">
+      </em>
+
+      <mde-popover #themePopoverImprimir="mdePopover" [mdePopoverOverlapTrigger]="false"
+        [mdePopoverCloseOnClick]="false" [mdePopoverOffsetX]="0" [mdePopoverOffsetY]="0" [mdePopoverArrowOffsetX]="0"
+        mdePopoverArrowColor="transparent">
+        <div style="background-color: #565656 ;padding:20px;border-radius:5px;opacity:0.95;">
+          <span style="color: white;">Ver detalhes</span>
+        </div>
+      </mde-popover>
+
+      <mde-popover #themePopoverCancelar="mdePopover" [mdePopoverOverlapTrigger]="false"
+        [mdePopoverCloseOnClick]="false" [mdePopoverOffsetX]="0" [mdePopoverOffsetY]="0" [mdePopoverArrowOffsetX]="0"
+        mdePopoverArrowColor="transparent">
+        <div style="background-color: #565656 ;padding:20px;border-radius:5px;opacity:0.95;">
+          <span style="color: white;">Cancelar documento</span>
+        </div>
+      </mde-popover>
+
+      <mde-popover #themePopoverLiquidar="mdePopover" [mdePopoverOverlapTrigger]="false"
+        [mdePopoverCloseOnClick]="false" [mdePopoverOffsetX]="0" [mdePopoverOffsetY]="0" [mdePopoverArrowOffsetX]="0"
+        mdePopoverArrowColor="transparent">
+        <div style="background-color: #565656 ;padding:20px;border-radius:5px;opacity:0.95;">
+          <span style="color: white;">Liquidar documento</span>
+        </div>
+      </mde-popover>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+  <ng-container matColumnDef="groupHeader">
+    <td colspan="7" mat-cell *matCellDef="let group">
+      <strong>{{group.value}}</strong>
+    </td>
+  </ng-container>
+
+  <tr mat-row *matRowDef="let row; columns: ['groupHeader']; when: matGroupBy.isGroup"> </tr>
+
+</table>
+
+<mat-paginator [length]="0" [pageSize]="10" showFirstLastButtons></mat-paginator>

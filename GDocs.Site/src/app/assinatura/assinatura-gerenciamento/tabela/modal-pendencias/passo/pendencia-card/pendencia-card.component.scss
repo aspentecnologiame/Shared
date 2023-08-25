@@ -1,0 +1,44 @@
+:host {
+  display: flex;
+  flex: 1 0 50%;
+  box-sizing: border-box;
+  padding: 0.25em 0.25em;
+}
+
+.card {
+  display: flex;
+  flex-direction: row;
+  min-width: 240px;
+
+  & &-header em {
+    margin-right: 7px;
+  }
+
+  & &-body {
+    padding-left: 0;
+    & p{
+      margin: 0;
+    }
+
+    &-name{
+      white-space: nowrap;
+    }
+  }
+}
+
+.icon {
+  font-size: 16px;
+  cursor: pointer;
+
+  &-red {
+    color: #c9302c;
+  }
+
+  &-orange {
+    color: #ffa500;
+  }
+
+  &-green {
+    color: #008000;
+  }
+}

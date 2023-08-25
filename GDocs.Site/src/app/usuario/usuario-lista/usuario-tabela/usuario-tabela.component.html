@@ -1,0 +1,32 @@
+<table mat-table [dataSource]="matDataSource" matSort matSortDisableClear class="ng-mat-table" aria-describedby="nome">
+  <ng-container matColumnDef="id">
+    <th scope="col" mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
+    <td mat-cell class="text-left" *matCellDef="let row">{{row.id}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="nome">
+    <th scope="col" mat-header-cell *matHeaderCellDef mat-sort-header>Nome</th>
+    <td mat-cell class="text-left" *matCellDef="let row">{{row.nome}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="perfil">
+    <th scope="col" mat-header-cell *matHeaderCellDef style="text-align: center;">Perfis</th>
+    <td mat-cell class="text-left" *matCellDef="let row">
+      <span *ngFor="let perfil of row.perfis; let last = last">{{ perfil.descricao + (last===false?', ':'') }}</span>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="acao">
+    <th scope="col" mat-header-cell *matHeaderCellDef style="text-align: center;">Ação</th>
+    <td mat-cell class="text-center" *matCellDef="let row">
+      <a style="cursor:pointer" (click)="alterarUsuario(row)">
+        <i class="fa fa-edit" matTooltip="Editar" aria-hidden="true"></i>
+      </a>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+
+<mat-paginator [length]="0" [pageSize]="7" showFirstLastButtons></mat-paginator>

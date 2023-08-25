@@ -1,0 +1,28 @@
+<div class="div-modal" mat-dialog-content>
+  <div class="modal-header">
+    <h4 class="modal-title">Status de Pagamento – ICE FI 1548</h4>
+  </div>
+  <div class="modal-body">
+    <div>
+      <app-motivo-cancelamento [dataSource]="motivoCancelamento">
+      </app-motivo-cancelamento>
+    </div>
+    <div>
+      <ng2-pdfjs-viewer #pdfViewer2 [pdfSrc]="pdfSrc2" locale="pt-br" pagemode="none" [openFile]="false" [viewBookmark]="false"
+        [fullScreen]="false" [find]="false" cursor="H" class="col-xs-12 col-sm-12 col-md-12 col-lg-12"
+        style="height: 70vh; padding: 0">
+      </ng2-pdfjs-viewer>
+    </div>
+  </div>
+  <div class="modal-footer">
+
+
+    <button cdkFocusInitial (click)="fecharModal()" type="button" class="btn btn-primary pull-right modal-footer-last-button">
+      Fechar
+    </button>
+
+
+
+    </div>
+  </div>
+

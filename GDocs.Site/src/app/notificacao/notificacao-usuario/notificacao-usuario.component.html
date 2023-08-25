@@ -1,0 +1,63 @@
+<div class="panel">
+  <div class="panel-heading">
+    <app-breadcrumb></app-breadcrumb>
+  </div>
+  <div class="panel-body" [style.minHeight]='minHeight'>
+    <div class="page-header">
+      <i class="fa fa-bell" aria-hidden="true"></i>
+      <h1>Lista de relatórios não lidos</h1>
+    </div>
+    <hr />
+
+    <div [hidden]="existemRegistrosASeremExibidos">
+      <h3 style="color: #fff;" #msgRelatoriosNaoLidos>Não restaram relatórios a serem lidos!</h3>
+    </div>
+
+    <div [hidden]="!existemRegistrosASeremExibidos">
+
+      <table mat-table [dataSource]="matDataSource" matSort matSortDisableClear class="ng-mat-table" aria-describedby="dataCriacao">
+
+        <ng-container matColumnDef="nome">
+          <th scope="col" mat-header-cell *matHeaderCellDef mat-sort-header>Título do Relatório</th>
+          <td mat-cell class="text-left" *matCellDef="let row">{{row.nome}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="dataCriacao">
+          <th scope="col" mat-header-cell *matHeaderCellDef mat-sort-header>Data de emissão</th>
+          <td mat-cell class="text-center" *matCellDef="let row">{{row.dataCriacao | date: 'dd/MM/yyyy'}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="acoes">
+          <th scope="col" mat-header-cell *matHeaderCellDef style="text-align: center;">Ação</th>
+          <td mat-cell class="text-center" *matCellDef="let row">
+            <a style="cursor:pointer" (click)="exibirDetalhesDocumento(row)">
+              <i class="fas fa-search" matTooltip="Detalhes" aria-hidden="true"></i>
+            </a>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+
+      <mat-paginator [length]="0" [pageSize]="7" showFirstLastButtons></mat-paginator>
+
+    </div>
+
+  </div>
+
+  <div class="panel-footer" style="min-height: 90px">
+    <div id="dvLegenda" class="panel-heading">
+      <div class="row">
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+          <h4 style="border-bottom: 1px dotted #ccc">Ação</h4>
+          <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+              <i class="fas fa-search text-info" aria-hidden="true"></i> Detalhes
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

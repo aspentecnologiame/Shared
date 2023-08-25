@@ -1,0 +1,52 @@
+version: "2.4"
+
+services: 
+  gdocs_aplicacoes_fila:
+    image: rabbitmq:management-alpine
+    container_name: gdocs_aplicacoes_fila
+    hostname: gdocs_aplicacoes_fila
+    ports: 
+      - "15672:15672"
+      - "5672:5672"
+    volumes: 
+      - "gdocs_aplicacoes_fila_data:/var/lib/rabbitmq"
+    environment: 
+      - RABBITMQ_DEFAULT_USER=gdocs
+      - RABBITMQ_DEFAULT_PASS=gdocs
+      - RABBITMQ_DEFAULT_VHOST=gdocs
+    mem_limit: 500mb
+    memswap_limit: 500mb
+    cpus: 0.5
+  
+  gdocs_aplicacoes_sql:
+    image: microsoft/mssql-server-linux:2017-latest
+    container_name: gdocs_aplicacoes_sql
+    hostname: gdocs_aplicacoes_sql
+    ports: 
+      - "1433:1433"
+    volumes: 
+      - "C:/docker/volumes/gdocsAplicacoes/sql/Backup:/sql/backup"
+      - "C:/docker/volumes/gdocsAplicacoes/sql/Data:/sql/data"
+    environment: 
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=P@ssw0rd
+      - MSSQL_PID=Developer
+    mem_limit: 1g
+    memswap_limit: 1g
+    cpus: 1
+
+  gdocs_aplicacoes_redis:
+    image: redis:5.0.3-alpine
+    command: ["redis-server", "--appendonly", "yes"]
+    container_name: gdocs_aplicacoes_redis
+    hostname: gdocs_aplicacoes_redis
+    ports:
+      - "6380:6379"
+    volumes:
+      - "C:/docker/volumes/gdocsAplicacoes/redis/data:/data"   
+    mem_limit: 200mb
+    memswap_limit: 200mb
+    cpus: 0.5
+
+volumes: 
+  gdocs_aplicacoes_fila_data:

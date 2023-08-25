@@ -1,0 +1,18 @@
+<div class="div-modal" mat-dialog-content>
+  <div class="modal-header">
+    <h4 class="modal-title">Upload da imagem da assinatura</h4>
+  </div>
+  <div class="modal-body">
+    <app-upload
+      (uploadCompletoAdicionarNaListaDeDocumentosPreview)="uploadCompletoAdicionarNaListaDeDocumentosPreview($event)"
+      fileUploadType="image">
+    </app-upload>
+    <img *ngIf="imageUrl !== ''" src={{imageUrl}} style="height: 120px;" alt="Imagem de preview" />
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-success" (click)="save()">
+      <i class="fa fa-floppy-o" aria-hidden="true"></i>
+      Salvar</button>
+    <button (click)="fecharModal()" type="button" class="btn btn-primary">Fechar</button>
+  </div>
+</div>

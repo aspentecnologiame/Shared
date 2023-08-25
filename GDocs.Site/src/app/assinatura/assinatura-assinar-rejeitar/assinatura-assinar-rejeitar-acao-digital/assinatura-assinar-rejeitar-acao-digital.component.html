@@ -1,0 +1,71 @@
+<div class="panel">
+  <div class="panel-heading">
+    <app-breadcrumb></app-breadcrumb>
+  </div>
+  <div class="panel-body" [style.minHeight]='minHeight'>
+    <div class="page-header" style="margin-bottom: 0px;">
+      <i class="fa fa-file" aria-hidden="true"></i>
+      <h1>Detalhes do documento Digital</h1>
+    </div>
+  <div>
+    <app-assinatura-assinar-rejeitar-card-justificativa [NomeAutor]="nomeAutor" [DataSource]="assinaturaUsuarioAd"></app-assinatura-assinar-rejeitar-card-justificativa>
+      <div class="row">
+        <ng2-pdfjs-viewer #pdfViewer [pdfSrc]="pdfSrc" [downloadFileName]="nomeDownload" locale="pt-br" pagemode="none"
+          [ngClass]="{'col-xs-12': true, 'col-sm-12': true, 'col-md-12': false, 'col-lg-12': true}"
+          [openFile]="false" [viewBookmark]="false" [fullScreen]="false"   [find]="false" cursor="H" style="height: 525px; padding: 0; margin-top: 10px;">
+        </ng2-pdfjs-viewer>
+      </div>
+      <div class="row">
+        <div class="col-sm-12 col-lg-12 col-md-12 col-xs-12">
+          <hr />
+          <div class="form-group">
+            <div *ngIf="possuiAlgumaRejeicaoNoPasso === false" class="pull-right">
+
+              <button class="btn btn-primary" (click)="downloadDocumentoUpadoNoFluxoAssinaturaParaAssinarDigitalmente()" [disabled]="!FluxoPendenteOutroUsuario">
+                <em class="fa fa-download" aria-hidden="true"></em> Download para assinaturas
+              </button>
+
+              <button class="btn btn-primary" (click)="uploadDocumentoAssinadoDigitalmente()" [disabled]="!botaoUploadHabiltado">
+                <em class="fa fa-upload" aria-hidden="true"></em> Upload assinado
+              </button>
+
+              <button class="btn-split btn btn-success" (click)="confirmarDocumentoAssinadoDigitalmente()" [disabled]="uploadResponseModel === null || uploadResponseModel === undefined">
+                <em class="fa fa-check" aria-hidden="true"></em> Aprovar
+              </button>
+              <div class="dropdown-split">
+                <button class="btn-split btn btn-success"style="border-left: 1px solid #ffffff;" [disabled]="uploadResponseModel === null || uploadResponseModel === undefined">
+                  <em class="fa fa-caret-down"></em>
+                </button>
+                <div class="dropdown-content-split">
+                  <button class="btn btn-success btn-assinar-com-obs" (click)="confirmarDocumentoAssinadoDigitalmenteComObservacao()" [disabled]="uploadResponseModel === null || uploadResponseModel === undefined" style="width: 200px;">
+                    <em class="fa fa-check icon-split" aria-hidden="true"></em>
+                    Aprovar
+                    <p class="p-split"> com observação</p>
+                  </button>
+                </div>
+            </div>
+            </div>
+            <button class="btn btn-danger pull-right" (click)="rejeitar()" [disabled]="!FluxoPendenteOutroUsuario">
+              <i class="fa fa-times" aria-hidden="true"></i> Rejeitar
+            </button>
+            <button class="btn btn-danger pull-right" (click)="navegarParaConsulta()">
+              <i class="fa fa-times" aria-hidden="true"></i> Cancelar
+            </button>
+            <div *ngIf="MostraFareiEnvio">
+              <mat-slide-toggle
+                class="pull-right"
+                style="margin-right:20px;"
+                (change)="FareiEnvioChange($event)"
+                [disabled] = "checkFareiEnvioHabilitado"
+                [(ngModel)]="checkFareiEnvioValor"
+                [color]="color">
+                Eu farei o envio
+            </mat-slide-toggle>
+          </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+ <app-assinatura-assinar-rejeitar-footer></app-assinatura-assinar-rejeitar-footer>
+</div>

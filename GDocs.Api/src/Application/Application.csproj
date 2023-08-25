@@ -1,0 +1,31 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <ProjectGuid>{935E66BA-62A1-485F-B1A3-979E81E689E9}</ProjectGuid>        
+        <OutputType>Library</OutputType>
+      <TargetFramework>netstandard2.1</TargetFramework>
+        <ApplicationIcon />
+        <StartupObject />
+        <AssemblyName>ICE.GDocs.Application</AssemblyName>
+        <RootNamespace>ICE.GDocs.Application</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <None Remove="Application.csproj.vspscc" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="AutoMapper" Version="12.0.0" />
+        <PackageReference Include="ICE.Framework.Pdf" Version="4.3.1-*" />
+        <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="3.1.32" />
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
+        <PackageReference Include="NLog" Version="5.1.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Common\Common.csproj" />
+        <ProjectReference Include="..\Domain\Domain.csproj" />
+        <ProjectReference Include="..\Infra\Data\Infra.Data.csproj" />
+    </ItemGroup>
+
+</Project>

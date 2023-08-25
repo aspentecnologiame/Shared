@@ -1,0 +1,76 @@
+<mat-accordion multi="true">
+    <mat-expansion-panel expanded class="material-border" [disabled]="clickButton">
+        <mat-expansion-panel-header class="material-header" (click)="clickButton=false">
+
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <label class="label-cursor-pointer">Passo de aprovação n° {{passoUsuariosAdAdicionados.ordem}}
+                    </label>
+                    <button (click)="removerPasso();" stopPropagation matTooltip="Remover passo" class="btn btn-link">
+                        <i class=" fa fa-trash-alt text-danger"></i>
+                    </button>
+                </div>
+            </div>
+
+        </mat-expansion-panel-header>
+        <div class="container">
+            <div class="row" style="padding-bottom:8px; padding-top: 6px;">
+                <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
+                    <ng-select [items]="obsListaUsuario$ | async" class="ng-select" bindLabel="nome" [addTag]="false"
+                        [hideSelected]="true" [loading]="listaUsuarioLoading" [typeahead]="listaUsuarioinput$"
+                        [(ngModel)]="selectUsuarios" loadingText="Aguarde, carregando..."
+                        notFoundText="Nenhum usuário localizado com esses termos."
+                        typeToSearchText="Digite 3 ou mais caracteres para buscar um usuário"
+                        placeholder="Digite 3 ou mais caracteres para buscar um usuário" clearAllText="Limpar"
+                        appendTo="app-cadastro,app-assinatura-cadastro">
+                    </ng-select>
+                </div>
+                <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+                    <button class="btn btn-success" (click)="adicionarAssinador()">
+                        <i class="fa fa-plus" aria-hidden="true"></i> Adicionar usuário
+                    </button>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-11 col-md-11 col-lg-11 tabela-scroll-assinadores">
+                <table *ngIf="exbibirTabelaAssinadores()" mat-table [dataSource]="matDataSource"
+                    class="ng-mat-table" aria-describedby="nome">
+
+                    <ng-container matColumnDef="nome">
+                        <th scope="col" mat-header-cell *matHeaderCellDef>Nome</th>
+                        <td mat-cell class="text-left" *matCellDef="let row">{{row.nome}}</td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="assinarDigitalmente">
+                        <th scope="col" mat-header-cell *matHeaderCellDef style="width: 20%; text-align: center;" [ngClass]="showCertificadoDigitalColumn()">Certificado Digital</th>
+                        <td mat-cell class="text-center" *matCellDef="let row;  let i = index;" [ngClass]="showCertificadoDigitalColumn()">
+                          <mat-checkbox (change)="selecaoAssinaturaDigital(row, $event, button)"></mat-checkbox>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="recebernotificacao">
+                        <th scope="col" mat-header-cell *matHeaderCellDef style="width: 20%; text-align: center;">Receber
+                            notificação</th>
+                        <td mat-cell class="text-center" *matCellDef="let row;  let i = index;">
+                            <mat-checkbox [(ngModel)]="row.notificarFinalizacao"></mat-checkbox>
+                        </td>
+                    </ng-container>
+
+                    <ng-container matColumnDef="acao">
+                        <th scope="col" mat-header-cell *matHeaderCellDef style="width: 5%; text-align: center;">Ação</th>
+                        <td mat-cell class="text-center" *matCellDef="let row;  let i = index;"
+                            style="text-align: center;">
+                            <button (click)="removerAssinador(i);" matTooltip="Remover aprovador"
+                                class="btn btn-link">
+                                <i class=" fa fa-trash-alt text-danger"></i>
+                            </button>
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+            </div>
+        </div>
+    </mat-expansion-panel>
+</mat-accordion>
+<br>

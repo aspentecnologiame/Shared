@@ -1,0 +1,36 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <ProjectGuid>{E51E4903-C82E-462D-9A58-D1E907BDEE8C}</ProjectGuid>
+      <TargetFramework>netstandard2.1</TargetFramework>
+        <RootNamespace>ICE.GDocs.Infra.CrossCutting.IoC</RootNamespace>
+        <AssemblyName>ICE.GDocs.Infra.CrossCutting.IoC</AssemblyName>
+        <IsPackable>false</IsPackable>
+    </PropertyGroup>
+
+
+    <ItemGroup>
+        <None Remove="Infra.CrossCutting.IoC.csproj.vspscc" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="AutoMapper" Version="12.0.0" />        
+        <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="6.0.0" />
+        <PackageReference Include="Microsoft.Extensions.Configuration" Version="6.0.0" />
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="6.0.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\..\..\Application\Application.csproj" />
+        <ProjectReference Include="..\..\..\Domain\Domain.csproj" />
+        <ProjectReference Include="..\..\Data\Infra.Data.csproj" />
+        <ProjectReference Include="..\..\ExternalServices\ActiveDirectory\Infra.ExternalServices.ActiveDirectory.csproj" />
+        <ProjectReference Include="..\..\ExternalServices\ArmazenamentoTemporario\Infra.ExternalServices.ArmazenamentoTemporario.csproj" />
+        <ProjectReference Include="..\..\ExternalServices\IceDocTools\Infra.ExternalServices.DocTools.csproj" />
+        <ProjectReference Include="..\..\ExternalServices\Infra.ExternalServices.Email\Infra.ExternalServices.Email.csproj" />
+        <ProjectReference Include="..\..\ExternalServices\RdlToPdfBytesConverter\Infra.ExternalServices.RdlToPdfBytesConverter.csproj" />
+        <ProjectReference Include="..\..\ExternalServices\Worker\Infra.ExternalServices.GdocsWorker.csproj" />
+    </ItemGroup>
+
+
+</Project>

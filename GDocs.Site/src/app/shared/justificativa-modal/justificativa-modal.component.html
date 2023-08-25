@@ -1,0 +1,25 @@
+<div mat-dialog-content>
+  <div class="modal-header">
+    <h4 class="modal-title">{{data.titulo}}</h4>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="form">
+      <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 form-group">
+          <label class="control-label" style="margin-right: 3px;">{{DescricaoCampo}}</label>
+          <textarea class="form-control text-box single-line login-textbox-control" height="30px!important"
+            id="nomeCampo" name="nomeCampo" [placeholder]="DescricaoCampo" type="text" formControlName="nomeCampo">
+            </textarea>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-success pull-right" style="margin-right: 0px;" (click)="confirmarModal()">
+      <i class="fa fa-check" aria-hidden="true"></i> {{data.confirmar == null?"Aprovar":data.confirmar }}
+    </button>
+    <button class="btn btn-danger pull-right" (click)="cancelarModal()">
+      <i class="fa fa-times" aria-hidden="true"></i> Cancelar
+    </button>
+  </div>
+</div>

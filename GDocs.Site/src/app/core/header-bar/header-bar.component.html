@@ -1,0 +1,40 @@
+<div class="wrap-box original" id="menu">
+  <div class="navbar navbar-default">
+    <div class="top-bar">
+      <ul class="top-bar-nav">
+        <li *ngIf="existemRelatoriosNaoLidos" style="color: #ffffff;" id="liNotificacaoUsuario">
+          <a href="javascript:void(0);" style="cursor: pointer;" (click)="notificacaoUsuario()">
+            <i class="fa fa-bell" aria-hidden="true" matTooltip="Você tem relatórios não lidos"></i>
+          </a>
+        </li>
+        <li style="color: #ffffff;">
+          <a href="javascript:void(0);" style="cursor: pointer;" (click)="perfil()">
+            <i class="fa fa-user" aria-hidden="true" matTooltip="Meus dados"></i>
+          </a>
+          &nbsp;
+          <span>
+            {{usuario.fullName}}
+          </span>
+        </li>
+        <li>
+          <a href="javascript:void(0);" (click)="logout()">
+            <i class="dropdown-icon fa fa-power-off" aria-hidden="true"></i>
+            Sair
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <div class="navbar-brand">
+        <img src="assets/images/logo-gdocs-reduzida.png" style="display: inline; vertical-align: middle;" height="45px"
+          alt="Logo GDocs">
+      </div>
+    </div>
+    <app-menu [dataSource]="menu"></app-menu>
+  </div>
+</div>

@@ -1,0 +1,96 @@
+
+<div *ngIf="AdicionarItem">
+  <button class="btn btn-primary pull-left" (click)="AdicicaoMaterialDialog()" style="margin-bottom:5px;">
+    <em class="fa fa-plus" aria-hidden="true"></em> Adicionar Material
+  </button>
+  </div>
+
+ <table mat-table  *ngIf="dataSourceMaterial.data.length > 0" [dataSource]="dataSourceMaterial" class="ng-mat-table" aria-describedby="id">
+  <!-- check -->
+  <ng-container matColumnDef="check" >
+    <th  mat-header-cell *matHeaderCellDef style="width:1%;text-align: center;"></th>
+    <td mat-cell   *matCellDef="let row; let i=index;">
+           <mat-checkbox  [(ngModel)]="row.check" [id]="row.id"></mat-checkbox>
+    </td>
+  </ng-container>
+
+  <!-- Radio button -->
+    <ng-container matColumnDef="radio" >
+      <th  mat-header-cell *matHeaderCellDef style="width:0.5%;text-align:center;"></th>
+      <td style="padding-right: 0px !important;
+                 padding-left: 8px !important"
+      mat-cell  *matCellDef="let row; let i=index;">
+          <mat-radio-button style="margin-top:5px; margin-left:5px"
+           (click)="RadioButtonMarcado(row.idSolicitacaoSaidaMaterialItem)"
+           [id]="row.idSolicitacaoSaidaMaterialItem"
+           [value]="row.idSolicitacaoSaidaMaterialItem"
+           [checked]="SelecionaPrimeiroItem(row.idSolicitacaoSaidaMaterialItem)" >
+        </mat-radio-button>
+      </td>
+    </ng-container>
+
+  <ng-container matColumnDef="patrimonio">
+    <th  mat-header-cell scope="row" style="width:10%; text-align: center;" *matHeaderCellDef>Patrimônio</th>
+    <td mat-cell class="text-center" *matCellDef="let row"> {{row.patrimonio}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="quantidade">
+    <th mat-header-cell style="width:5%;text-align: center;"  *matHeaderCellDef>Qtde</th>
+    <td mat-cell class="text-center"  *matCellDef="let row"> {{row.quantidade}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="unidade">
+    <th mat-header-cell style="width:10%; text-align: center;"   *matHeaderCellDef>Unidade</th>
+    <td mat-cell class="text-center" *matCellDef="let row"> {{row.unidade}}</td>
+  </ng-container>
+
+
+  <ng-container matColumnDef="descricao">
+    <th mat-header-cell style="width:39%; text-align:center;" *matHeaderCellDef>Descrição</th>
+    <td mat-cell  class="text-left"  *matCellDef="let row">
+      {{row.descricao}}
+
+    <em *ngIf="MostrarInfoDado(row)" class="fa fa-info-circle" aria-hidden="true" [mdePopoverTriggerFor]="themePopoverDados"
+      mdePopoverTriggerOn="click" mdePopoverTriggerOn="hover" aria-hidden="true">
+    </em>
+    <mde-popover #themePopoverDados="mdePopover" [mdePopoverOverlapTrigger]="false"
+      [mdePopoverCloseOnClick]="false" [mdePopoverOffsetX]="0" [mdePopoverOffsetY]="0" [mdePopoverArrowOffsetX]="0"
+      mdePopoverArrowColor="transparent">
+      <div
+        class="popover-internal-div-padrao"
+        [innerHtml]="montarHover(row) | safe: 'html'">
+      </div>
+    </mde-popover>
+    </td>
+  </ng-container>
+
+
+  <ng-container matColumnDef="status">
+    <th mat-header-cell style="width:15%; text-align:center;"   *matHeaderCellDef>Status</th>
+    <td mat-cell  style="text-align:left;" *matCellDef="let row"> {{row.status}}
+    </td>
+  </ng-container>
+
+
+
+  <!-- actions -->
+  <ng-container matColumnDef="acao">
+    <th mat-header-cell style="width:8%; text-align:center;" *matHeaderCellDef>Ação</th>
+    <td mat-cell class="text-center" *matCellDef="let row; let i=index;">
+      <em  class="fas fa-pen"  style="margin-left:5px;cursor:pointer;color:#eba308"
+      matTooltip="Editar Material"
+    (click)="EditarMaterialDialog(row)"  aria-hidden="true">
+    </em>
+
+      <em class="fa fa-trash-alt text-danger"  style="margin-left:10px;cursor:pointer;"
+        matTooltip="Deletar Material"
+      (click)="DeletarItem(i,row)"  aria-hidden="true">
+      </em>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+<mat-paginator  [class]="MostraPag"  [length]="0" [pageSize]="5" showFirstLastButtons></mat-paginator>
+

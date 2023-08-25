@@ -1,0 +1,20 @@
+<div>
+  <div>
+    <app-upload
+      (uploadCompletoAdicionarNaListaDeDocumentosPreview)="uploadCompletoAdicionarNaListaDeDocumentosPreview($event)">
+    </app-upload>
+  </div>
+  <div>
+    <app-pdf-preview [listarDocumentosChanging]="listaAssinaturaDocUploadChangingValue" [showThumbnail]="true"
+      [bloquearRemocaoPrimeiroElemento]="true">
+    </app-pdf-preview>
+  </div>
+  <div class="row pull-right">
+    <br>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 form-group">
+      <button class="btn btn-success" style="margin-right: 0px;" (click)="salvarArquivo()">
+        <i class="fa fa-save" aria-hidden="true"></i> Enviar para aprovação
+      </button>
+    </div>
+  </div>
+</div>

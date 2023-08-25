@@ -1,0 +1,17 @@
+<div class="div-modal" mat-dialog-content>
+  <div class="modal-header">
+    <h4 class="modal-title">Crie sua assinatura</h4>
+  </div>
+  <div class="modal-body">
+      <canvas #canvas></canvas>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-success" (click)="save()">
+      <i class="fa fa-floppy-o" aria-hidden="true"></i>
+      Salvar</button>
+    <button class="btn btn-danger" (click)="reset()">
+      <i class="fa fa-times" aria-hidden="true"></i> Refazer
+    </button>
+    <button (click)="fecharModal()" type="button" class="btn btn-primary">Fechar</button>
+  </div>
+</div>

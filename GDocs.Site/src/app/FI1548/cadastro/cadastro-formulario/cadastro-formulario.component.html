@@ -1,0 +1,104 @@
+  <div>
+    <form [formGroup]="formDadosDocumento">
+
+      <div class="row">
+
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 form-group">
+          <label class="control-label">Descrição da necessidade</label>
+          <textarea formControlName="descricao" class="form-control text-box" rows="4"
+            [attr.maxlength]="formDadosDocumento.get('descricao').getError('maxlength')?.requiredLength"></textarea>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 form-group">
+          <label class="control-label">Referência</label>
+          <input type="text" formControlName="referencia" class="form-control text-box single-line" name="referencia"
+            [attr.maxlength]="formDadosDocumento.get('referencia').getError('maxlength')?.requiredLength" />
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 form-group">
+          <label class="control-label">Moeda</label>
+          <ng-select [items]="listaMoedas" [multiple]="false" id="selectTipoMoeda" [selectOnTab]="true"
+            bindLabel="nome" bindValue="simbolo" placeholder="[Selecione]" formControlName="tipoMoeda"
+            clearAllText="Limpar" loadingText="Aguarde, carregando..."
+            notFoundText="Nenhum tipo de moeda localizado.">
+            <ng-template ng-label-tmp ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+              {{item.titulo}} ({{ item.simbolo }})
+            </ng-template>
+          </ng-select>
+        </div>
+
+        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 form-group">
+          <label class="control-label">Valor</label>
+          <input type="text" [attr.maxlength]="formDadosDocumento.get('valor').getError('maxlength')?.requiredLength"
+            (keypress)="apenasNumeroEVirgula($event)" (blur)="onBlurValor($event.target.value)"
+            class="form-control text-box single-line" name="valor" formControlName="valor" />
+        </div>
+
+        <div class="col-xs-12 col-sm-1 col-md-1 col-lg-1 form-group" style="margin-bottom: 0px;">
+          <label class="control-label" style="margin-right: 3px;">Fornecedor</label>
+          <mat-radio-group formControlName="fornecedor" class="row">
+            <mat-radio-button *ngFor="let item of listaFornecedor" [value]="item.valor" class="row col-xs-12">
+              {{item.descricao}}
+            </mat-radio-button>
+          </mat-radio-group>
+        </div>
+
+        <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 form-group">
+          <label class="control-label">Prazo de entrega</label>
+          <input type="text" [attr.maxlength]="formDadosDocumento.get('prazoEntrega').getError('maxlength')?.requiredLength" class="form-control text-box single-line" name="prazoEntrega"
+            formControlName="prazoEntrega" />
+        </div>
+
+        <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 form-group" style="margin-bottom: 0px;">
+          <label class="control-label" style="margin-right: 3px;">Tipo de pagamento</label>
+          <mat-radio-group (change)="tipoPagamentouChange()" formControlName="tipoPagamento" class="row">
+            <mat-radio-button  *ngFor="let item of listaStatus" [value]="item.valor" class="row col-xs-12">
+              {{item.descricao}}
+            </mat-radio-button>
+          </mat-radio-group>
+        </div>
+
+        <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 form-group" *ngIf="habilitarCampoParcela()">
+          <label class="control-label">Qtde. parcelas</label>
+          <input type="text" mask="00000000" class="form-control text-box single-line" name="parcelas"
+            formControlName="parcelas" />
+        </div>
+
+
+        <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 form-group" *ngIf="habilitarCampoVencimentoPara()">
+          <label class="control-label">Vencimento para (dias)</label>
+          <input type="text" mask="00000000" class="form-control text-box single-line" name="vencimentoDias"
+            formControlName="vencimentoDias" />
+        </div>
+
+
+
+      </div>
+
+      <div class="row">
+        <div class="col-xs-16 col-sm-4 col-md-4 col-lg-4 form-group">
+          <label class="control-label">Este Status de pagamento substitui outro:</label>
+          <ng-select [items]="listaSubstitutos" [multiple]="false" id="selectReferenciaSubstituto" [selectOnTab]="true"
+            bindLabel="valor" bindValue="id" placeholder="[Selecione]" formControlName="referenciaSubstituto"
+            clearAllText="Limpar" loadingText="Aguarde, carregando..."
+            notFoundText="Nenhum referência localizada.">
+            <ng-template ng-label-tmp ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+              {{item.valor}}
+            </ng-template>
+          </ng-select>
+        </div>
+      </div>
+
+
+      <div class="row">
+
+
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 form-group">
+          <mat-checkbox id="destacarDocumento" name="destacarDocumento" formControlName="destaque">Este documento é de ALTA PRIORIDADE (Prazo, Relevância, etc)</mat-checkbox>
+        </div>
+      </div>
+    </form>
+  </div>

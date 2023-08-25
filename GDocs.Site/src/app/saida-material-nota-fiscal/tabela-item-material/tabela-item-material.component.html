@@ -1,0 +1,140 @@
+
+<div *ngIf="AdicionarNovoItem">
+  <button class="btn btn-primary pull-left" (click)="AdicionarNovoMaterialDialog()" style="margin-bottom:5px;">
+    <em class="fa fa-plus" aria-hidden="true"></em> Adicionar Material
+  </button>
+  </div>
+
+ <table mat-table  *ngIf="dataSourceItemMaterialNF.data.length > 0" [dataSource]="dataSourceItemMaterialNF" class="ng-mat-table" aria-describedby="id">
+
+  <ng-container matColumnDef="check" >
+    <th  mat-header-cell *matHeaderCellDef style="width:1%;text-align: center;"></th>
+    <td mat-cell   *matCellDef="let row; let i=index;">
+    <mat-checkbox  [(ngModel)]="row.check" [id]="row.id">
+
+    </mat-checkbox>
+    </td>
+  </ng-container>
+
+  <!-- Radio button check -->
+  <ng-container matColumnDef="radio">
+    <th mat-header-cell style="width:1%;"  *matHeaderCellDef></th>
+
+    <td style="padding-right: 0px !important;
+                 padding-left: 8px !important"
+        mat-cell   *matCellDef="let row">
+          <mat-radio-button
+          (click)="ItemMaterialNFCheckedRadio(row.id)" [id]="row.id" [value]="row.id" [checked]="SelecionaPrimeiro(row.id)" >
+        </mat-radio-button>
+    </td>
+  </ng-container>
+
+
+  <ng-container matColumnDef="quantidade">
+    <th mat-header-cell style="width:5%;text-align: center;"  *matHeaderCellDef>Qtde</th>
+    <td mat-cell class="text-center"  *matCellDef="let row"> {{row.quantidade}}
+      <em *ngIf="MostrarCopy()" class="fas fa-copy "  style="margin-left:5px;cursor:pointer;"
+      copyClipboard="{{row.quantidade}}"></em>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="unidade">
+    <th mat-header-cell style="width:8%; text-align: center;"   *matHeaderCellDef>Unidade</th>
+    <td mat-cell class="text-center" *matCellDef="let row"> {{row.unidade}}
+      <em *ngIf="MostrarCopy()" class="fas fa-copy "  style="margin-left:5px;cursor:pointer;"
+      copyClipboard="{{row.unidade}}">
+      </em>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="patrimonio">
+    <th mat-header-cell style="width:10%; text-align: center;"   *matHeaderCellDef>Patrimônio</th>
+    <td mat-cell class="text-center" *matCellDef="let row"> {{(row.patrimonio)}}
+      <em *ngIf="MostrarCopy()" class="fas fa-copy "  style="margin-left:5px;cursor:pointer;"
+      copyClipboard="{{row.patrimonio}}">
+      </em>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="valorUnitario">
+    <th mat-header-cell style="width:10%; text-align: center;"   *matHeaderCellDef>Valor unitário</th>
+    <td mat-cell class="text-center" *matCellDef="let row"> {{  row.valorUnitario  | currency:'R$'}}
+      <em *ngIf="MostrarCopy()" class="fas fa-copy "  style="margin-left:5px;cursor:pointer;"
+      copyClipboard="{{row.valorUnitario  | number: '1.2'}}">
+      </em>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="codigo">
+    <th  mat-header-cell scope="row" style="width:8%; text-align: center;" *matHeaderCellDef>Código</th>
+    <td mat-cell class="text-center" *matCellDef="let row"> {{row.codigo}}
+      <em *ngIf="MostrarCopy()" class="fas fa-copy "  style="margin-left:5px;cursor:pointer;"
+      copyClipboard="{{row.codigo}}">
+      </em>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="tagService">
+    <th mat-header-cell style="width:10%; text-align: center;"   *matHeaderCellDef>Tag Service</th>
+    <td mat-cell class="text-center" *matCellDef="let row"> {{row.tagService}}
+      <em *ngIf="MostrarCopy()" class="fas fa-copy "  style="margin-left:5px;cursor:pointer;"
+      copyClipboard="{{row.tagService}}">
+      </em>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="descricao">
+    <th mat-header-cell
+     style="width:39%;
+    text-align:center;"
+     *matHeaderCellDef>Descrição
+    </th>
+    <td mat-cell  style="text-align:left;"  *matCellDef="let row">
+      {{row.descricao}}
+
+    <em *ngIf="MostrarInfo()" class="fa fa-info-circle" aria-hidden="true" [mdePopoverTriggerFor]="themePopoverDadosComplementares"
+      mdePopoverTriggerOn="click" mdePopoverTriggerOn="hover" aria-hidden="true">
+    </em>
+    <mde-popover #themePopoverDadosComplementares="mdePopover" [mdePopoverOverlapTrigger]="false"
+      [mdePopoverCloseOnClick]="false" [mdePopoverOffsetX]="0" [mdePopoverOffsetY]="0" [mdePopoverArrowOffsetX]="0"
+      mdePopoverArrowColor="transparent">
+      <div
+        class="popover-internal-div-padrao"
+        [innerHtml]="montarHover(row) | safe: 'html'">
+      </div>
+    </mde-popover>
+
+
+        <em *ngIf="MostrarCopy()" class="fas fa-copy "  style="margin-left:5px;cursor:pointer;"
+        copyClipboard="{{row.descricao}}">
+        </em>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="status">
+    <th mat-header-cell style="width:15%; text-align:center;"   *matHeaderCellDef>Status</th>
+    <td mat-cell  style="text-align:left;" *matCellDef="let row"> {{row.status}}
+    </td>
+  </ng-container>
+
+  <!-- actions -->
+  <ng-container matColumnDef="acao">
+    <th mat-header-cell style="width:8%; text-align:center;" *matHeaderCellDef>Ação</th>
+    <td mat-cell class="text-center" *matCellDef="let row; let i=index;">
+      <em  class="fas fa-pen"  style="margin-left:5px;cursor:pointer;color:#eba308"
+      matTooltip="Editar Material"
+      (click)="EditarItemMaterialNFDialog(row)"  aria-hidden="true">
+      </em>
+
+      <em class="fa fa-trash-alt text-danger"  style="margin-left:10px;cursor:pointer;"
+        matTooltip="Deletar Material"
+      (click)="DeletarItemMaterialNF(i,row)"  aria-hidden="true">
+      </em>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="colunasExibidas"></tr>
+  <tr mat-row *matRowDef="let row; columns: colunasExibidas;"></tr>
+</table>
+<mat-paginator  [class]="MostraPagina"  [length]="0" [pageSize]="5" showFirstLastButtons></mat-paginator>
+

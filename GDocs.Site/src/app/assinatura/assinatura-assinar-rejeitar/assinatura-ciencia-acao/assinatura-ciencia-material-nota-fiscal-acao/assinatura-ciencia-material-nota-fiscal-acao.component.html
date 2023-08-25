@@ -1,0 +1,91 @@
+<div class="div-modal" mat-dialog-content>
+  <div class="modal-header">
+    <h4 class="modal-title">{{data.titulo}}</h4>
+  </div>
+  <div  class="modal-body">
+    <div class="row">
+      <div class="col-sm-4 col-md-4 col-lg-4 form-group">
+        <label class="control-label">Número NF</label><br>
+        <label class="NumeroDoc control-label">{{data.ciencia.solicitacaoCiencia.numeroMaterial}}</label>
+      </div>
+      <div class="col-sm-4 col-md-4 col-lg-4 form-group">
+      </div>
+      <div class="col-sm-4 col-md-4 col-lg-4 form-group">
+        <label class="control-label">Tipo de Ciência</label><br>
+        <label class="tipoCiencia control-label">{{data.ciencia.solicitacaoCiencia.tipoCiencia}}</label>
+      </div>
+    </div>
+
+  <div class="tabela-scroll">
+
+   <app-assinatura-ciencia-acao-card-justificativa [dataSource]="cienciaUsuarioRejeitado">
+   </app-assinatura-ciencia-acao-card-justificativa>
+
+    <form [formGroup]="formCienciaNf">
+      <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 form-group">
+          <label class="control-label" style="margin-right: 3px;">Justificativa da Solicitação</label>
+          <textarea class="form-control text-box single-line login-textbox-control" height="30px!important"
+            id="justificativa" name="justificativa" placeholder="Justificativa" type="text"
+            formControlName="justificativa">
+            </textarea>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-4 col-md-4 col-lg-4 form-group">
+          <label class="control-label">Responsável</label>
+          <input type="text" formControlName="responsavel" class="form-control text-box single-line" name="responsavel"
+            id="responsavel" />
+        </div>
+
+        <div class="col-lg-4 col-xs-4 col-sm-4 col-md-4" *ngIf="PermirtirData()">
+          <label class="control-label">Data prevista de retorno </label>
+          <div class="input-group">
+            <input formControlName="dataRetorno" matInput [matDatepicker]="pickerRetorno" class="form-control text-center mat-datapicker-input" [readonly]="true" (click)="pickerRetorno.open()">
+            <span class="input-group-addon" style="cursor: pointer;" (click)="pickerRetorno.open()">
+              <span class="fa fa-calendar-alt"></span>
+            </span>
+            <mat-datepicker #pickerRetorno></mat-datepicker>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="form-group col-lg-12 col-xs-12 col-sm-12 col-md-12">
+          <label style="margin-right: 3px;" class="control-label">Motivo da solicitação</label>
+          <textarea id="observacao" name="observacao" placeholder="nameCampoObservacao" type="text"
+            class="form-control text-box single-line login-textbox-control" height="30px!important"
+            formControlName="observacao">
+            </textarea>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group col-sm-12 col-md-12 col-lg-12 col-xs-12">
+          <label style="margin-right:3px;" class="control-label">Material</label>
+          <app-tabela-item-material [dataSource]="dataSource" [configuracaoColuna]="acao">
+          </app-tabela-item-material>
+        </div>
+      </div>
+      <div *ngIf="PermirtirData()" class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <app-historico-prorrogacao-tabela *ngIf="HistoricoProrrogacao.length > 0" [dataSource]="HistoricoProrrogacao">
+          </app-historico-prorrogacao-tabela>
+        </div>
+      </div>
+
+    </form>
+  </div>
+  </div>
+  <div class="modal-footer" id="footer">
+    <button class="btn btn-success pull-right" style="margin-right: 0px;" (click)="confirmarModal()">
+      <i class="fa fa-check" aria-hidden="true"></i> Ciente
+    </button>
+    <button class="btn btn-danger pull-right" (click)="RejeitarCienciaNf()">
+      <i class="fa fa-times" aria-hidden="true"></i> Rejeitar
+    </button>
+    <button class="btn btn-danger pull-right" (click)="cancelarModal()">
+      <i class="fa fa-times" aria-hidden="true"></i> Cancelar
+    </button>
+  </div>
+</div>

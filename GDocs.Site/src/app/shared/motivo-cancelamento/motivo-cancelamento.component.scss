@@ -1,0 +1,37 @@
+::ng-deep .mat-card {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-right: 10px;
+  margin-left: 10px;
+  transition: box-shadow 280ms cubic-bezier(.4,0,.2,1);
+  display: block;
+  position: relative;
+  padding: 5px;
+  border-radius: 4px;
+  background: #f0f0f0;
+  color: rgba(0,0,0,.87);
+}
+
+::ng-deep .mat-card-content>:first-child, .mat-card>:first-child {
+    margin-top: 0;
+}
+
+::ng-deep .mat-card-title {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 15px;
+    font-weight: 500;
+}
+
+::ng-deep .mat-card-content>:last-child:not(.mat-card-footer), .mat-card>:last-child:not(.mat-card-footer) {
+    margin-bottom: 0;
+}
+
+::ng-deep .mat-card-actions, .mat-card-content, .mat-card-subtitle {
+    display: block;
+    margin-bottom: 16px;
+}
+
+::ng-deep .mat-card-content, .mat-card-subtitle {
+    font-size: 12px;
+}

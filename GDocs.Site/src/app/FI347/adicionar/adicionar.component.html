@@ -1,0 +1,106 @@
+<div class="panel">
+  <div class="panel-heading">
+    <app-breadcrumb></app-breadcrumb>
+  </div>
+
+  <div class="panel-body">
+    <div class="page-header">
+      <i class="fa fa-file" aria-hidden="true"></i>
+      <h1>Dados do documento</h1>
+    </div>
+    <div>
+      <form [formGroup]="formDadosMaterialSaida" novalidate>
+        <div class="row">
+
+          <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 form-group" style="margin-bottom: 0px;">
+            <label class="control-label" style="margin-right: 3px;">Tipos de saída</label>
+            <mat-radio-group (change)="ClickTipoRetorno()" formControlName="tiposaida" class="row">
+              <mat-radio-button     *ngFor="let item of listarTipoSaida" [value]="item.id" class=" col-sm-4 col-md-4 col-lg-4 ">
+                {{item.descricao}}
+              </mat-radio-button>
+            </mat-radio-group>
+          </div>
+
+          <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 form-group">
+            <label class="control-label">Sigla do setor</label>
+            <input type="text" oninput="this.value = this.value.toUpperCase()" formControlName="setor" class="form-control text-box single-line" name="setor"
+              [attr.maxlength]="formDadosMaterialSaida.get('setor').getError('maxlength')?.requiredLength" />
+          </div>
+        </div>
+
+
+        <div class="row">
+          <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 form-group">
+            <label class="control-label">Origem</label>
+            <input type="text" formControlName="origem" class="form-control text-box single-line" name="origem"
+              [attr.maxlength]="formDadosMaterialSaida.get('origem').getError('maxlength')?.requiredLength" />
+          </div>
+          <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 form-group">
+            <label class="control-label">Destino</label>
+            <input type="text" formControlName="destino" class="form-control text-box single-line" name="destino"
+              [attr.maxlength]="formDadosMaterialSaida.get('destino').getError('maxlength')?.requiredLength" />
+          </div>
+          <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 form-group">
+            <label class="control-label">Data prevista de retorno </label>
+            <div class="input-group">
+              <input formControlName="dataPrevista" matInput [matDatepicker]="picker" [readonly]="true"
+                class="form-control text-center mat-datapicker-input data" [readonly]="true" (click)="picker.open()">
+              <span class="input-group-addon" style="cursor: pointer;" (click)="picker.open()" #btnDataPicker>
+                <span class="fa fa-calendar-alt"></span>
+              </span>
+              <mat-datepicker #picker></mat-datepicker>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 form-group">
+            <label class="control-label">Motivo do Serviço</label>
+            <textarea formControlName="motivo" class="form-control text-box" rows="4"
+              [attr.maxlength]="formDadosMaterialSaida.get('motivo').getError('maxlength')?.requiredLength"></textarea>
+          </div>
+        </div>
+
+        <app-material-saida-item-tabela
+         [Adicionar]="true"
+         [dataSource]="dataSource"
+         (eventoItemMaterial)="EventoItemMaterial($event)">
+        </app-material-saida-item-tabela>
+
+        <div class="row">
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 form-group" style="padding-top: 10px;">
+            <label class="control-label">Observações</label>
+            <textarea formControlName="observacoes" class="form-control text-box" rows="4"
+              [attr.maxlength]="formDadosMaterialSaida.get('observacoes').getError('maxlength')?.requiredLength"></textarea>
+          </div>
+        </div>
+
+        <hr />
+        <div class="form-group" style="height: 38px;">
+          <button class="btn btn-success pull-right" style="margin-right: 0px;" (click)="gravarFormDados()">
+            <em class="fa fa-save" aria-hidden="true"></em> Salvar
+          </button>
+          <button class="btn btn-danger pull-right" (click)="cancelar()">
+            <em class="fa fa-times" aria-hidden="true"></em> Cancelar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="panel-footer" style="min-height: 90px">
+    <div id="dvLegenda" class="panel-heading">
+      <div class="row">
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+          <h4 style="border-bottom: 1px dotted #ccc">Ação</h4>
+          <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+              <em class="fas fa-pen" style="color:#eba308;"></em> Editar Material
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+              <em class="fa fa-trash-alt " style="color:#c9302c;"></em> Deletar Material
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

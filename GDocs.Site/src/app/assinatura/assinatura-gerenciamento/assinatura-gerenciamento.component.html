@@ -1,0 +1,172 @@
+<div class="panel">
+  <div class="panel-heading">
+    <app-breadcrumb></app-breadcrumb>
+  </div>
+  <div class="panel-body" [style.minHeight]='minHeight'>
+    <div class="page-header">
+      <i class="fa fa-search" aria-hidden="true"></i>
+      <h1>Filtro de pesquisa</h1>
+    </div>
+    <div>
+      <form [formGroup]="formPesquisarAssinatura" novalidate>
+        <div class="row">
+          <div class="col-xs-12 col-sm-4 col-md-4 col-lg-2 form-group">
+            <label class="control-label">Data início</label>
+            <div class="input-group">
+              <input id="dataInicio" formControlName="dataInicio" matInput [matDatepicker]="picker"
+                class="form-control text-center mat-datapicker-input" [readonly]="true" (click)="picker.open()">
+              <span class="input-group-addon" style="cursor: pointer;" (click)="picker.open()">
+                <span class="fa fa-calendar-alt"></span>
+              </span>
+              <mat-datepicker #picker></mat-datepicker>
+            </div>
+          </div>
+
+          <div class="col-xs-12 col-sm-4 col-md-4 col-lg-2 form-group">
+            <label class="control-label">Data término</label>
+            <div class="input-group">
+              <input id="dataTermino" formControlName="dataTermino" matInput [matDatepicker]="picker2"
+                class="form-control text-center mat-datapicker-input" [readonly]="true" (click)="picker2.open()">
+              <span class="input-group-addon" style="cursor: pointer;" (click)="picker2.open()">
+                <span class="fa fa-calendar-alt"></span>
+              </span>
+              <mat-datepicker #picker2></mat-datepicker>
+            </div>
+          </div>
+
+          <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 form-group">
+            <label class="control-label">Número do documento</label>
+            <input id="inputNumero" type="text" class="form-control text-box single-line"
+              formControlName="numeroDocumento" placeholder="[Número do documento]" />
+          </div>
+
+          <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 form-group">
+            <label class="control-label">Nome do documento</label>
+            <ng-select [items]="obsListaNomes$ | async" class="ng-select" bindLabel="nomeDocumento" [addTag]="false"
+              [hideSelected]="true" [loading]="listaNomesLoading" [typeahead]="listaNomesinput$"
+              formControlName="nomeDocumento" loadingText="Aguarde, carregando..."
+              notFoundText="Nenhum nome localizado com esses termos."
+              typeToSearchText="Digite 3 ou mais caracteres para buscar um nome"
+              placeholder="Digite 3 ou mais caracteres para buscar um nome" clearAllText="Limpar">
+            </ng-select>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 form-group">
+            <label class="control-label">Autor</label>
+            <ng-select [items]="autores" [multiple]="true" id="selectAutores" [selectOnTab]="true" bindLabel="nome"
+              bindValue="activeDirectoryId" placeholder="[Selecione]" formControlName="usuariosGuidAd"
+              clearAllText="Limpar" loadingText="Aguarde, carregando..." notFoundText="Nenhum autor localizado.">
+              <ng-template ng-label-tmp ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+                {{item.nome}}
+              </ng-template>
+            </ng-select>
+          </div>
+
+          <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 form-group">
+            <label class="control-label">Status do documento</label>
+            <ng-select [items]="statusAssinaturaList" [multiple]="true" id="selectStatusDocumento" [selectOnTab]="true"
+              bindLabel="descricao" bindValue="id" placeholder="[Selecione]" formControlName="status"
+              clearAllText="Limpar" loadingText="Aguarde, carregando..." notFoundText="Nenhum status localizado.">
+              <ng-template ng-label-tmp ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+                {{item.descricao}}
+              </ng-template>
+            </ng-select>
+          </div>
+
+          <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 form-group">
+            <label class="control-label" style="margin-right: 3px;">Categoria</label>
+            <ng-select class="ng-select" [multiple]="true" [items]="categorias" id="selectCategorias"
+              [selectOnTab]="true" bindLabel="descricao" bindValue="id" placeholder="[Selecione]"
+              formControlName="categoriaId" loadingText="Aguarde, carregando..."
+              notFoundText="Nenhuma categoria localizada." clearAllText="Limpar">
+              <ng-template ng-label-tmp ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+                {{item.descricao}}
+              </ng-template>
+            </ng-select>
+          </div>
+
+        </div>
+        <div class="row">
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <button class="btn btn-primary" (click)="formPesquisarAssinaturaOnSubmit()"><i class="fa fa-search"
+                aria-hidden="true"></i> Pesquisar</button>
+            <button class="btn btn-primary" (click)="resetFormPesquisarAssinatura()"><i class="fa fa-eraser"
+                aria-hidden="true"></i> Limpar</button>
+          </div>
+        </div>
+      </form>
+
+    </div>
+
+    <hr style="margin-bottom: 8px;" />
+
+    <div *appHasPermition="'assinatura:gerenciardocumentos:adicionar'" class="form-group">
+      <button class="btn btn-success" [routerLink]="'/assinatura/adicionar'">
+        <i class="fa fa-plus" aria-hidden="true"></i> Adicionar
+      </button>
+      <button *ngIf="dataSource?.length > 0" class="btn btn-primary pull-right" style="margin-right: 0px;"
+        (click)="gerarRdl()"><i class="fa fa-file-alt" aria-hidden="true"></i> Gerar
+        relatório</button>
+    </div>
+
+    <app-assinatura-gerenciamento-tabela #compTabela [dataSource]="dataSource"
+      *ngIf="(dataSource?.length || 0) > 0 else tabelaVazia"></app-assinatura-gerenciamento-tabela>
+    <ng-template #tabelaVazia>
+      <app-no-records-found-message *ngIf="dataSource != null"></app-no-records-found-message>
+    </ng-template>
+  </div>
+
+  <div class="panel-footer" style="min-height: 90px">
+    <div id="dvLegenda" class="panel-heading">
+      <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <h4 style="border-bottom: 1px dotted #ccc">Ação</h4>
+          <div class="row">
+            <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+              <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                  <em class="fas fa-user-edit" style="color:#00417f;font-size: 16px;"></em> Atribuir representante
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                  <em class="fas fa-file-alt" style="color:#008000;font-size: 16px;"></em> Status do fluxo das aprovações
+                </div>
+              </div>
+            </div>
+            <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+              <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                  <em class="fas fa-search" style="color:#00417f;font-size: 16px;"></em> Ver detalhes
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                  <em class="fas fa-window-close" style="color:#c9302c;font-size: 16px;"></em> Cancelar processo de
+                  Aprovação
+                </div>
+              </div>
+            </div>
+            <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+              <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                  <em class="fas fa-star warning-color" style="font-size: 16px;"></em> Remover destaque
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                  <em class="far fa-star warning-color" style="font-size: 16px;"></em> Destacar
+                </div>
+              </div>
+            </div>
+            <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+              <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                  <em class="fas fa-certificate" style="font-size: 16px; color:#00417f;"></em> Documento com certificado
+                </div>
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                  <em class="fas fa-file-signature" style="font-size: 16px; color:#00417f;"></em> Documento com aprovação
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

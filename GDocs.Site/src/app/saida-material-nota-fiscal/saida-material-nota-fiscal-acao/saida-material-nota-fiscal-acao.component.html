@@ -1,0 +1,109 @@
+<div class="div-modal" mat-dialog-content>
+  <div class="modal-header">
+    <h4 class="modal-title">{{data.titulo}}</h4>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-sm-4 col-md-4 col-lg-4">
+        <label class="control-label">Número NF</label><br>
+        <label class="NumeroMaterial control-label">{{data.editarItem.numero}}</label>
+      </div>
+    </div>
+    <div class="tabela-scroll-acao">
+      <form [formGroup]="formSaidaMaterialNfAcao">
+        <div class="row">
+          <div class="col-sm-4 col-md-4 col-lg-4 form-group">
+            <label class="control-label">Responsável</label>
+            <input type="text" formControlName="solicitanteNf" class="form-control text-box single-line"
+              name="solicitanteNf" id="solicitanteNf" />
+          </div>
+          <div class="col-sm-4 col-md-4 col-lg-4  form-group">
+            <label class="control-label">Origem </label>
+            <input type="text" formControlName="origemNf" class="form-control text-box single-line" name="origemNf"
+              id="origemNf" />
+          </div>
+          <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 form-group">
+            <label class="control-label">Destino </label>
+            <input type="text" formControlName="destinoNf" class="form-control text-box single-line" name="destinoNf" />
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-4 col-md-4 col-lg-4 form-group" *ngIf="MostraCampo()">
+            <label class="control-label">Conferente SCP</label>
+            <input type="text" formControlName="conferenteNf" class="form-control text-box single-line" name="conferenteNf"
+              id="conferenteNf" />
+          </div>
+          <div *ngIf="EhSolicitacaoProrogacao()" class="col-sm-4 col-md-4 col-lg-4 form-group">
+            <label class="control-label">Data retorno prevista</label>
+            <div class="input-group">
+              <input type="text" value="{{SaidaMaterial.retorno | date: 'dd/MM/yyyy'}}" disabled
+                 class="form-control" name="dataRetornoCadastrada" id="dataRetornoCadastrada" />
+              <span class="input-group-addon">
+                <span class="fa fa-calendar-alt"></span>
+              </span>
+            </div>
+          </div>
+
+          <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 form-group" *ngIf="MostarDataMaterial()">
+            <label class="control-label">{{nameCampoData}}</label>
+            <div class="input-group">
+              <input formControlName="dataSaidaNf" matInput [matDatepicker]="picker"
+                class="form-control text-center mat-datapicker-input" [readonly]="true" (click)="picker.open()">
+              <span class="input-group-addon" style="cursor: pointer;" (click)="picker.open()">
+                <span class="fa fa-calendar-alt"></span>
+              </span>
+              <mat-datepicker #picker></mat-datepicker>
+            </div>
+          </div>
+
+          <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 form-group" *ngIf="MostraCampo()">
+            <label class="control-label">{{nameCampoHora}}</label>
+            <div class="input-group">
+              <input matInput id="horaSaidaNf" type="text" class="form-control text-box text-center" style="width: 100px;"
+                name="horaSaidaNf" formControlName="horaSaidaNf" mask="00:00" [dropSpecialCharacters]="false" />
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-6 col-md-6 col-lg-6 form-group" *ngIf="MostraCampo()">
+            <label class="control-label">Nome do Portador</label>
+            <input type="text" formControlName="nomePortadorNf" class="form-control text-box single-line"
+              name="nomePortadorNf" id="nomePortadorNf" />
+          </div>
+          <div class="col-sm-6 col-md-6 col-lg-6  form-group" *ngIf="MostraCampo()">
+            <label class="control-label">Setor/empresa Responsável</label>
+            <input type="text" formControlName="setorEmpresaReposavelNf" class="form-control text-box single-line"
+              name="setorEmpresaReposavelNf" id="setorEmpresaReposavelNf" />
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 form-group">
+            <label class="control-label" style="margin-right: 3px;">{{nameCampoObservacao}}</label>
+            <textarea class="form-control"  rows="2"
+              id="observacaoNf" name="observacaoNf" [placeholder]="nameCampoObservacao" type="text"
+              formControlName="observacaoNf">
+            </textarea>
+          </div>
+        </div>
+        <div style="height:289px" class="row">
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 form-group">
+            <label class="control-label" style="margin-right: 3px;">Material</label>
+            <app-tabela-item-material [configuracaoColuna]="acao" [dataSource]="dataSource">
+            </app-tabela-item-material>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <button class="btn btn-success pull-right" style="margin-right: 0px;" (click)="confirmarModal()">
+      <i class="fa fa-check" aria-hidden="true"></i> Confirmar
+    </button>
+    <button class="btn btn-danger pull-right" (click)="cancelarModal()">
+      <i class="fa fa-times" aria-hidden="true"></i> Cancelar
+    </button>
+  </div>
+</div>

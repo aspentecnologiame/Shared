@@ -1,0 +1,62 @@
+<form [formGroup]="formAssinaturaInformacoes">
+  <div class="row">
+    <div class="col-xs-6 col-sm-12 col-md-6 col-lg-6 form-group">
+      <label class="control-label" style="margin-right: 3px;">Título do fluxo</label>
+      <input class="form-control text-box single-line login-textbox-control" height="30px!important" id="titulo"
+        name="titulo" placeholder="Título do fluxo" type="text" maxlength="255" formControlName="titulo">
+    </div>
+
+    <div class="col-xs-6 col-sm-12 col-md-6 col-lg-6 form-group">
+      <label class="control-label" style="margin-right: 3px;">Categoria</label>
+      <ng-select class="ng-select" [items]="categorias" id="selectCategorias" [selectOnTab]="true"
+         bindLabel="descricao" bindValue="id" placeholder="[Selecione]"
+        formControlName="categoriaId" loadingText="Aguarde, carregando..." notFoundText="Nenhuma categoria localizada."
+        clearAllText="Limpar" (change)="checarCategoriaSelecionada($event.id)">
+        <ng-template ng-label-tmp ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+          {{item.descricao}}
+        </ng-template>
+      </ng-select>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-6 col-sm-12 col-md-6 col-lg-6 form-group">
+      <label class="control-label" style="margin-right: 3px;">Nome do documento</label>
+      <input class="form-control text-box single-line login-textbox-control" height="30px!important" id="nomeDocumento"
+        name="nomeDocumento" placeholder="Nome do documento" type="text" maxlength="255"
+        formControlName="nomeDocumento">
+    </div>
+    <div class="col-xs-3 col-sm-12 col-md-3 col-lg-3 form-group">
+      <label class="control-label" style="margin-right: 3px;">Número do documento</label>
+      <input class="form-control text-box single-line login-textbox-control" height="30px!important"
+        id="numeroDocumento" name="numeroDocumento" [placeholder]="montarPlaceHolderNumeracaoAutomatica()" type="text"
+        formControlName="numeroDocumento" maxlength="9" formControlNumericOnly [readonly]="numeracaoAutomatica || semGerarNumero" />
+    </div>
+    <div class="col-xs-3 col-sm-12 col-md-3 col-lg-3 form-group" style="margin-top: 19px;">
+      <mat-checkbox id="gerarNumeroDocumento" name="gerarNumeroDocumento" (change)="gerarNumeroDocumento($event.checked)" [disabled]="numeracaoAutomatica" *ngIf="!numeracaoAutomatica">
+        Meu documento não <br > possui um número
+      </mat-checkbox>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-3 col-sm-12 col-md-3 col-lg-3 form-group">
+      <mat-checkbox id="destacarDocumento" name="destacarDocumento" formControlName="destaque">Este documento é de ALTA PRIORIDADE (Prazo, Relevância, etc)</mat-checkbox>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 form-group">
+      <label class="control-label" style="margin-right: 3px;">Descrição</label>
+        <textarea formControlName="descricao" class="form-control text-box" rows="4"></textarea>
+    </div>
+  </div>
+
+  <div class="row" *ngIf="false">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 form-group" style="padding-left: 17px;">
+      <mat-checkbox style="margin-right:8px" formControlName="destaque" name="destaque" inderterminate="false">
+      </mat-checkbox>
+      <label class="control-label" style="margin-right: 3px;"> Destacar</label>
+    </div>
+  </div>
+</form>

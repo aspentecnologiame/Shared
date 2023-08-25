@@ -1,0 +1,71 @@
+<div class="panel">
+  <div class="panel-heading">
+    <app-breadcrumb></app-breadcrumb>
+  </div>
+  <div class="panel-body" [style.minHeight]='minHeight'>
+    <div class="page-header">
+      <i class="fa fa-search" aria-hidden="true"></i>
+      <h1>Filtro de pesquisa</h1>
+    </div>
+    <div>
+      <form [formGroup]="form" novalidate>
+        <div class="row">
+          <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 form-group">
+            <label class="control-label">Nome</label>
+            <input id="nome" type="text" class="form-control text-box single-line" name="nome" formControlName="nome" />
+          </div>
+          <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 form-group">
+            <label class="control-label">Perfil</label>
+            <ng-select 
+              class="ng-select"
+              [items]="perfis" 
+              id="selectPerfis" 
+              [selectOnTab]="true" 
+              bindLabel="descricao" 
+              bindValue="id" 
+              placeholder="[Selecione]" 
+              formControlName="perfil" 
+              loadingText="Aguarde, carregando..."
+              notFoundText="Nenhum perfil localizado."               
+              clearAllText="Limpar" >
+              <ng-template ng-label-tmp ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+                {{item.descricao}}
+              </ng-template>
+            </ng-select>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <button class="btn btn-primary" (click)="onSubmit()"><i class="fa fa-search" aria-hidden="true"></i> Pesquisar</button>
+            <button class="btn btn-primary" (click)="resetForm()"><i class="fa fa-eraser" aria-hidden="true"></i> Limpar</button>
+          </div>
+        </div>
+      </form>
+    </div>
+    <hr />
+    <div class="form-group">
+      <button class="btn btn-success" (click)="inserirUsuario()">
+        <i class="fa fa-plus" aria-hidden="true"></i> Adicionar
+      </button>
+    </div>
+    <app-usuario-tabela [dataSource]="dataSource" *ngIf="(dataSource?.length || 0) > 0 else tabelaVazia"></app-usuario-tabela>
+    <ng-template #tabelaVazia>
+        <app-no-records-found-message *ngIf="dataSource != null"></app-no-records-found-message>
+    </ng-template>
+  </div>
+
+  <div class="panel-footer" style="min-height: 90px">
+    <div id="dvLegenda" class="panel-heading">
+      <div class="row">
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+          <h4 style="border-bottom: 1px dotted #ccc">Ação</h4>
+          <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+              <i class="fa fa-edit text-info" aria-hidden="true"></i> Editar
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

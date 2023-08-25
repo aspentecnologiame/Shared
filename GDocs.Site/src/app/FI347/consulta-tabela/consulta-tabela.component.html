@@ -1,0 +1,188 @@
+
+<div class="form-inline table-filter-field">
+  <div class="form-group pull-right">
+    <label style="margin-right: 5px;">Buscar </label>
+    <input id="filtrar" type="text" (keyup)="aplicarFiltro($event.target.value)"
+      class="form-control text-box single-line" name="filtrar" />
+  </div>
+  <div class="clearfix"></div>
+</div>
+
+<table mat-table [dataSource]="matDataSourceTable" matSort (matSortChange)="sortChange($event)" matSortDisableClear class="ng-mat-table" style="margin-top: 10px;">
+  <caption>Tabela de Documentos</caption>
+
+  <ng-container matColumnDef="numero">
+    <th scope="col" mat-header-cell *matHeaderCellDef style="width: 8%;text-align: center;" mat-sort-header>Número</th>
+    <td mat-cell *matCellDef="let row" class="text-right">
+      {{row.numero}}
+      <em class="fa fa-info-circle" aria-hidden="true" [mdePopoverTriggerFor]="themePopoverDadosComplementares"
+        mdePopoverTriggerOn="click" mdePopoverTriggerOn="hover" aria-hidden="true">
+      </em>
+      <mde-popover #themePopoverDadosComplementares="mdePopover" [mdePopoverOverlapTrigger]="false"
+        [mdePopoverCloseOnClick]="false" [mdePopoverOffsetX]="0" [mdePopoverOffsetY]="0" [mdePopoverArrowOffsetX]="0"
+        mdePopoverArrowColor="transparent">
+        <div
+          class="popover-internal-div-padrao"
+          [innerHtml]="row.htmlItens | safe: 'html'">
+        </div>
+      </mde-popover>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="tipoSaida">
+    <th scope="row" mat-header-cell *matHeaderCellDef style="width: 13%;text-align: center;" mat-sort-header>Tipo de Saída</th>
+    <td mat-cell class="text-left" *matCellDef="let row">
+      {{row.tipoSaida}}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="destino">
+    <th scope="row" mat-header-cell *matHeaderCellDef style="width: 13%;text-align: center;" mat-sort-header>Destino</th>
+    <td mat-cell class="text-left" *matCellDef="let row">
+      {{row.destino}}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="status">
+    <th scope="row" mat-header-cell *matHeaderCellDef style="width: 13%;" mat-sort-header>Status</th>
+    <td mat-cell class="text-left" *matCellDef="let row">
+      {{row.status}}
+      <em *ngIf="row.retornoParcial" [mdePopoverTriggerFor]="themeRetornoParcial" mdePopoverTriggerOn="hover" aria-hidden="true" style="color: #eba308" class="fa fa-exclamation-triangle" aria-hidden="true"></em>
+      <mde-popover #themeRetornoParcial="mdePopover" [mdePopoverOverlapTrigger]="false"
+        [mdePopoverCloseOnClick]="false" [mdePopoverOffsetX]="0" [mdePopoverOffsetY]="0" [mdePopoverArrowOffsetX]="0"
+        mdePopoverArrowColor="transparent">
+        <div style="background-color: #565656 ;padding:20px;border-radius:5px;opacity:0.95;">
+          <span style="color: white;">Retorno parcial</span>
+        </div>
+      </mde-popover>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="dataAcaoSaida">
+    <th scope="row" mat-header-cell *matHeaderCellDef mat-sort-header style="width: 13%;">Data de saída</th>
+    <td mat-cell class="text-center" *matCellDef="let row">
+      {{row.dataAcao | date: 'dd/MM/yyyy'}}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="retorno">
+    <th scope="row" mat-header-cell *matHeaderCellDef mat-sort-header style="width: 15%;">Previsão de Retorno</th>
+    <td mat-cell class="text-center" *matCellDef="let row">
+      {{row.retorno | date: 'dd/MM/yyyy'}}
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="acao">
+    <th scope="row" mat-header-cell *matHeaderCellDef style="width: 8%;text-align: center;">Ação</th>
+    <td mat-cell class="text-center" *matCellDef="let row">
+      <em style="cursor:pointer;color:#00417f" class="fas fa-search" [mdePopoverTriggerFor]="themePopoverImprimir"
+        (click)="exibirDetalhesDocumento(row)" mdePopoverTriggerOn="hover" aria-hidden="true">
+      </em>
+
+      <mde-popover #themePopoverImprimir="mdePopover" [mdePopoverOverlapTrigger]="false"
+        [mdePopoverCloseOnClick]="false" [mdePopoverOffsetX]="0" [mdePopoverOffsetY]="0" [mdePopoverArrowOffsetX]="0"
+        mdePopoverArrowColor="transparent">
+        <div style="background-color: #565656 ;padding:20px;border-radius:5px;opacity:0.95;">
+          <span style="color: white;">Ver detalhes</span>
+        </div>
+      </mde-popover>
+
+      <em  *ngIf="mostraBotaoHistoricoMaterial()" style="cursor:pointer;color:#008000" class="fas fa-file-alt"  style="margin-left:5px;cursor:pointer;color:#008000"
+      [mdePopoverTriggerFor]="themePopoverHistorico"
+      (click)="HistoricoMaterial(row)" mdePopoverTriggerOn="hover" aria-hidden="true">
+      </em>
+
+      <em *ngIf="mostraBotaoRegistroSaida(row)" style="cursor:pointer;color:#00417f" class="fas fa-arrow-right"  style="margin-left:5px;cursor:pointer;color:#eba308"
+      [mdePopoverTriggerFor]="themePopoverFazerBaixa"
+      (click)="FazerRegistroSaidaMaterial(row)" mdePopoverTriggerOn="hover" aria-hidden="true">
+      </em>
+
+      <em *ngIf="mostraBotaoRegistroRetorno(row)" style="cursor:pointer;color:#00417f" class="fas fa-undo"  style="margin-left:5px;cursor:pointer;color:#289c41"
+      [mdePopoverTriggerFor]="themePopoverFazerRetornoMaterial"
+      (click)="FazerRegistroRetornoMaterial(row)" mdePopoverTriggerOn="hover" aria-hidden="true">
+      </em>
+
+      <em *ngIf="mostraBotaoRegistroProrrogacao(row)" style="cursor:pointer;color:#00417f" class="fas fa-history"  style="margin-left:5px;cursor:pointer;color:#f35900"
+      [mdePopoverTriggerFor]="themePopoverSolicitacaoRetorno"
+      (click)="SolicitacaoProrrogacaoRetorno(row)" mdePopoverTriggerOn="hover" aria-hidden="true">
+      </em>
+
+      <em *ngIf="mostrarBotaoCancelar(row)" style="margin-left:5px;cursor:pointer;color:#c9302c"
+      class="fas fa-window-close" [mdePopoverTriggerFor]="themePopoverCancelar" (click)="confirmarCancelamento(row)"
+      matTooltipPosition="after" aria-hidden="true">
+      </em>
+
+      <mde-popover #themePopoverCancelar="mdePopover" [mdePopoverOverlapTrigger]="false"
+      [mdePopoverCloseOnClick]="false" [mdePopoverOffsetX]="0" [mdePopoverOffsetY]="0" [mdePopoverArrowOffsetX]="0"
+      mdePopoverArrowColor="transparent">
+      <div style="background-color: #565656 ;padding:20px;border-radius:5px;opacity:0.95;">
+        <span style="color: white;">Cancelar saída de material - sem NF</span>
+      </div>
+      </mde-popover>
+
+
+      <em *ngIf="mostraBotaoRegistroBaixaSemRetorno(row)" style="cursor:pointer;color:#00417f" class="fas fa-trash-restore" style="margin-left:5px;cursor:pointer;color:#c90a0a"
+      [mdePopoverTriggerFor]="themePopoverBaixaSemRetorno"
+      (click)="BaixaMaterialSemRetorno(row)" mdePopoverTriggerOn="hover" aria-hidden="true">
+      </em>
+
+    <mde-popover #themePopoverBaixaSemRetorno="mdePopover" [mdePopoverOverlapTrigger]="false"
+    [mdePopoverCloseOnClick]="false" [mdePopoverOffsetX]="0" [mdePopoverOffsetY]="0" [mdePopoverArrowOffsetX]="0"
+    mdePopoverArrowColor="transparent">
+    <div style="background-color: #565656 ;padding:20px;border-radius:5px;opacity:0.95;">
+      <span style="color: white;">Solicitação de Baixa de material sem retorno</span>
+    </div>
+  </mde-popover>
+
+
+    <mde-popover #themePopoverSolicitacaoRetorno="mdePopover" [mdePopoverOverlapTrigger]="false"
+      [mdePopoverCloseOnClick]="false" [mdePopoverOffsetX]="0" [mdePopoverOffsetY]="0" [mdePopoverArrowOffsetX]="0"
+      mdePopoverArrowColor="transparent">
+      <div style="background-color: #565656 ;padding:20px;border-radius:5px;opacity:0.95;">
+        <span style="color: white;">Solicitação de prorrogação de retorno</span>
+      </div>
+    </mde-popover>
+
+      <mde-popover #themePopoverFazerBaixa="mdePopover" [mdePopoverOverlapTrigger]="false"
+        [mdePopoverCloseOnClick]="false" [mdePopoverOffsetX]="0" [mdePopoverOffsetY]="0" [mdePopoverArrowOffsetX]="0"
+        mdePopoverArrowColor="transparent">
+        <div style="background-color: #565656 ;padding:20px;border-radius:5px;opacity:0.95;">
+          <span style="color: white;">Registro de saída</span>
+        </div>
+      </mde-popover>
+
+      <mde-popover #themePopoverHistorico="mdePopover" [mdePopoverOverlapTrigger]="false"
+      [mdePopoverCloseOnClick]="false" [mdePopoverOffsetX]="0" [mdePopoverOffsetY]="0" [mdePopoverArrowOffsetX]="0"
+      mdePopoverArrowColor="transparent">
+      <div style="background-color: #565656 ;padding:20px;border-radius:5px;opacity:0.95;">
+        <span style="color: white;">Histórico Material</span>
+      </div>
+    </mde-popover>
+
+
+
+      <mde-popover #themePopoverFazerRetornoMaterial="mdePopover" [mdePopoverOverlapTrigger]="false"
+      [mdePopoverCloseOnClick]="false" [mdePopoverOffsetX]="0" [mdePopoverOffsetY]="0" [mdePopoverArrowOffsetX]="0"
+      mdePopoverArrowColor="transparent">
+      <div style="background-color: #565656 ;padding:20px;border-radius:5px;opacity:0.95;">
+        <span style="color: white;">Registro de retorno </span>
+      </div>
+    </mde-popover>
+
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+  <ng-container matColumnDef="groupHeader">
+    <td colspan="7" mat-cell *matCellDef="let group">
+      <strong>{{group.value}}</strong>
+    </td>
+  </ng-container>
+
+  <tr mat-row *matRowDef="let row; columns: ['groupHeader']; when: matGroupBy.isGroup"> </tr>
+
+</table>
+
+<mat-paginator [length]="0" [pageSize]="10" showFirstLastButtons></mat-paginator>

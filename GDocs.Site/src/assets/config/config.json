@@ -1,0 +1,27 @@
+{
+  "env": {
+    "name": "DEV"
+  },
+  "logging": {
+    "console": true
+  },
+  "apisBaseUrl": {
+    "gDocs": "https://gdocstst.sistemasice.com.br/api",
+    "gDocs_local": "https://localhost:44304/api"
+  },
+  "gDocs": {
+    "Site": {
+      "ProductVersion": "1.0.0"
+    }
+  },
+  "nomeApp": "GDocs",
+  "loginIntegrado": false,
+  "fileExtensionsAllowedForUploadToConvertToPdf": ".pdf,.doc,.docx,.xls,.xlsx,.txt,.rtf",
+  "fileExtensionsAllowedForUploadImage": ".png,.jpg",
+  "fileExtensionsAllowedOnlyPdf": ".pdf",
+  "appInsights": {
+    "ativo": "false",
+    "instrumentationKey": "00000000-0000-0000-0000-000000000000",
+    "enableAutoRouteTracking": "false"
+  }
+}

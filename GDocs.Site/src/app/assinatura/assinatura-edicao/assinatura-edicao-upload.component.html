@@ -1,0 +1,54 @@
+<div class="panel">
+  <div class="panel-heading">
+    <app-breadcrumb></app-breadcrumb>
+  </div>
+
+  <div class="panel-body" [style.minHeight]='minHeight'>
+    <div class="page-header">
+      <i class="fa fa-user" aria-hidden="true"></i>
+      <h1>Documentos para aprovação</h1>
+    </div>
+    Upload
+    <div>
+      <app-upload
+        (uploadCompletoAdicionarNaListaDeDocumentosPreview)="uploadCompletoAdicionarNaListaDeDocumentosPreview($event)">
+      </app-upload>
+    </div>
+    <div>
+      <app-pdf-preview [listarDocumentosChanging]="listarDocumentosChangingValue" [showThumbnail]="true"
+        [bloquearRemocaoPrimeiroElemento]="true">
+      </app-pdf-preview>
+    </div>
+    <div class="row pull-left">
+      <br>
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 form-group">
+        <button class="btn btn-primary" style="margin-right: 0px;" (click)="Editar()">
+           Editar
+        </button>
+      </div>
+    </div>
+    <div class="row pull-right">
+      <br>
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 form-group">
+        <button class="btn btn-success" style="margin-right: 0px;" (click)="salvar()">
+          <i class="fa fa-save" aria-hidden="true"></i> Enviar para aprovação
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div style="min-height: 90px" class="panel-footer">
+    <div class="panel-heading" id="dvLegenda">
+      <div class="row">
+        <div class="col-sm-4 col-md-4 col-lg-4 col-xs-12 ">
+          <h4 style="border-bottom: 1px dotted #ccc">Ação</h4>
+          <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12">
+              <i aria-hidden="true" class="fa fa-trash-alt text-danger"></i> Remover documento
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

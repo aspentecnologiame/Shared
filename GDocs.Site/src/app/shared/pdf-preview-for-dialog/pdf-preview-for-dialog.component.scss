@@ -1,0 +1,20 @@
+.div-modal {
+  max-height: inherit;
+  overflow: hidden;
+}
+
+.modal-body {
+  max-height: 706px;
+  padding: 0;
+  overflow: hidden;
+}
+
+.modal-header {
+  border-bottom: 0;
+}
+
+.modal-footer {
+  &-last-button {
+    margin: 0 !important;
+  }
+}

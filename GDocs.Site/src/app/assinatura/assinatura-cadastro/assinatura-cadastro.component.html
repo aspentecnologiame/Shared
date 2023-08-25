@@ -1,0 +1,92 @@
+<div class="panel">
+  <div class="panel-heading">
+    <app-breadcrumb></app-breadcrumb>
+  </div>
+
+  <div class="panel-body" [style.minHeight]='minHeight'>
+    <div class="page-header">
+      <i class="fa fa-user" aria-hidden="true"></i>
+      <h1>Documentos para aprovação</h1>
+    </div>
+
+    <mat-horizontal-stepper [linear]="true" labelPosition="bottom" #stepper>
+      <ng-template matStepperIcon="edit">
+        <mat-icon>done</mat-icon>
+      </ng-template>
+      <ng-template matStepperIcon="last">
+        <mat-icon>done_all</mat-icon>
+      </ng-template>
+
+      <mat-step>
+        <ng-template matStepLabel>Informações</ng-template>
+
+        <app-assinatura-informacoes [(assinaturaInformacoesModel)]="assinaturaInformacoes"
+          [(errors)]="errorsAssinaturaInformacoes"></app-assinatura-informacoes>
+
+        <div class="row pull-right">
+          <br>
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 form-group">
+            <button class="btn btn-danger" (click)="cancelarOperacao()">
+              <i class="fa fa-times" aria-hidden="true"></i> Cancelar
+            </button>
+            <button class="btn btn-primary" style="margin-right: 0px;" (click)="proximoStep()">Avançar <i
+                class="fa fa-chevron-right" aria-hidden="true"></i></button>
+          </div>
+        </div>
+
+      </mat-step>
+
+      <mat-step>
+        <ng-template matStepLabel>Aprovadores</ng-template>
+        <app-assinatura-assinadores #assinaturaAssinadoresComponent
+          [(passoAssinaturaUsuariosAdAdcionadosPai)]="passoAssinaturaUsuariosAdAdcionadosPai"
+          [(assinaturaInformacoes)]="assinaturaInformacoes"
+          (sinalizarAlteracaoAssinaturaDocumento)="checarNecessidadeDeLimparUpload()">
+        </app-assinatura-assinadores>
+        <div class="row pull-right">
+          <br>
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 form-group">
+            <button class="btn btn-danger" (click)="cancelarOperacao()">
+              <i class="fa fa-times" aria-hidden="true"></i> Cancelar
+            </button>
+            <button (click)="stepAnterior()" class="btn btn-primary"><i class="fa fa-chevron-left"
+                aria-hidden="true"></i> Voltar</button>
+            <button (click)="proximoStep()" class="btn btn-primary" style="margin-right: 0px;">Avançar <i
+                class="fa fa-chevron-right" aria-hidden="true"></i></button>
+          </div>
+        </div>
+      </mat-step>
+
+      <mat-step [completed]="false">
+        <ng-template matStepLabel>Upload</ng-template>
+
+        <app-upload
+          (uploadCompletoAdicionarNaListaDeDocumentosPreview)="uploadCompletoAdicionarNaListaDeDocumentosPreview($event)"
+          [categoriaId]="assinaturaInformacoes.categoriaId"
+          [numeroDocumento]="assinaturaInformacoes.numeroDocumento"
+          [qtdeDocumentos]="retornarQtdeDeArquivosUpload()"
+          [assinaturaDocumentoUsuario]="componenteAssinadores.matDataSource.data">
+        </app-upload>
+
+        <app-pdf-preview #pdfViewUpload [listarDocumentosChanging]="listarDocumentosChangingValue" [showThumbnail]="true">
+        </app-pdf-preview>
+
+        <div class="row pull-right">
+          <br>
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 form-group">
+            <button class="btn btn-danger" (click)="cancelarOperacao()">
+              <i class="fa fa-times" aria-hidden="true"></i> Cancelar
+            </button>
+            <button class="btn btn-primary" (click)="stepAnterior()"><i class="fa fa-chevron-left"
+                aria-hidden="true"></i> Voltar</button>
+            <button class="btn btn-success" style="margin-right: 0px;"
+              (click)="salvarDocumentosInformacoesPessoasAssinatura()">
+              <i class="fa fa-save" aria-hidden="true"></i> Salvar
+            </button>
+          </div>
+        </div>
+      </mat-step>
+
+    </mat-horizontal-stepper>
+  </div>
+</div>

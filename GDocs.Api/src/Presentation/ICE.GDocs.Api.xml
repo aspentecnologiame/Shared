@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ICE.GDocs.Api</name>
+    </assembly>
+    <members>
+        <member name="T:ICE.GDocs.Api.Configurations.Swagger.ConfigureSwaggerOptions">
+            <summary>
+            Configures the Swagger generation options.
+            </summary>
+            <remarks>This allows API versioning to define a Swagger document per API version after the
+            <see cref="T:Microsoft.AspNetCore.Mvc.ApiExplorer.IApiVersionDescriptionProvider"/> service has been resolved from the service container.</remarks>
+        </member>
+        <member name="M:ICE.GDocs.Api.Configurations.Swagger.ConfigureSwaggerOptions.#ctor(Microsoft.AspNetCore.Mvc.ApiExplorer.IApiVersionDescriptionProvider)">
+            <summary>
+            Initializes a new instance of the <see cref="T:ICE.GDocs.Api.Configurations.Swagger.ConfigureSwaggerOptions"/> class.
+            </summary>
+            <param name="provider">The <see cref="T:Microsoft.AspNetCore.Mvc.ApiExplorer.IApiVersionDescriptionProvider">provider</see> used to generate Swagger documents.</param>
+        </member>
+        <member name="M:ICE.GDocs.Api.Configurations.Swagger.ConfigureSwaggerOptions.Configure(Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenOptions)">
+            <inheritdoc />
+        </member>
+        <member name="T:ICE.GDocs.Api.Configurations.Swagger.SwaggerDefaultValues">
+            <summary>
+            Represents the Swagger/Swashbuckle operation filter used to document the implicit API version parameter.
+            </summary>
+            <remarks>This <see cref="T:Swashbuckle.AspNetCore.SwaggerGen.IOperationFilter"/> is only required due to bugs in the <see cref="T:Swashbuckle.AspNetCore.SwaggerGen.SwaggerGenerator"/>.
+            Once they are fixed and published, this class can be removed.</remarks>
+        </member>
+        <member name="M:ICE.GDocs.Api.Configurations.Swagger.SwaggerDefaultValues.Apply(Microsoft.OpenApi.Models.OpenApiOperation,Swashbuckle.AspNetCore.SwaggerGen.OperationFilterContext)">
+            <summary>
+            Applies the filter to the specified operation using the given context.
+            </summary>
+            <param name="operation">The operation to apply the filter to.</param>
+            <param name="context">The current operation filter context.</param>
+        </member>
+        <member name="M:ICE.GDocs.Api.DependencyResolver.RegisterApiDependencies(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            
+            </summary>
+            <param name="services"></param>
+            <param name="configuration"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ICE.GDocs.Api.Startup.Configure(Microsoft.AspNetCore.Builder.IApplicationBuilder,Microsoft.AspNetCore.Hosting.IWebHostEnvironment,Microsoft.AspNetCore.Mvc.ApiExplorer.IApiVersionDescriptionProvider)">
+            <summary>
+            Configures the application using the provided builder, hosting environment, and API version description provider.
+            </summary>
+            <param name="app">The current application builder.</param>
+            <param name="env"></param>
+            <param name="provider">The API version descriptor provider used to enumerate defined API versions.</param>
+        </member>
+        <member name="M:Microsoft.AspNetCore.Mvc.ControllerBaseExtensions.Success``1(Microsoft.AspNetCore.Mvc.ControllerBase,``0)">
+            <summary>
+            
+            </summary>
+            <typeparam name="T"></typeparam>
+            <param name="controllerBase"></param>
+            <param name="content"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.AspNetCore.Mvc.ControllerBaseExtensions.Failure(Microsoft.AspNetCore.Mvc.ControllerBase,System.ExceptionReadOnlyCollection)">
+            <summary>
+            
+            </summary>
+            <param name="controllerBase"></param>
+            <param name="errors"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

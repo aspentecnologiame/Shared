@@ -1,0 +1,39 @@
+<div *ngIf="DadosEncontrado()" style="padding-top:15px;width:870px;">
+  <div class="row">
+    <div class="col-sm-3 col-md-3 col-lg-3 form-group">
+      <label class="control-label">Conferente SCP</label>
+      <p class="control-label ">{{dataSource.conferente}}</p>
+    </div>
+
+    <div class="col-sm-3 col-md-3 col-lg-3 form-group">
+      <label class="control-label">Portador</label>
+      <p class="control-label ">{{dataSource.portador}}</p>
+    </div>
+
+    <div class="col-sm-3 col-md-3 col-lg-3 form-group">
+      <label class="control-label">Setor/Empresa responsável</label>
+      <p class="control-label">{{dataSource.setorEmpresa}}</p>
+    </div>
+
+    <div class="col-sm-3 col-md-3 col-lg-3 form-group">
+      <label class="control-label">Data/Horário {{descricaoData}}</label>
+      <p class="control-label">{{dataSource.dataAcao | date : 'dd/MM/yyyy HH:mm'}}</p>
+    </div>
+  </div>
+
+
+  <div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12 form-group">
+      <label class="control-label">Observação</label>
+      <p class="control-label ">{{dataSource.observacao}}</p>
+    </div>
+  </div>
+</div>
+
+<div style="width:660px;" *ngIf="!DadosEncontrado()">
+  <div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12 form-group">
+      <p class="control-label ">{{msgNaoEncontrado}}</p>
+    </div>
+  </div>
+</div>

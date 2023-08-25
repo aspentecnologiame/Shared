@@ -1,0 +1,55 @@
+<div mat-dialog-content>
+  <div class="modal-header">
+    <h4 class="modal-title">{{data.titulo}}</h4>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="formAdicionarMaterial">
+      <div class="row">
+        <div class="col-sm-3 col-md-3 col-lg-3 form-group">
+          <label class="control-label">Quantidade</label>
+          <input type="text" formControlName="quantidade" formControlNumericOnly class="form-control text-box single-line" name="quantidade" id="quantidade"/>
+        </div>
+        <div class="col-sm-3 col-md-3 col-lg-3 form-group">
+          <label class="control-label">Unidade </label>
+          <input type="text" formControlName="unidade" formControlTextsOnly class="form-control text-box single-line" name="unidade" id="unidade"/>
+        </div>
+        <div class="col-sm-6 col-md-6 col-lg-6 form-group">
+          <label class="control-label">Patrimônio</label>
+          <input type="text" formControlName="patrimonio" class="form-control text-box single-line" name="patrimonio" />
+        </div>
+      </div>
+  <div class="row">
+    <div class="col-sm-3 col-md-3 col-lg-3 form-group">
+      <label class="control-label">Valor Unitário</label>
+      <input type="text"
+      (keypress)="apenasNumeroOuVirgula($event)"  formControlName="valorUnitario"
+      (blur)="onBlurValor( $event.target.value)"
+      class="form-control text-box single-line" name="valorUnitario" id="valorUnitario"/>
+    </div>
+    <div class="col-sm-3 col-md-3 col-lg-3 form-group">
+      <label class="control-label">Código </label>
+      <input type="text" formControlName="codigo" class="form-control text-box single-line" name="codigo" />
+    </div>
+    <div class="col-sm-6 col-md-6 col-lg-6 form-group">
+      <label class="control-label">Tag service</label>
+      <input type="text" formControlName="tagService" class="form-control text-box single-line" name="tagService" />
+    </div>
+  </div>
+      <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 form-group">
+          <label class="control-label">Descrição</label>
+          <textarea type="text" formControlName="descricao" class="form-control text-box single-line" height="30px!important" name="descricao" >
+          </textarea>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-success pull-right" style="margin-right: 0px;" (click)="confirmarSalvarModal()">
+      <i class="fa fa-check" aria-hidden="true"></i> Confirmar
+    </button>
+    <button class="btn btn-danger pull-right" (click)="fecharModal()">
+      <i class="fa fa-times" aria-hidden="true"></i> Cancelar
+    </button>
+  </div>
+</div>

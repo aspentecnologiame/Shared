@@ -1,0 +1,55 @@
+<div class="panel">
+  <div class="panel-heading">
+    <app-breadcrumb></app-breadcrumb>
+  </div>
+  <div class="panel-body" [style.minHeight]='minHeight'>
+    <div class="page-header">
+      <i class="fa fa-user" aria-hidden="true"></i>
+      <h1>Meus dados</h1>
+    </div>
+
+      <form [formGroup]="form" novalidate>
+        <div class="row">
+          <div class="col-xs-12 col-sm-7 col-md-7 col-lg-6 form-group">
+            <label class="control-label">Nome</label>
+            <input id="nome" type="text" class="form-control text-box single-line" name="nome"
+              formControlName="nome" disabled="true" />
+          </div>
+          <div class="col-xs-12 col-sm-5 col-md-5 col-lg-6 form-group">
+            <label class="control-label">Email</label>
+            <input id="email" type="text" class="form-control text-box single-line" name="email"
+              formControlName="email" disabled="true" />
+          </div>
+        </div>
+      </form>
+      <div class="row">
+        <div class="col-xs-12 col-sm-7 col-md-7 col-lg-12 form-group">
+          <label class="control-label">Assinatura atual</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12 col-sm-7 col-md-7 col-lg-12 form-group">
+          <div style="width: 100%; height: 200px; border: 1px solid black; text-align: center; margin: auto; padding: 10px;">
+            <img *ngIf="imagemBase64AssinaturaAtual !== undefined"
+            [src]="imagemBase64AssinaturaAtual"
+            style="height: 180px;"
+            alt="Assinatura atual"/>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-6 col-sm-7 col-md-7 col-lg-6 form-group">
+            <button class="btn btn-primary" (click)="criarAssinatura()">
+              <i class="fa fa-pen" aria-hidden="true"></i>
+              Criar Assinatura</button>
+
+            <button class="btn btn-primary" (click)="uploadAssinatura()">
+              <i class="fa fa-upload" aria-hidden="true"></i> Upload de imagem
+            </button>
+        </div>
+      </div>
+
+  </div>
+  <div class="panel-footer" style="min-height: 90px">
+  </div>
+</div>

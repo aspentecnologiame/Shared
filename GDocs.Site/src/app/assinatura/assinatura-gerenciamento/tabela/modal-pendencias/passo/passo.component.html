@@ -1,0 +1,18 @@
+<div class="passo">
+  <div class="passo-header">
+    <em *ngIf="legendaIcone!==''" #emTriggerPopover="mdePopoverTrigger" mdePopoverTriggerOn="hover" class="{{faIcone}} icon {{corIcone}}"
+      [mdePopoverTriggerFor]="themePopover" aria-hidden="true">
+    </em>
+    <h1>Passo de aprovação nº {{passo.ordem}}</h1>
+
+    <mde-popover #themePopover="mdePopover" [mdePopoverOverlapTrigger]="false" [mdePopoverCloseOnClick]="false"
+      [mdePopoverOffsetX]="0" [mdePopoverOffsetY]="0" [mdePopoverArrowOffsetX]="0" mdePopoverArrowColor="transparent">
+      <div style="background-color: #565656 ;padding:20px;border-radius:5px;opacity:0.95;">
+        <span #status style="color: white;">{{legendaIcone}}</span>
+      </div>
+    </mde-popover>
+  </div>
+  <div class="passo-body">
+    <app-pendencia-card *ngFor="let assinante of passo.usuarios" [assinante]="assinante"></app-pendencia-card>
+  </div>
+</div>

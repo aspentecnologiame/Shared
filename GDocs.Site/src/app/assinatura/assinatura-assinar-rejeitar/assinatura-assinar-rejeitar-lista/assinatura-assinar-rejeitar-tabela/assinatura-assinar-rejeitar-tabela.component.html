@@ -1,0 +1,165 @@
+<div class="form-inline table-filter-field">
+  <div class="form-group pull-right">
+    <label style="margin-right: 5px;">Buscar </label>
+    <input id="filtrar" type="text" (keyup)="aplicarFiltro($event.target.value)"
+      class="form-control text-box single-line" name="filtrar" />
+  </div>
+  <div class="clearfix"></div>
+</div>
+
+<table mat-table [dataSource]="matDataSource" (matSortChange)="ordenacaoCustomizada($event)" matSort matSortActive="dataCriacao" matSortDirection="asc" matSortDisableClear class="ng-mat-table" aria-describedby="nome"
+  style="margin-top: 10px;">
+  <ng-container matColumnDef="selecionado">
+    <th scope="col" mat-header-cell *matHeaderCellDef style="text-align: center; width: 32px;" [hidden]="!verificarSeAbaPermiteAssinaturaEmLote()">
+      <mat-checkbox class="mat-checkbox-header" aria-label="Selecionar todos" [(ngModel)]="selecionarTodos"
+        (change)="selecionarTodosParaAssinar($event.checked);"></mat-checkbox>
+    </th>
+    <td mat-cell class="text-center" *matCellDef="let row" [hidden]="!verificarSeAbaPermiteAssinaturaEmLote()">
+      <mat-checkbox *ngIf="verificarSeOCheckBoxPodeSerExibido(row.id)" [(ngModel)]="row.selecionado" [disabled]="row.assinarCertificadoDigital"
+        (change)="selecionarParaAssinar($event.checked,row.id);">
+      </mat-checkbox>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="numero">
+    <th scope="row" mat-header-cell *matHeaderCellDef mat-sort-header style="width: 10%;">Número</th>
+    <td mat-cell class="text-center" *matCellDef="let row">
+      {{row.numero}}
+      <em class="fa fa-star warning-color" *ngIf="row.destaque" [mdePopoverTriggerFor]="themePopoverDestaque"></em>
+      <mde-popover #themePopoverDestaque="mdePopover" [mdePopoverOverlapTrigger]="false"
+        [mdePopoverCloseOnClick]="false" [mdePopoverOffsetX]="0" [mdePopoverOffsetY]="0" [mdePopoverArrowOffsetX]="0"
+        mdePopoverArrowColor="transparent">
+        <div style="background-color: #565656 ;padding:20px;border-radius:5px;opacity:0.95;">
+          <span style="color: white;">Destacado pelo solicitante</span>
+        </div>
+      </mde-popover>
+    </td>
+  </ng-container>
+
+  <ng-container matColumnDef="descricao">
+    <th scope="row" mat-header-cell *matHeaderCellDef mat-sort-header>Descrição</th>
+    <td mat-cell class="text-left" *matCellDef="let row">
+      <mde-popover #themePopoverStatusPasso="mdePopover" [mdePopoverOverlapTrigger]="false"
+        [mdePopoverCloseOnClick]="false" [mdePopoverOffsetX]="0" [mdePopoverOffsetY]="0" [mdePopoverArrowOffsetX]="0"
+        mdePopoverArrowColor="transparent">
+        <div style="background-color: #565656 ;padding:20px;border-radius:5px;opacity:0.95;">
+          <span style="color: white;">{{retornaDescricaoStatusPasso(row.statusPassoAtualId)}}</span>
+        </div>
+      </mde-popover>
+      <mde-popover #themePopoverAssinarCertificadoDigital="mdePopover" [mdePopoverOverlapTrigger]="false"
+        [mdePopoverCloseOnClick]="false" [mdePopoverOffsetX]="0" [mdePopoverOffsetY]="0" [mdePopoverArrowOffsetX]="0"
+        mdePopoverArrowColor="transparent">
+        <div style="background-color: #565656 ;padding:20px;border-radius:5px;opacity:0.95;">
+          <span style="color: white;">Documento deve ser assinado por certificado digital</span>
+        </div>
+      </mde-popover>
+     <span>      <em *appHasPermition="'assinatura:pendencias:exibirstatuspasso'"
+      class="fa fa-circle {{retornaClassStatusPasso(row.statusPassoAtualId)}}"
+      [mdePopoverTriggerFor]="themePopoverStatusPasso"
+      mdePopoverTriggerOn="hover" aria-hidden="true" style="float:left; width:3%;padding-top: 1%;">
+    </em>
+    <span [innerHtml]="row.descricao | safe: 'html'" class="descricaoAssinatura">
+
+
+    </span>
+  </span>
+      <em *ngIf="row.assinarCertificadoDigital"
+        class="fa fa-certificate"
+        [mdePopoverTriggerFor]="themePopoverAssinarCertificadoDigital"
+        mdePopoverTriggerOn="hover" aria-hidden="true" style="float: left; width: 3%;color: #151476;">
+      </em>
+      <mde-popover #themePopoverSubstituto="mdePopover" [mdePopoverOverlapTrigger]="false"
+      [mdePopoverCloseOnClick]="false" [mdePopoverOffsetX]="0" [mdePopoverOffsetY]="0" [mdePopoverArrowOffsetX]="0"
+      mdePopoverArrowColor="transparent">
+      <div style="background-color: #565656 ;padding:20px;border-radius:5px;opacity:0.95;">
+        <span style="color: white;">Esse documento é substituto de outro</span>
+      </div>
+    </mde-popover>
+      <em *ngIf="row.referenciaSubstituto"
+      class="fa fa-sync-alt"
+      [mdePopoverTriggerFor]="themePopoverSubstituto"
+      mdePopoverTriggerOn="hover" aria-hidden="true" style="float: left; width:3%;color: #2724ad;">
+    </em>
+      <em class="fa fa-info-circle {{paddingParaCiencia(row)}}" aria-hidden="true" [mdePopoverTriggerFor]="themePopoverDadosComplementares"
+        mdePopoverTriggerOn="click" mdePopoverTriggerOn="hover" aria-hidden="true" style="float:right; width: 3%;">
+      </em>
+      <mde-popover #themePopoverDadosComplementares="mdePopover" [mdePopoverOverlapTrigger]="false"
+        [mdePopoverCloseOnClick]="false" [mdePopoverOffsetX]="0" [mdePopoverOffsetY]="0" [mdePopoverArrowOffsetX]="0"
+        mdePopoverArrowColor="transparent">
+        <div class="popover-internal-div-padrao">
+          <div>
+            <strong>Titulo</strong>
+            <pre> {{row.titulo}}</pre>
+          </div>
+          <div>
+            <strong>Nome do documento</strong>
+            <pre> {{row.nomeDocumento}}</pre>
+          </div>
+        </div>
+      </mde-popover>
+    </td>
+  </ng-container>
+
+  <ng-container  matColumnDef="observacao">
+    <th [hidden]="selectedTabIndex != abaCiencia" scope="row" mat-header-cell *matHeaderCellDef mat-sort-header style="width: 25%;">Motivo</th>
+    <td [hidden]="selectedTabIndex != abaCiencia" mat-cell class="text-left" *matCellDef="let row">{{row.observacao}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="descricaoCategoria">
+    <th scope="row" mat-header-cell *matHeaderCellDef mat-sort-header style="width: 25%;">Categoria</th>
+    <td mat-cell class="text-center" *matCellDef="let row">{{row.descricaoCategoria}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="dataCriacao">
+    <th scope="row" mat-header-cell *matHeaderCellDef mat-sort-header style="width: 10%;">Data</th>
+    <td mat-cell class="text-center" *matCellDef="let row">{{row.dataCriacao | date: 'dd/MM/yyyy'}}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="acao">
+    <th scope="row" mat-header-cell *matHeaderCellDef style="width: 5%; text-align: center;">Ação</th>
+    <td mat-cell class="text-center" *matCellDef="let row">
+      <em style="margin-right:5px;cursor:pointer;color:#008000" class="fas fa-file-alt"
+        [mdePopoverTriggerFor]="themePopoverPendenciaAssinatura" mdePopoverTriggerOn="hover" aria-hidden="true"
+        (click)="obterProcessoComPassosParaAssinatura(row)" [hidden]="verificarSeAbaPermiteAssinaturaEmLote() || verificarSeAbaPermiteVerDetalheCiencia()">
+      </em>
+      <em style="cursor:pointer;color:#00417f" class="fas fa-search" [mdePopoverTriggerFor]="themePopoverImprimir"
+        (click)="visualizarDocumento(row)" mdePopoverTriggerOn="hover" aria-hidden="true" [hidden]="verificarSeAbaPermiteVerDetalheCiencia()">
+      </em>
+      <em style="cursor:pointer;color:#00417f" class="fas fa-search" [mdePopoverTriggerFor]="themePopoverCiencia"
+        (click)="visualizarCiencia(row)" mdePopoverTriggerOn="hover" aria-hidden="true" [hidden]="!verificarSeAbaPermiteVerDetalheCiencia()">
+      </em>
+      <mde-popover #themePopoverPendenciaAssinatura="mdePopover" [mdePopoverOverlapTrigger]="false"
+        [mdePopoverCloseOnClick]="false" [mdePopoverOffsetX]="0" [mdePopoverOffsetY]="0" [mdePopoverArrowOffsetX]="0"
+        mdePopoverArrowColor="transparent">
+        <div style="background-color: #565656 ;padding:20px;border-radius:5px;opacity:0.95;">
+          <span style="color: white;">Status do fluxo das aprovações</span>
+        </div>
+      </mde-popover>
+      <mde-popover #themePopoverImprimir="mdePopover" [mdePopoverOverlapTrigger]="false"
+        [mdePopoverCloseOnClick]="false" [mdePopoverOffsetX]="0" [mdePopoverOffsetY]="0" [mdePopoverArrowOffsetX]="0"
+        mdePopoverArrowColor="transparent">
+        <div style="background-color: #565656 ;padding:20px;border-radius:5px;opacity:0.95;">
+          <span style="color: white;">Ver detalhes</span>
+        </div>
+      </mde-popover>
+      <mde-popover #themePopoverCiencia="mdePopover" [mdePopoverOverlapTrigger]="false"
+        [mdePopoverCloseOnClick]="false" [mdePopoverOffsetX]="0" [mdePopoverOffsetY]="0" [mdePopoverArrowOffsetX]="0"
+        mdePopoverArrowColor="transparent">
+        <div style="background-color: #565656 ;padding:20px;border-radius:5px;opacity:0.95;">
+          <span style="color: white;">Ver detalhes</span>
+        </div>
+      </mde-popover>
+    </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;" data-id="{{row.id}}"></tr>
+</table>
+
+<mat-paginator [length]="0" [pageSize]="10" showFirstLastButtons></mat-paginator>
+
+<div *appHasPermition="'assinatura:pendencias:assinaremlote'">
+  <button class="btn btn-success pull-left" (click)="assinarDocumentosSelecionados()" *ngIf="verificarSeAbaPermiteAssinaturaEmLote() && !verificarSeAbaPermiteVerDetalheCiencia()">
+    <i class="fa fa-file-signature" aria-hidden="true"></i> Aprovar documentos selecionados
+  </button>
+</div>

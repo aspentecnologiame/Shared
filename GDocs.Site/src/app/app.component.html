@@ -1,0 +1,21 @@
+<div *ngIf="!platform.TRIDENT">
+  <ng-http-loader [entryComponent]="componenteLoader"></ng-http-loader>
+  <router-outlet></router-outlet>
+</div>
+<div class="modal-navegado-incompativel-container" *ngIf="platform.TRIDENT">
+  <div class="modal-navegado-incompativel">
+    <p class="titulo">Você deve estar usando um navegador incompatível.</p>
+    <p class="mensagem">Os navegadores antigos podem colocar sua segurança em risco, são lentos e não funcionam com os
+      novos recursos utilizado na Web. Para obter os mais novos recuros que a Web tem a oferecer, utilize um navegador
+      mais moderno.</p>
+
+    <div class="navegadores-compativeis">
+      <div>Navegadores compatíveis <small>(utilizar a versão mais atual)</small></div>
+      <img class="logo-ice" src="assets/images/firefox.png" alt="Firefox">
+      <img class="logo-ice" src="assets/images/chrome.png" alt="Chrome">
+      <img class="logo-ice" src="assets/images/safari.png" alt="Safari">
+      <img class="logo-ice" src="assets/images/edge.png" alt="Edge">
+
+    </div>
+  </div>
+</div>

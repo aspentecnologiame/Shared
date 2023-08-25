@@ -1,0 +1,19 @@
+<div class="div-modal" mat-dialog-content>
+  <div class="modal-header">
+    <h4 class="modal-title">Atribuir Representantes</h4>
+  </div>
+  <div class="modal-body div-modal-body">
+    <div>
+      <app-assinatura-gerenciamento-representante-tabela [dataSource]="dataSource" [(dataSource)]="dataSource"
+        *ngIf="(dataSource?.length || 0) > 0 else tabelaVazia">
+      </app-assinatura-gerenciamento-representante-tabela>
+      <ng-template #tabelaVazia>
+        <app-no-records-found-message *ngIf="dataSource != null"></app-no-records-found-message>
+      </ng-template>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button (click)="fecharModal(false)" type="button" class="btn btn-primary">Fechar</button>
+    <button (click)="salvarRepresentantes()" type="button" class="btn btn-success">Salvar</button>
+  </div>
+</div>

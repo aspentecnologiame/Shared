@@ -1,0 +1,52 @@
+<div class="panel">
+  <div class="panel-heading">
+    <app-breadcrumb></app-breadcrumb>
+  </div>
+  <div class="panel-body" [style.minHeight]='minHeight'>
+    <div class="page-header">
+      <i class="fa fa-user" aria-hidden="true"></i>
+      <h1>Dados do usuário</h1>
+    </div>
+
+    <div>
+      <form [formGroup]="form" novalidate>
+        <div class="row">
+          <div class="col-xs-12 col-sm-7 col-md-7 col-lg-7 form-group">
+            <label class="control-label">Nome</label>
+
+            <input *ngIf="atualizarUsuario" id="nome" type="text" class="form-control text-box single-line" name="nome"
+              formControlName="nome" disabled="true" />
+
+            <ng-select *ngIf="! atualizarUsuario" [items]="obsListaUsuario$ | async" class="ng-select" bindLabel="nome"
+              [addTag]="false" [hideSelected]="true" [loading]="listaUsuarioLoading" [typeahead]="listaUsuarioinput$"
+              [(ngModel)]="selectUsuarios" formControlName="nome" loadingText="Aguarde, carregando..."
+              notFoundText="Nenhum usuário localizado." typeToSearchText="Digite 3 ou mais caracteres"
+              placeholder="Digite 3 ou mais caracteres" clearAllText="Limpar">
+            </ng-select>
+
+          </div>
+          <div class="col-xs-12 col-sm-5 col-md-5 col-lg-5 form-group">
+            <label class="control-label">Perfil</label>
+            <ng-select class="ng-select" [items]="perfis" id="selectPerfis" [selectOnTab]="true" bindLabel="descricao"
+              bindValue="id" placeholder="[Selecione]" formControlName="perfil" loadingText="Aguarde, carregando..."
+              notFoundText="Nenhum perfil localizado." [multiple]="true" clearAllText="Limpar">
+              <ng-template ng-label-tmp ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+                {{item.descricao}}
+              </ng-template>
+            </ng-select>
+          </div>
+        </div>
+      </form>
+      <div class="form-group">
+        <button class="btn btn-success pull-right" style="margin-right: 0px;" (click)="gravarDados()">
+          <i class="fa fa-floppy-o" aria-hidden="true"></i>
+          Salvar</button>
+        <button class="btn btn-danger pull-right" (click)="cancelarOperacao()">
+          <i class="fa fa-times" aria-hidden="true"></i> Cancelar
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="panel-footer" style="min-height: 90px">
+  </div>
+</div>

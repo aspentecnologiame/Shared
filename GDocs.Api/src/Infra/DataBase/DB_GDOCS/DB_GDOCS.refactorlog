@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Operations Version="1.0" xmlns="http://schemas.microsoft.com/sqlserver/dac/Serialization/2012/02">
+  <Operation Name="Rename Refactor" Key="fb4f2103-78da-4c6e-b889-64ff986c30e4" ChangeDateTime="08/11/2022 19:34:55">
+    <Property Name="ElementName" Value="[dbo].[tb_aus_assinatura_usuario].[bin_idt_assinatura]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[tb_aus_assinatura_usuario]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="bin_idt_assinaturadocumento" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="5f72f7c6-e8ec-42a5-aa63-500ac4800b65" ChangeDateTime="10/06/2022 20:16:00">
+    <Property Name="ElementName" Value="[dbo].[tb_padpu_processo_assinatura_documento_passo_usuario].[ padpu_flg_farei_envio]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[tb_padpu_processo_assinatura_documento_passo_usuario]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="padpu_flg_farei_envio" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="faf2a962-bde6-4d4f-bb7c-a8298d1ba302" ChangeDateTime="04/03/2023 16:27:01">
+    <Property Name="ElementName" Value="[dbo].[tb_smnf_saida_material_nota_fiscal].[smnf_observacao]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[tb_smnf_saida_material_nota_fiscal]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="smnf_motivo" />
+  </Operation>
+</Operations>

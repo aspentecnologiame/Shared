@@ -1,0 +1,133 @@
+<div class="tamanho-tela" mat-dialog-content>
+  <div class="modal-header">
+    <h4 class="modal-title">Histórico Material {{headerTitulo(SaidaMaterial.numero)}}</h4>
+  </div>
+  <div class="modal-body">
+    <div class="row" style="width:900px;">
+      <div class="col-sm-4 col-lg-4 " >
+        <label class="control-label">Tipo de Saída</label>
+        <p class="control-label destaque">{{SaidaMaterial.tipoSaida}}</p>
+      </div>
+      <div class="col-sm-4 col-lg-4  ">
+        <label class="control-label">Responsável/Setor </label>
+        <p class="control-label destaque">{{SaidaMaterial.setorResponsavel}}</p>
+
+      </div>
+      <div class="col-sm-4 col-lg-4 " >
+        <label class="control-label">Status</label>
+        <p class="control-label destaque">{{SaidaMaterial.status}}</p>
+      </div>
+    </div>
+<div class="tabela-scroll-historico-com-nf">
+    <div class="row" style="width:900px;">
+      <div class="col-sm-4 col-lg-4  form-group"  >
+        <label class="control-label">Origem</label>
+        <p class="control-label ">{{SaidaMaterial.origem}}</p>
+      </div>
+      <div class="col-sm-4 col-lg-4  form-group">
+        <label class="control-label">Destino</label>
+        <p class="control-label">{{SaidaMaterial.destino}}</p>
+
+      </div>
+      <div class="col-sm-4 col-lg-4  form-group" >
+        <label class="control-label">Data Prevista retorno</label>
+        <p class="control-label">{{SaidaMaterial.retorno | date: 'dd/MM/yyyy'}}</p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-12 col-lg-12 form-group" >
+        <label class="control-label">Motivo</label>
+        <p class="control-label ">{{SaidaMaterial.motivo}}</p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-lg-12 form-group">
+        <label class="control-label" style="margin-right: 3px;">Materiais</label>
+        <app-tabela-item-material
+         [configuracaoColuna]="acao"
+         (eventoItemSelecionado)="ItemMarcado($event)"
+         [dataSource]="DataSourceItemMaterial">
+        </app-tabela-item-material>
+      </div>
+    </div>
+
+    <div class="row" style="padding-left:15px;">
+      <mat-tab-group >
+        <mat-tab label="SAÍDA">
+          <app-detalhe-saida-material
+            MsgNaoEncontrado="Não foi encontrado o evento de saída para essa solicitação."
+           [dataSource]="DataSourceAcaoSaida">
+          </app-detalhe-saida-material>
+        </mat-tab>
+
+
+        <mat-tab label="RETORNO">
+         <app-detalhe-saida-material
+         MsgNaoEncontrado="Não foi encontrado o evento de retorno para esse material."
+         [dataSource]="DataSourceAcaoRetorno">
+         </app-detalhe-saida-material>
+        </mat-tab>
+
+        <mat-tab label="PRORROGAÇÃO" >
+            <div style="padding-right: 10px;" >
+              <app-historico-prorrogacao-tabela
+              [MostraTitulo]="false"
+              [dataSource]="DataSourceHistoricoProrogacao"
+              *ngIf="DataSourceHistoricoProrogacao.length > 0 else SemProrogacao" >
+              </app-historico-prorrogacao-tabela>
+              <ng-template #SemProrogacao>
+                <div  class="nao-encontrado row ">
+                  <div class="col-sm-12 col-lg-12 ">
+                    <p class="control-label ">Não foi encontrado o evento de prorrogação para essa solicitação.</p>
+                  </div>
+                </div>
+              </ng-template>
+            </div>
+        </mat-tab>
+
+        <mat-tab label="BAIXA SEM RETORNO">
+          <div style="padding-right: 10px;" >
+            <app-historico-prorrogacao-tabela
+            [MostraTitulo]="false"
+            [configuracao]="acaoTabelaHistorico"
+            [dataSource]="DataSourceHistoricoBaixaSemRetorno"
+            *ngIf="DataSourceHistoricoBaixaSemRetorno.length > 0 else SemBaixaRetorno">
+            </app-historico-prorrogacao-tabela>
+            <ng-template #SemBaixaRetorno>
+              <div  class="nao-encontrado row ">
+                <div class="col-sm-12 col-lg-12 ">
+                  <p class="control-label ">Não foi encontrado o evento de baixa sem retorno para esse material.</p>
+                </div>
+              </div>
+            </ng-template>
+          </div>
+        </mat-tab>
+
+        <mat-tab label="NF SUBSTITUÍDAS">
+          <div style="padding-right: 10px;" >
+            <app-historico-nota-fiscal-anexo-saida-tabela
+            [dataSource]="DataSourceHistoricoTrocaNfSaida"
+            *ngIf="DataSourceHistoricoTrocaNfSaida.length > 0 else HistoricoNaoEncontrado">
+            </app-historico-nota-fiscal-anexo-saida-tabela>
+            <ng-template #HistoricoNaoEncontrado>
+              <div  class="nao-encontrado row ">
+                <div class="col-sm-12 col-lg-12 ">
+                  <p class="control-label ">Não existe NF substituída para essa saída de material.</p>
+                </div>
+              </div>
+            </ng-template>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+  </div>
+</div>
+
+  <div class="modal-footer">
+    <button class="btn btn-primary pull-right" (click)="cancelarModal()">
+      <i aria-hidden="true"></i> Fechar
+    </button>
+  </div>
+</div>

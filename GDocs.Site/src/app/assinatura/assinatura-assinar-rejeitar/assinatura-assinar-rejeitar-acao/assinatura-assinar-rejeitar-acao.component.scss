@@ -1,0 +1,110 @@
+::ng-deep .mat-card {
+    margin-top: 10px;
+    transition: box-shadow 280ms cubic-bezier(.4,0,.2,1);
+    display: block;
+    position: relative;
+    padding: 16px;
+    border-radius: 4px;
+    background: #f0f0f0;
+    color: rgba(0,0,0,.87);
+}
+
+::ng-deep .mat-card-content>:first-child, .mat-card>:first-child {
+    margin-top: 0;
+}
+
+::ng-deep .mat-card-title {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 15px;
+    font-weight: 500;
+}
+
+a:link{
+  text-decoration:underline;
+  color:red;
+  }
+  
+  a:visited{
+  text-decoration:none;
+  color:red;
+  }
+  
+  a:hover{
+  text-decoration:none;
+  color: ink;
+  }
+  
+  a:active{
+  text-decoration:none;
+  color:green;
+  }
+  
+
+::ng-deep .mat-card-content>:last-child:not(.mat-card-footer), .mat-card>:last-child:not(.mat-card-footer) {
+    margin-bottom: 0;
+}
+
+::ng-deep .mat-card-actions, .mat-card-content, .mat-card-subtitle {
+    display: block;
+    margin-bottom: 16px;
+}
+
+::ng-deep .mat-card-content, .mat-card-subtitle {
+    font-size: 12px;
+}
+
+::ng-deep .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-bar {
+  background-color: #5a84ac;
+}
+
+::ng-deep .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-thumb {
+  background-color: #00417f;
+}
+
+::ng-deep .mat-slide-toggle:focus {
+   background-color: #1081b6; }
+.btn-split{
+  margin-right: 0;
+}
+.dropdown-split {
+  display: inline-block;
+}
+
+.dropdown-content-split {
+  display: none;
+  position: absolute;
+  z-index: 1;
+}
+
+.dropdown-content-split a {
+  color: #fff;
+  padding: 0px 11px;
+  text-decoration: none;
+  display: block;
+  margin-left: -97px;
+  width: 132px;
+  background-color: #5cb85c;
+}
+
+.dropdown-content-split a:hover {background-color: #5cb85c}
+
+.dropdown-split:hover .dropdown-content-split {
+  display: block;
+}
+
+.btn-split:hover, .dropdown-split:hover .btn-split {
+  background-color: #5cb85c;
+}
+
+.p-split{
+  margin-left: 13px;
+}
+
+.btn-assinar-com-obs{
+  height: 49px;
+}
+
+.div-autor {
+  margin-top: 10px;
+}

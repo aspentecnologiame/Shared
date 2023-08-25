@@ -1,0 +1,118 @@
+<div class="panel">
+  <div class="panel-heading">
+    <app-breadcrumb></app-breadcrumb>
+  </div>
+  <div class="panel-body" [style.minHeight]='minHeight'>
+    <div class="page-header" style="margin-bottom: 0px;">
+      <i class="fa fa-file" aria-hidden="true"></i>
+      <h1>Pendentes de aprovação</h1>
+    </div>
+    <div>
+      <div [ngClass]="(dataSource?.length || 0) > 0 ? 'botao-atualizar' : 'botao-atualizar-sem-dados'" [hidden]="!botaoAtualizarVisivel">
+        <div class="row">
+          <div class="form-group">
+            <button class="btn btn-primary pull-right" (click)="atualizarTela()">
+              <i class="fa fa-sync-alt" aria-hidden="true"></i> Atualizar ({{ tempoMomentoRefreshEmSegundos * 1000
+              | date:'mm:ss'}})
+            </button>
+          </div>
+        </div>
+        <div class="row">
+          <mat-progress-bar [class.mat-progress-bar-danger]="tempoMomentoRefreshEmSegundos < indicadorAlertaBarraTempo"
+            class="pull-right" mode="determinate" [value]="indicadorProgressoBarraTempo" dir="rtl">
+          </mat-progress-bar>
+        </div>
+      </div>
+      <div class="row">
+
+        <mat-tab-group dynamicHeight (selectedTabChange)="onTabChanged($event);" [(selectedIndex)]="selectedTabIndex">
+          <mat-tab *ngFor="let abaCategoria of ABAS_CATEGORIAS;">
+            <ng-template matTabLabel>
+                    <span [ngClass]="abaCategoria.destacar ? 'destacar' : ''">{{abaCategoria.descricaoCategoria}}</span>
+                    <span [ngClass]="abaCategoria.destacar ? 'destacar-num' : ''" style="float: right;" class="badge badge-primary">{{abaCategoria.quantidadeDocumentos}}</span>
+            </ng-template>
+
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 form-group" style="margin-top: 15px;">
+              <app-assinatura-assinar-rejeitar-tabela
+                (eventDocumentosSelecionados)="listaDocumentosSelecionados($event)"
+                (AtualizarTabela)="atualizarTela()"
+                (PararContador)="setarCondicaoContador($event)"
+                (eventAtualizarMatriz)="popularListDocumentosPendentesAssinatura()" [dataSource]="dataSource"
+                [documentosSelecionadosLista]="documentosSelecionadosLista"
+                [selectedTabIndex]="selectedTabIndex"
+                *ngIf="(dataSource?.length || 0) > 0 else tabelaVazia">
+              </app-assinatura-assinar-rejeitar-tabela>
+              <ng-template #tabelaVazia>
+                <app-no-records-found-message *ngIf="dataSource != null"></app-no-records-found-message>
+              </ng-template>
+            </div>
+          </mat-tab>
+        </mat-tab-group>
+        <div style="margin-top:53px">
+          <app-no-records-found-message message="Não há documentos pendentes de aprovação."
+            *ngIf="ABAS_CATEGORIAS.length == 0"></app-no-records-found-message>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="panel-footer" style="min-height: 90px">
+    <div id="dvLegenda" class="panel-heading">
+      <div class="row">
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+          <h4 style="border-bottom: 1px dotted #ccc">Ação</h4>
+          <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+              <em class="fas fa-search" style="color:#00417f;font-size: 16px;"></em> Ver detalhes
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+              <em class="fas fa-file-alt" style="color:#008000;font-size: 16px;"></em> Status do fluxo das aprovações
+            </div>
+          </div>
+        </div>
+        <div *appHasPermition="'assinatura:pendencias:exibirstatuspasso'" class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+          <h4 style="border-bottom: 1px dotted #ccc">Status</h4>
+          <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+              <em class="fa fa-circle marcador-naoassinado"></em> Não aprovado
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+              <em class="fa fa-circle marcador-aprovado"></em> Aprovado
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+              <em class="fa fa-circle marcador-assinadocomobservacao"></em> Aprovado com observação
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+              <em class="fa fa-circle marcador-rejeitado"></em> Rejeitado
+            </div>
+          </div>
+        </div>
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+          <h4 style="border-bottom: 1px dotted #ccc">Descrição</h4>
+          <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+              <em class="fa fa-certificate ng-star-inserted" style="color:#00417f;font-size: 16px;"></em> Certificado Digital
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+              <em class="fa fa-info-circle" style="color:#000;font-size: 16px;"></em> Informação
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+              <em class="fa fa-sync-alt" style="color:#2724ad;font-size: 16px;"></em> Documento Substituto
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

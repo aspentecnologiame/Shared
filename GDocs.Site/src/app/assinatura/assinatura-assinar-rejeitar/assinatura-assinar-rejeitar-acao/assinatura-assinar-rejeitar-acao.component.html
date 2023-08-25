@@ -1,0 +1,88 @@
+<div class="panel">
+  <div class="panel-heading">
+    <app-breadcrumb></app-breadcrumb>
+  </div>
+  <div class="panel-body" [style.minHeight]='minHeight'>
+    <div class="page-header" style="margin-bottom: 0px;">
+      <i class="fa fa-file" aria-hidden="true"></i>
+      <h1>Detalhes do documento</h1>
+    </div>
+    <div>
+      <app-assinatura-assinar-rejeitar-card-justificativa
+      [DataSource]="assinaturaUsuarioAd"
+      [NomeAutor]="nomeAutor">
+    </app-assinatura-assinar-rejeitar-card-justificativa>
+
+    <div>
+        <mat-card *ngIf="MostraAprovadoresPrevio()">
+          <mat-card-title>Aprovação prévia realizada por:</mat-card-title>
+          <mat-card-content style=" display: flex; align-items: center; line-height: 50px;  flex-wrap: nowrap;">
+            {{aprovadoresPrevios}}
+           <i class="far fa-check-circle fa-lg" 
+           style="font-size: 50px; color: #1f5129; margin-left:auto; margin-right: 10px;  " ></i>
+           <span style="font-size: 20px; color: #1f5129; font-weight: bold;">Pré-Aprovado</span> 
+            
+
+          </mat-card-content>
+        </mat-card>
+    </div>
+      <div class="row">
+        <ng2-pdfjs-viewer #pdfViewer [pdfSrc]="pdfSrc" [downloadFileName]="nomeDownload" locale="pt-br" pagemode="none"
+          [openFile]="false" [viewBookmark]="false" [fullScreen]="false" [find]="false" cursor="H"
+          [ngClass]="{'col-xs-12': true, 'col-sm-12': true, 'col-md-12': false, 'col-lg-12': true}"
+          style="height: 525px; padding: 0; margin-top: 10px;">
+        </ng2-pdfjs-viewer>
+      </div>
+      <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+          <hr />
+          <div class="form-group">
+            <em *ngIf="this.possuiSubstitutoCancelado"  style="color:#ff0303;padding-right:2px; font-size: 15px; cursor: pointer;" 
+
+            (click)="exibirDetalhesDocumento(this.documentoRetorno)" aria-hidden="true"> <u>Status de Pagamento substitui outro que foi cancelado após aprovação</u>
+
+          </em>
+          <em *ngIf="this.possuiSubstitutoRejeitado"  style="color:#ff0303;padding-right:2px; font-size: 15Px; cursor: pointer;" 
+
+          (click)="exibirDetalhesDocumento(this.documentoRetorno)" aria-hidden="true"> <u>Status de Pagamento substitui outro que foi rejeitado</u>
+
+        </em>
+             
+            <div class="pull-right" *ngIf="possuiAlgumaRejeicaoNoPasso === false">
+              <button class="btn-split btn btn-success" (click)="assinar()">
+                <i class="fa fa-check" aria-hidden="true"></i> {{textoAssinatura}}
+              </button>
+              <div class="dropdown-split"><button class="btn-split btn btn-success"
+                  style="border-left: 1px solid #ffffff;"><i class="fa fa-caret-down"></i></button>
+                <div class="dropdown-content-split">
+                  <a class="btn btn-success btn-assinar-com-obs" (click)="assinarComObservacao()"><i
+                      class="fa fa-check icon-split" aria-hidden="true"></i>
+                    {{textoAssinatura}} com
+                    <p class="p-split"> observação</p>
+                  </a>
+                </div>
+              </div>
+            </div>
+            <button class="btn btn-danger pull-right" (click)="rejeitar()">
+              <i class="fa fa-times" aria-hidden="true"></i> Rejeitar
+            </button>
+            <button class="btn btn-danger pull-right" (click)="navegarParaConsulta()">
+              <i class="fa fa-times" aria-hidden="true"></i> Cancelar
+            </button>
+            <div *ngIf="MostraFareiEnvioSemCertificado">
+              <mat-slide-toggle
+                class="pull-right"
+                style="margin-right:20px;"
+                (change)="FareiEnvioChangeSemCertificado($event)"
+                [disabled] = "checkFareiEnvioHabilitadoSemCertificado"
+                [(ngModel)]="checkFareiEnvioValorSemCertificado"
+                [color]="colorSemCertificado">
+                Eu farei o envio
+            </mat-slide-toggle>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+    <app-assinatura-assinar-rejeitar-footer></app-assinatura-assinar-rejeitar-footer>
+</div>

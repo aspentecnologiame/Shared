@@ -1,0 +1,62 @@
+::ng-deep .mat-progress-bar-buffer {
+    background: #5cb85c;
+}
+
+::ng-deep .mat-progress-bar-fill::after {
+    background-color: #cccccc;
+}
+
+::ng-deep .mat-progress-bar-danger {
+    .mat-progress-bar-buffer {
+        background: #ff0000;
+    }
+}
+
+::ng-deep .mat-tab-header {
+    width: 100%;
+}
+
+::ng-deep .mat-tab-label {
+    min-width: 180px !important;
+}
+
+@media only screen and (max-width: 1279px) {
+    ::ng-deep .mat-tab-header {
+        width: 100%;
+    }
+}
+
+.botao-atualizar{
+  margin-top: 62px;
+  position: absolute;
+  left: 20px;
+  z-index: 99;
+}
+
+.botao-atualizar-sem-dados {
+    margin-top: 55px;
+    position: absolute;
+    left: 20px;
+    z-index: 99;   
+}
+
+.botao-atualizar, .botao-atualizar button, .botao-atualizar mat-progress-bar {
+  width: 150px;
+  margin-right: 16px;
+}
+
+::ng-deep .mat-tab-header, .mat-tab-nav-bar {
+    border-bottom: 0px solid rgba(0,0,0,.12);
+}
+
+::ng-deep .mat-tab-body {
+    border-top: 1px solid #CCCCCC;
+}
+
+.destacar {
+    color: red !important;
+}
+
+.destacar-num {
+    background-color: red !important;
+}

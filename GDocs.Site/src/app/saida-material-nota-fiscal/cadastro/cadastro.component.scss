@@ -1,0 +1,8 @@
+
+.desabilitado {
+  cursor: not-allowed !important;
+}
+
+.mat-datapicker-input:disabled {
+  background-color: #f7f7f5 !important;
+}
